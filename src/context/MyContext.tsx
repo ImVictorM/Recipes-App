@@ -1,6 +1,6 @@
-import React, { createContext, useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import copy from 'clipboard-copy';
+import React, { createContext, useState, useMemo } from "react";
+import PropTypes from "prop-types";
+import copy from "clipboard-copy";
 
 export const Mycontext = createContext();
 
@@ -10,14 +10,14 @@ function ContextProvider({ children }) {
 
   const handleCopy = () => {
     const url = window.location.href;
-    if (url.includes('in-progress')) {
-      const urlReplaced = url.replace('/in-progress', '');
+    if (url.includes("in-progress")) {
+      const urlReplaced = url.replace("/in-progress", "");
       copy(urlReplaced);
     } else {
       copy(url);
     }
 
-    setShareCopy('Link copied!');
+    setShareCopy("Link copied!");
 
     const THREE_SECONDS = 3000;
     setTimeout(() => {
@@ -25,17 +25,18 @@ function ContextProvider({ children }) {
     }, THREE_SECONDS);
   };
 
-  const contextValue = useMemo(() => ({
-    search,
-    shareCopy,
-    handleCopy,
-    setSearch,
-  }), [search, shareCopy]);
+  const contextValue = useMemo(
+    () => ({
+      search,
+      shareCopy,
+      handleCopy,
+      setSearch,
+    }),
+    [search, shareCopy]
+  );
 
   return (
-    <Mycontext.Provider value={ contextValue }>
-      {children}
-    </Mycontext.Provider>
+    <Mycontext.Provider value={contextValue}>{children}</Mycontext.Provider>
   );
 }
 

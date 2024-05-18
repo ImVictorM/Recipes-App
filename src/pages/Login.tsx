@@ -42,28 +42,35 @@ export default function Login() {
   };
 
   return (
-    <div className="min-vh-100 container-fluid">
+    <div className="min-vh-100 p-0 container-fluid d-flex justify-content-center">
       <main className="login">
-        <img src={logo} alt="logo" />
-        <form className="login-inputs">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            data-testid="email-input"
-            name="email"
-            value={loginFormState.email}
-            onChange={handleFormChange}
-          />
-          <input
-            type="password"
-            placeholder="Enter your password"
-            data-testid="password-input"
-            name="password"
-            value={loginFormState.password}
-            onChange={handleFormChange}
-          />
+        <img src={logo} className="logo" alt="logo" />
+        <form className="login-form container-fluid">
+          <h1 className="login-title">Login</h1>
+          <div className="login-inputs">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              data-testid="email-input"
+              name="email"
+              value={loginFormState.email}
+              onChange={handleFormChange}
+              className="form-control"
+            />
+
+            <input
+              type="password"
+              placeholder="Enter your password"
+              data-testid="password-input"
+              name="password"
+              value={loginFormState.password}
+              onChange={handleFormChange}
+              className="form-control"
+            />
+          </div>
 
           <button
+            className="btn btn-primary"
             type="button"
             data-testid="login-submit-btn"
             disabled={!canEnter}

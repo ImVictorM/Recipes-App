@@ -1,20 +1,20 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useCallback, useContext } from 'react';
-import { withRouter, useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import RecipeDetailsApi from '../services/RecipeDetailsApi';
-import { getLocalStorage, setLocalStorage } from '../services/localStorage';
-import '../styles/pages/RecipeDetals.css';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
-import { Mycontext } from '../context/MyContext';
-import '../styles/pages/RecipeInProgress.css';
+import { useEffect, useState, useCallback } from "react";
+import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
+import {
+  getFromLocalStorage,
+  setInLocalStorage,
+} from "../services/localStorage";
 
-function RecipeInProgress({ history }) {
-  const { location: { pathname } } = history;
-  const { handleCopy, shareCopy } = useContext(Mycontext);
-  const keyToSearchFor = pathname.includes('meals') ? 'meals' : 'drinks';
+import "../styles/pages/RecipeInProgress.css";
+import "../styles/pages/RecipeDetals.css";
+import { blackHeartIcon, shareIcon, whiteHeartIcon } from "@/assets/icons";
+
+export default function RecipeInProgress({ history }) {
+  const {
+    location: { pathname },
+  } = history;
+  const keyToSearchFor = pathname.includes("meals") ? "meals" : "drinks";
   const { id } = useParams();
   const [favorites, setFavorites] = useState([]);
   const [defaultApi, setDefaultApi] = useState({});
@@ -33,64 +33,77 @@ function RecipeInProgress({ history }) {
   const [inProgressRecipes, setInProgressRecipes] = useState(INITIAL_STATE);
   const separateIngredientsAndMeasures = (obj) => {
     const entries = Object.entries(obj);
-    const extractIngredientsAndMeasure = entries.reduce((acc, element) => {
-      const accCopy = { ...acc };
-      const key = element[0];
-      const value = element[1];
-      if (key.includes('Ingredient') && value) {
-        accCopy.ingredients.push(value);
+    const extractIngredientsAndMeasure = entries.reduce(
+      (acc, element) => {
+        const accCopy = { ...acc };
+        const key = element[0];
+        const value = element[1];
+        if (key.includes("Ingredient") && value) {
+          accCopy.ingredients.push(value);
+        }
+        if (key.includes("Measure") && value !== " ") {
+          accCopy.measures.push(value);
+        }
+        return accCopy;
+      },
+      {
+        ingredients: [],
+        measures: [],
       }
-      if (key.includes('Measure') && (value !== ' ')) {
-        accCopy.measures.push(value);
-      }
-      return accCopy;
-    }, {
-      ingredients: [],
-      measures: [],
-    });
+    );
     setIngredientsAndMeasure(extractIngredientsAndMeasure);
   };
-  const verifyPathname = useCallback((categoryApi) => {
-    separateIngredientsAndMeasures(categoryApi[0]);
-    if (pathname.includes('drinks')) {
-      const {
-        strDrink,
-        strDrinkThumb,
-        idDrink, strCategory,
-        strInstructions,
-        strAlcoholic,
-      } = categoryApi[0];
+  const verifyPathname = useCallback(
+    (categoryApi) => {
+      separateIngredientsAndMeasures(categoryApi[0]);
+      if (pathname.includes("drinks")) {
+        const {
+          strDrink,
+          strDrinkThumb,
+          idDrink,
+          strCategory,
+          strInstructions,
+          strAlcoholic,
+        } = categoryApi[0];
 
-      const data = {
-        instruction: strInstructions,
-        alcohol: strAlcoholic,
-        category: strCategory,
-        picture: strDrinkThumb,
-        title: strDrink,
-        id: idDrink,
-      };
-      setParameters(data);
-    } else {
-      const { strMeal, strMealThumb, idMeal, strCategory, strInstructions, strYoutube,
-      } = categoryApi[0];
-      const data = {
-        video: strYoutube,
-        instruction: strInstructions,
-        category: strCategory,
-        picture: strMealThumb,
-        title: strMeal,
-        id: idMeal,
-      };
-      setParameters(data);
-    }
-  }, [id, pathname]);
+        const data = {
+          instruction: strInstructions,
+          alcohol: strAlcoholic,
+          category: strCategory,
+          picture: strDrinkThumb,
+          title: strDrink,
+          id: idDrink,
+        };
+        setParameters(data);
+      } else {
+        const {
+          strMeal,
+          strMealThumb,
+          idMeal,
+          strCategory,
+          strInstructions,
+          strYoutube,
+        } = categoryApi[0];
+        const data = {
+          video: strYoutube,
+          instruction: strInstructions,
+          category: strCategory,
+          picture: strMealThumb,
+          title: strMeal,
+          id: idMeal,
+        };
+        setParameters(data);
+      }
+    },
+    [id, pathname]
+  );
   useEffect(() => {
     const handleFilter = async () => {
       const categoryApi = await RecipeDetailsApi(id, pathname);
       setDefaultApi(categoryApi[0]);
       verifyPathname(categoryApi);
     };
-    const favoriteRecipes = getLocalStorage('favoriteRecipes');
+    const favoriteRecipes = getFromLocalStorage("favoriteRecipes");
     if (favoriteRecipes !== null) {
       setFavorites(favoriteRecipes);
     }
@@ -111,24 +124,25 @@ function RecipeInProgress({ history }) {
 
     const newFavorite = {
       id: idDrink || idMeal,
-      type: pathname.includes('drink') ? 'drink' : 'meal',
-      nationality: strArea || '',
+      type: pathname.includes("drink") ? "drink" : "meal",
+      nationality: strArea || "",
       category: strCategory,
-      alcoholicOrNot: strAlcoholic || '',
+      alcoholicOrNot: strAlcoholic || "",
       name: strDrink || strMeal,
       image: strDrinkThumb || strMealThumb,
     };
 
-    const recipeIsFavorite = favorites
-      .some((recipe) => Number(recipe.id) === Number(id));
+    const recipeIsFavorite = favorites.some(
+      (recipe) => Number(recipe.id) === Number(id)
+    );
     if (recipeIsFavorite) {
-      const removedItem = favorites.filter((recipe) => (
-        Number(recipe.id) !== Number(id)
-      ));
-      setLocalStorage('favoriteRecipes', removedItem);
+      const removedItem = favorites.filter(
+        (recipe) => Number(recipe.id) !== Number(id)
+      );
+      setInLocalStorage("favoriteRecipes", removedItem);
       setFavorites(removedItem);
     } else {
-      setLocalStorage('favoriteRecipes', [...favorites, newFavorite]);
+      setInLocalStorage("favoriteRecipes", [...favorites, newFavorite]);
       setFavorites([...favorites, newFavorite]);
     }
   };
@@ -140,7 +154,7 @@ function RecipeInProgress({ history }) {
     const prevCopy = inProgressRecipes[keyToSearchFor][id];
 
     if (checked) {
-      target.parentElement.className = 'checked';
+      target.parentElement.className = "checked";
       const newList = [...prevCopy, ingredientAndMeasure];
       setInProgressRecipes({
         ...inProgressRecipes,
@@ -149,9 +163,10 @@ function RecipeInProgress({ history }) {
         },
       });
     } else {
-      target.parentElement.className = 'noChecked';
-      const newList = inProgressRecipes[keyToSearchFor][id]
-        .filter((element) => element !== ingredientAndMeasure);
+      target.parentElement.className = "noChecked";
+      const newList = inProgressRecipes[keyToSearchFor][id].filter(
+        (element) => element !== ingredientAndMeasure
+      );
       setInProgressRecipes({
         ...inProgressRecipes,
         [keyToSearchFor]: {
@@ -161,28 +176,28 @@ function RecipeInProgress({ history }) {
     }
   };
   useEffect(() => {
-    const localInProgress = getLocalStorage('inProgressRecipes') || INITIAL_STATE;
+    const localInProgress =
+      getFromLocalStorage("inProgressRecipes") || INITIAL_STATE;
     setInProgressRecipes(localInProgress);
   }, []);
   useEffect(() => {
-    setLocalStorage('inProgressRecipes', inProgressRecipes);
+    setInLocalStorage("inProgressRecipes", inProgressRecipes);
   }, [inProgressRecipes]);
   return (
     <div className="container justify-content-center">
       <section>
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ handleCopy }
-        >
-          <img src={ shareIcon } alt="Botão compartilhar" />
+        <button type="button" data-testid="share-btn" onClick={handleCopy}>
+          <img src={shareIcon} alt="Botão compartilhar" />
         </button>
         <p>{shareCopy}</p>
-        <button type="button" onClick={ handleFavorite }>
+        <button type="button" onClick={handleFavorite}>
           <img
             data-testid="favorite-btn"
-            src={ favorites.some(((element) => Number(element.id) === Number(id)
-            )) ? blackHeartIcon : whiteHeartIcon }
+            src={
+              favorites.some((element) => Number(element.id) === Number(id))
+                ? blackHeartIcon
+                : whiteHeartIcon
+            }
             alt="Botão favoritar"
           />
         </button>
@@ -190,41 +205,40 @@ function RecipeInProgress({ history }) {
       <img
         className="image-food"
         data-testid="recipe-photo"
-        src={ parameters.picture }
-        alt={ parameters.title }
+        src={parameters.picture}
+        alt={parameters.title}
       />
       <h1 data-testid="recipe-title">{parameters.title}</h1>
-      {
-        (pathname === `/drinks/${parameters.id}/in-progress`)
-        && <p data-testid="recipe-category">{parameters.alcohol}</p>
-      }
+      {pathname === `/drinks/${parameters.id}/in-progress` && (
+        <p data-testid="recipe-category">{parameters.alcohol}</p>
+      )}
       <div>
         <h2>Ingredients</h2>
         <div className="d-flex row">
-          {
-            ingredients.map((ingredient, index) => {
-              const ingredientAndMeasure = `${ingredient} ${measures[index]}`;
-              const shouldBeChecked = inProgressRecipes[keyToSearchFor][id]
-                .includes(ingredientAndMeasure);
-              return (
-                <label
-                  htmlFor={ index }
-                  key={ index }
-                  className={ `col-12 
-                  ${shouldBeChecked ? 'checked' : 'noChecked'}` }
-                  data-testid={ `${index}-ingredient-step` }
-                >
-                  <input
-                    type="checkbox"
-                    className="m-2"
-                    onClick={ handleChecked }
-                    defaultChecked={ shouldBeChecked }
-                  />
-                  <span>{ingredientAndMeasure}</span>
-                </label>
+          {ingredients.map((ingredient, index) => {
+            const ingredientAndMeasure = `${ingredient} ${measures[index]}`;
+            const shouldBeChecked =
+              inProgressRecipes[keyToSearchFor][id].includes(
+                ingredientAndMeasure
               );
-            })
-          }
+            return (
+              <label
+                htmlFor={index}
+                key={index}
+                className={`col-12 
+                  ${shouldBeChecked ? "checked" : "noChecked"}`}
+                data-testid={`${index}-ingredient-step`}
+              >
+                <input
+                  type="checkbox"
+                  className="m-2"
+                  onClick={handleChecked}
+                  defaultChecked={shouldBeChecked}
+                />
+                <span>{ingredientAndMeasure}</span>
+              </label>
+            );
+          })}
         </div>
       </div>
       <p data-testid="recipe-category">{parameters.category}</p>
@@ -239,11 +253,3 @@ function RecipeInProgress({ history }) {
     </div>
   );
 }
-RecipeInProgress.propTypes = {
-  history: PropTypes.shape({
-    location: PropTypes.shape({
-      pathname: PropTypes.string,
-    }),
-  }).isRequired,
-};
-export default withRouter(RecipeInProgress);

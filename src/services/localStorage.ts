@@ -1,6 +1,14 @@
-export const setLocalStorage = <T>(key: string, value: T): void => {
+export const setInLocalStorage = <T>(key: string, value: T): void => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
-export const getLocalStorage = (key: string): string =>
-  JSON.parse(localStorage.getItem(key) || "");
+export const getFromLocalStorage = <T>(key: string): T | undefined => {
+  const item = localStorage.getItem(key);
+  if (item) {
+    return JSON.parse(item) as T;
+  }
+};
+
+export const removeFromLocalStorage = (key: string): void => {
+  localStorage.removeItem(key);
+};

@@ -1,32 +1,5 @@
-:root {
-
-  --green-prymary: #fcc436;
-
-  --green-secondary: #fdd56e;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background-color: whitesmoke;
-  display: flex;
-  justify-content: center;
-}
-
 .login {
-  align-items: center;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: rgb(0 0 0 / 20%) 0 2px 4px -1px , rgb(0 0 0 / 14%) 0 4px 5px 0;
-  display: flex;
-  flex-direction: column;
-  margin-top: 50%;
-  padding: 90px 0;
-  width: 450px;
+  
 }
 
 .logo {

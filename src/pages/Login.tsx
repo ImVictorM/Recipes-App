@@ -21,7 +21,7 @@ export default function Login() {
     }));
   };
 
-  const canEnter = useMemo(() => {
+  const isFormValid = useMemo(() => {
     const MIN_PASSWORD_LENGTH = 6;
     const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
@@ -73,7 +73,7 @@ export default function Login() {
             className="btn btn-primary"
             type="button"
             data-testid="login-submit-btn"
-            disabled={!canEnter}
+            disabled={!isFormValid}
             onClick={handleLogin}
           >
             Enter

@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import userSlice from "./slices/userSlice";
-import menuSlice from "./slices/menuSlice";
+import { menuSlice, visibilitySlice, userSlice } from "./slices";
 
 const rootReducer = combineReducers({
   user: userSlice.reducer,
   menu: menuSlice.reducer,
+  visibility: visibilitySlice.reducer,
 });
 
 export const setupStore = (preloadedState?: Partial<RootState>) => {

@@ -1,145 +1,162 @@
-import { useContext, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useAppDispatch } from "@/hooks";
+import { FilterOptions } from "@/services/menu/common";
 import "../styles/components/searchBy.css";
+import { getMealsByFilter } from "@/services/menu/mealApi";
+import { getCocktailsByFilter } from "@/services/menu/cocktailApi";
+import { useNavigate } from "react-router-dom";
+import { setDrinks, setMeals } from "@/store/slices/menuSlice";
 
-export default function SearchBar({ searchInput }) {
-  const [methodToSearch, setMethodToSearch] = useState("");
-  const location = useLocation();
-  const [menu, setMenu] = useState([]);
+export type SearchBarProps = {
+  searchFor: "meals" | "drinks";
+};
 
-  const handleChange = ({ target: { value } }) => {
-    setMethodToSearch(value);
+type SearchBarFormState = {
+  searchQuery: string;
+  searchFilter: FilterOptions;
+};
+
+export default function SearchBar({ searchFor }: SearchBarProps) {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const emptyRecipesMessage =
+    "Sorry, we haven't found any recipes for these filters.";
+  const [formState, setFormState] = useState<SearchBarFormState>({
+    searchQuery: "",
+    searchFilter: FilterOptions.NAME,
+  });
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
-  const fetchMeals = () => {};
+  const handleMealsFetching = async () => {
+    const meals = await getMealsByFilter(
+      formState.searchQuery,
+      formState.searchFilter
+    );
 
-  const fetchCocktails = () => {};
-
-  const handleSearch = async () => {
-    if (location.pathname.includes("meals")) {
-      fetchMeals();
-    } else if (location.pathname.includes("drinks")) {
-      fetchCocktails();
-    }
-    const fetchedMenu = await getMeal(methodToSearch, searchInput, pathname);
-    if (pathname === "/drinks") {
-      dispatch(actSetDrinks(fetchedMenu));
+    if (meals.length === 0) {
+      window.alert(emptyRecipesMessage);
+    } else if (meals.length === 1) {
+      navigate(`/meals/${meals[0].idMeal}`);
     } else {
-      dispatch(actSetMeals(fetchedMenu));
+      dispatch(setMeals(meals));
+    }
+  };
+
+  const handleCocktailsFetching = async () => {
+    const drinks = await getCocktailsByFilter(
+      formState.searchQuery,
+      formState.searchFilter
+    );
+
+    if (drinks.length === 0) {
+      window.alert(emptyRecipesMessage);
+    } else if (drinks.length === 1) {
+      navigate(`/drinks/${drinks[0].idDrink}`);
+    } else {
+      dispatch(setDrinks(drinks));
+    }
+  };
+
+  const handleSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (
+      formState.searchQuery.length !== 1 &&
+      formState.searchFilter === FilterOptions.FIRST_LETTER
+    ) {
+      window.alert("Your search must have only 1 (one) character.");
+      return;
     }
 
-    if (fetchedMenu.length === 0) {
-      global.alert("Sorry, we haven't found any recipes for these filters.");
-    }
-    if (fetchedMenu.length === 1) {
-      let fetchedMenuId = null;
-      switch (pathname) {
-        case "/drinks":
-          fetchedMenuId = fetchedMenu[0].idDrink;
-          break;
-        default:
-          fetchedMenuId = fetchedMenu[0].idMeal;
-          break;
-      }
-      push(`${pathname}/${fetchedMenuId}`);
-    } else if (fetchedMenu.length > TWELVE) {
-      const firstTwelve = fetchedMenu.filter((_elem, index) => index < TWELVE);
-      setMenu(firstTwelve);
+    if (searchFor === "meals") {
+      await handleMealsFetching();
     } else {
-      setMenu(fetchedMenu);
+      await handleCocktailsFetching();
     }
-    setSearch(true);
   };
 
   return (
-    <section className="container-search">
+    <form className="container-search" onSubmit={handleSearchSubmit}>
+      <div className="filters">
+        <label htmlFor="search">
+          <input
+            className="input-search"
+            data-testid="search-input"
+            placeholder="Search"
+            id="search"
+            maxLength={
+              formState.searchFilter === FilterOptions.FIRST_LETTER ? 1 : 60
+            }
+            name="searchQuery"
+            value={formState.searchQuery}
+            onChange={handleFormChange}
+          />
+        </label>
+      </div>
+
       <div className="search-bar">
         <div className="searchbar-input">
+          <label htmlFor="name">
+            <input
+              required
+              type="radio"
+              data-testid="name-search-radio"
+              id="name"
+              defaultChecked={formState.searchFilter === FilterOptions.NAME}
+              name="searchFilter"
+              onChange={handleFormChange}
+              value={FilterOptions.NAME}
+            />
+            Name
+          </label>
+
           <label htmlFor="ingredient">
             <input
               type="radio"
               data-testid="ingredient-search-radio"
               id="ingredient"
-              name="searchOption"
-              onChange={handleChange}
-              value="Ingredient"
+              name="searchFilter"
+              defaultChecked={
+                formState.searchFilter === FilterOptions.INGREDIENT
+              }
+              onChange={handleFormChange}
+              value={FilterOptions.INGREDIENT}
             />
             Ingredient
           </label>
 
-          <label htmlFor="name">
+          <label htmlFor="firstLetter">
             <input
-              type="radio"
-              data-testid="name-search-radio"
-              id="name"
-              name="searchOption"
-              onChange={handleChange}
-              value="Name"
-            />
-            Name
-          </label>
-
-          <label htmlFor="First letter">
-            <input
+              defaultChecked={
+                formState.searchFilter === FilterOptions.FIRST_LETTER
+              }
               type="radio"
               data-testid="first-letter-search-radio"
-              id="First letter"
-              name="searchOption"
-              onChange={handleChange}
-              value="First Letter"
+              id="firstLetter"
+              name="searchFilter"
+              onChange={handleFormChange}
+              value={FilterOptions.FIRST_LETTER}
             />
             First letter
           </label>
         </div>
 
-        <div>
-          <button
-            className="btn-search"
-            data-testid="exec-search-btn"
-            type="button"
-            onClick={handleSearch}
-          >
-            Search
-          </button>
-        </div>
+        <button
+          className="btn-search"
+          data-testid="exec-search-btn"
+          type="submit"
+          disabled={formState.searchQuery === ""}
+        >
+          Search
+        </button>
       </div>
-      <ul className="mt-5">
-        {menu.map((food, index) => {
-          const {
-            location: { pathname },
-          } = history;
-          if (pathname === "/drinks") {
-            const { strDrink, strDrinkThumb, idDrink } = food;
-            return (
-              <Link key={idDrink} to={`/drinks/${food.idDrink}`}>
-                <li data-testid={`${index}-recipe-card`}>
-                  <img
-                    src={strDrinkThumb}
-                    alt={strDrink}
-                    data-testid={`${index}-card-img`}
-                    className="img"
-                  />
-                  <p data-testid={`${index}-card-name`}>{strDrink}</p>
-                </li>
-              </Link>
-            );
-          }
-          const { strMeal, strMealThumb, idMeal } = food;
-          return (
-            <Link key={idMeal} to={`/meals/${food.idMeal}`}>
-              <li data-testid={`${index}-recipe-card`}>
-                <img
-                  className="img"
-                  src={strMealThumb}
-                  alt={strMeal}
-                  data-testid={`${index}-card-img`}
-                />
-                <p data-testid={`${index}-card-name`}>{strMeal}</p>
-              </li>
-            </Link>
-          );
-        })}
-      </ul>
-    </section>
+    </form>
   );
 }

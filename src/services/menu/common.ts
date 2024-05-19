@@ -2,6 +2,12 @@ export type MenuCategory = {
   strCategory: string;
 };
 
+export enum FilterOptions {
+  FIRST_LETTER = "firstLetter",
+  NAME = "name",
+  INGREDIENT = "ingredient",
+}
+
 export type MenuRecipe = {
   strTags: string | null | "";
   strCategory: string;
@@ -40,4 +46,19 @@ export type MenuRecipe = {
   strImageSource: string | null | "";
   dateModified: string | null | "";
   strCreativeCommonsConfirmed: string | null | "";
+};
+
+export const getFilterEndpointByOption = (
+  query: string,
+  option: FilterOptions
+): string => {
+  switch (option) {
+    case FilterOptions.NAME:
+      return `search.php?s=${query}`;
+    case FilterOptions.FIRST_LETTER:
+      return `search.php?f=${query}`;
+
+    case FilterOptions.INGREDIENT:
+      return `filter.php?i=${query}`;
+  }
 };

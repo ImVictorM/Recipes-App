@@ -1,10 +1,10 @@
 import { RouteObject, createBrowserRouter } from "react-router-dom";
 import {
   // DoneRecipes,
-  // Drinks,
+  Drinks,
   // FavoriteRecipes,
   Login,
-  // Meals,
+  Meals,
   // Profile,
   // RecipeDetails,
   // RecipeInProgress,
@@ -27,34 +27,34 @@ const routes: RouteObject[] = [
   //   path: "/profile",
   //   element: <Profile />,
   // },
-  // {
-  //   path: "/drinks",
-  //   element: <Drinks />,
-  //   children: [
-  //     {
-  //       path: ":id",
-  //       element: <RecipeDetails />,
-  //     },
-  //     {
-  //       path: ":id/in-progress",
-  //       element: <RecipeInProgress />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "/meals",
-  //   element: <Meals />,
-  //   children: [
-  //     {
-  //       path: ":id",
-  //       element: <RecipeDetails />,
-  //     },
-  //     {
-  //       path: ":id/in-progress",
-  //       element: <RecipeInProgress />,
-  //     },
-  //   ],
-  // },
+  {
+    path: "/drinks",
+    element: <Drinks />,
+    // children: [
+    //   {
+    //     path: ":id",
+    //     element: <RecipeDetails />,
+    //   },
+    //   {
+    //     path: ":id/in-progress",
+    //     element: <RecipeInProgress />,
+    //   },
+    // ],
+  },
+  {
+    path: "/meals",
+    element: <Meals />,
+    // children: [
+    //   {
+    //     path: ":id",
+    //     element: <RecipeDetails />,
+    //   },
+    //   {
+    //     path: ":id/in-progress",
+    //     element: <RecipeInProgress />,
+    //   },
+    // ],
+  },
 ];
 
 const router = createBrowserRouter(routes);

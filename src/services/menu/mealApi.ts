@@ -1,5 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { MenuCategory, MenuRecipe } from "./common";
+import {
+  FilterOptions,
+  MenuCategory,
+  MenuRecipe,
+  getFilterEndpointByOption,
+} from "./common";
 
 export type MealCategory = MenuCategory;
 
@@ -31,7 +36,7 @@ export type GetMealsResponse = {
 };
 
 const mealClient = axios.create({
-  baseURL: "www.themealdb.com/api/json/v1/1/",
+  baseURL: "https://themealdb.com/api/json/v1/1/",
 });
 
 export async function getMealCategories(): Promise<MealCategory[]> {
@@ -55,4 +60,16 @@ export async function getMealDetailsById(id: string): Promise<Meal> {
   );
 
   return response.data.meals[0] || {};
+}
+
+export async function getMealsByFilter(
+  query: string,
+  option: FilterOptions
+): Promise<Meal[]> {
+  const endpoint = getFilterEndpointByOption(query, option);
+  const response: AxiosResponse<GetMealsResponse> = await mealClient.get(
+    endpoint
+  );
+
+  return response.data.meals || [];
 }

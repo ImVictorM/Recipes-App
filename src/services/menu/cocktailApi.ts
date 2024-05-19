@@ -1,5 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { MenuCategory, MenuRecipe } from "./common";
+import {
+  FilterOptions,
+  MenuCategory,
+  MenuRecipe,
+  getFilterEndpointByOption,
+} from "./common";
 
 export type DrinkCategory = MenuCategory;
 
@@ -51,4 +56,15 @@ export async function getCocktailDetailsById(id: string): Promise<Drink> {
     await cocktailClient.get(`lookup.php?i=${id}`);
 
   return response.data.drinks[0] || {};
+}
+
+export async function getCocktailsByFilter(
+  query: string,
+  option: FilterOptions
+) {
+  const endpoint = getFilterEndpointByOption(query, option);
+  const response: AxiosResponse<GetCocktailsResponse> =
+    await cocktailClient.get(endpoint);
+
+  return response.data.drinks || [];
 }

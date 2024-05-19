@@ -1,26 +1,17 @@
 import { useState } from "react";
-import { useAppDispatch } from "@/hooks";
 import { FilterOptions } from "@/services/menu/common";
 import "../styles/components/searchBy.css";
-import { getMealsByFilter } from "@/services/menu/mealApi";
-import { getCocktailsByFilter } from "@/services/menu/cocktailApi";
-import { useNavigate } from "react-router-dom";
-import { setDrinks, setMeals } from "@/store/slices/menuSlice";
 
-export type SearchBarProps = {
-  searchFor: "meals" | "drinks";
-};
-
-type SearchBarFormState = {
+export type SearchBarFormState = {
   searchQuery: string;
   searchFilter: FilterOptions;
 };
 
-export default function SearchBar({ searchFor }: SearchBarProps) {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const emptyRecipesMessage =
-    "Sorry, we haven't found any recipes for these filters.";
+export type SearchBarProps = {
+  onSearch: (formState: SearchBarFormState) => void;
+};
+
+export default function SearchBar({ onSearch }: SearchBarProps) {
   const [formState, setFormState] = useState<SearchBarFormState>({
     searchQuery: "",
     searchFilter: FilterOptions.NAME,
@@ -34,36 +25,6 @@ export default function SearchBar({ searchFor }: SearchBarProps) {
     }));
   };
 
-  const handleMealsFetching = async () => {
-    const meals = await getMealsByFilter(
-      formState.searchQuery,
-      formState.searchFilter
-    );
-
-    if (meals.length === 0) {
-      window.alert(emptyRecipesMessage);
-    } else if (meals.length === 1) {
-      navigate(`/meals/${meals[0].idMeal}`);
-    } else {
-      dispatch(setMeals(meals));
-    }
-  };
-
-  const handleCocktailsFetching = async () => {
-    const drinks = await getCocktailsByFilter(
-      formState.searchQuery,
-      formState.searchFilter
-    );
-
-    if (drinks.length === 0) {
-      window.alert(emptyRecipesMessage);
-    } else if (drinks.length === 1) {
-      navigate(`/drinks/${drinks[0].idDrink}`);
-    } else {
-      dispatch(setDrinks(drinks));
-    }
-  };
-
   const handleSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -75,11 +36,7 @@ export default function SearchBar({ searchFor }: SearchBarProps) {
       return;
     }
 
-    if (searchFor === "meals") {
-      await handleMealsFetching();
-    } else {
-      await handleCocktailsFetching();
-    }
+    onSearch(formState);
   };
 
   return (

@@ -37,12 +37,41 @@ const cocktailClient = axios.create({
   baseURL: "https://www.thecocktaildb.com/api/json/v1/1/",
 });
 
-export async function getCocktailCategories(): Promise<DrinkCategory[]> {
-  const response: AxiosResponse<GetCocktailCategoriesResponse> =
-    await cocktailClient.get("list.php?c=list");
-
-  return response.data.drinks || [];
-}
+export const cocktailsCategories: MenuCategory[] = [
+  {
+    strCategory: "Ordinary Drink",
+  },
+  {
+    strCategory: "Cocktail",
+  },
+  {
+    strCategory: "Shake",
+  },
+  {
+    strCategory: "Other / Unknown",
+  },
+  {
+    strCategory: "Cocoa",
+  },
+  {
+    strCategory: "Shot",
+  },
+  {
+    strCategory: "Coffee / Tea",
+  },
+  {
+    strCategory: "Homemade Liqueur",
+  },
+  {
+    strCategory: "Punch / Party Drink",
+  },
+  {
+    strCategory: "Beer",
+  },
+  {
+    strCategory: "Soft Drink",
+  },
+];
 
 export async function getCocktails(name: string = ""): Promise<Drink[]> {
   const response: AxiosResponse<GetCocktailsResponse> =

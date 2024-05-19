@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import ButtonFilter from "./ButtonFilter";
+import MenuFiltersByCategory from "./MenuFiltersByCategory";
 import "../styles/components/Recipes.css";
 
 export default function Recipes({ history }) {
@@ -35,7 +35,7 @@ export default function Recipes({ history }) {
 
   return (
     <div>
-      <ButtonFilter handleGetCategories={handleGetCategories} />
+      <MenuFiltersByCategory handleGetCategories={handleGetCategories} />
       <div className="recipes-div">
         <ul>
           {menu.map((food, index) => {

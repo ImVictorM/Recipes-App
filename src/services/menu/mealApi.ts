@@ -39,12 +39,50 @@ const mealClient = axios.create({
   baseURL: "https://themealdb.com/api/json/v1/1/",
 });
 
-export async function getMealCategories(): Promise<MealCategory[]> {
-  const response: AxiosResponse<GetMealCategoriesResponse> =
-    await mealClient.get("list.php?c=list");
-
-  return response.data.meals || [];
-}
+export const mealsCategories: MenuCategory[] = [
+  {
+    strCategory: "Beef",
+  },
+  {
+    strCategory: "Breakfast",
+  },
+  {
+    strCategory: "Chicken",
+  },
+  {
+    strCategory: "Dessert",
+  },
+  {
+    strCategory: "Goat",
+  },
+  {
+    strCategory: "Lamb",
+  },
+  {
+    strCategory: "Miscellaneous",
+  },
+  {
+    strCategory: "Pasta",
+  },
+  {
+    strCategory: "Pork",
+  },
+  {
+    strCategory: "Seafood",
+  },
+  {
+    strCategory: "Side",
+  },
+  {
+    strCategory: "Starter",
+  },
+  {
+    strCategory: "Vegan",
+  },
+  {
+    strCategory: "Vegetarian",
+  },
+];
 
 export async function getMeals(name: string = ""): Promise<Meal[]> {
   const response: AxiosResponse<GetMealsResponse> = await mealClient.get(

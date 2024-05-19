@@ -6,6 +6,7 @@ export enum FilterOptions {
   FIRST_LETTER = "firstLetter",
   NAME = "name",
   INGREDIENT = "ingredient",
+  CATEGORY = "category",
 }
 
 export type MenuRecipe = {
@@ -60,5 +61,7 @@ export const getFilterEndpointByOption = (
 
     case FilterOptions.INGREDIENT:
       return `filter.php?i=${query}`;
+    case FilterOptions.CATEGORY:
+      return `filter.php?c=${query}`;
   }
 };

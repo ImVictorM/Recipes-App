@@ -1,10 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
-import {
-  getFromLocalStorage,
-  setInLocalStorage,
-} from "../services/localStorage";
+import { getFromLocalStorage, setInLocalStorage } from "../utils/localStorage";
 
 import "../styles/pages/RecipeInProgress.css";
 import "../styles/pages/RecipeDetals.css";

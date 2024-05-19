@@ -1,9 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import {
-  getFromLocalStorage,
-  setInLocalStorage,
-} from "@/services/localStorage";
+import { getFromLocalStorage, setInLocalStorage } from "@/utils/localStorage";
 
 export type User = {
   email: string;

@@ -2,10 +2,7 @@ import { useEffect, useState, useCallback, useContext } from "react";
 import { useParams } from "react-router-dom";
 
 import { whiteHeartIcon, blackHeartIcon, shareIcon } from "@/assets/icons";
-import {
-  getFromLocalStorage,
-  setInLocalStorage,
-} from "../services/localStorage";
+import { getFromLocalStorage, setInLocalStorage } from "../utils/localStorage";
 import "../styles/pages/RecipeDetals.css";
 
 export default function RecipeDetails({ history }) {

@@ -31,7 +31,9 @@ export default function Login() {
     );
   }, [loginFormState]);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     dispatch(
       setUser({
         email: loginFormState.email,
@@ -45,7 +47,7 @@ export default function Login() {
     <div className="min-vh-100 p-0 container-fluid d-flex justify-content-center">
       <main className="login">
         <img src={logo} className="logo" alt="logo" />
-        <form className="login-form container-fluid">
+        <form className="login-form container-fluid" onSubmit={handleLogin}>
           <h1 className="login-title">Login</h1>
           <div className="login-inputs">
             <input
@@ -56,6 +58,7 @@ export default function Login() {
               value={loginFormState.email}
               onChange={handleFormChange}
               className="form-control"
+              maxLength={60}
             />
 
             <input
@@ -66,15 +69,15 @@ export default function Login() {
               value={loginFormState.password}
               onChange={handleFormChange}
               className="form-control"
+              maxLength={60}
             />
           </div>
 
           <button
             className="btn btn-primary"
-            type="button"
+            type="submit"
             data-testid="login-submit-btn"
             disabled={!isFormValid}
-            onClick={handleLogin}
           >
             Enter
           </button>

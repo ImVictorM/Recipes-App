@@ -1,4 +1,4 @@
-import { MenuFiltersByCategory, SearchBar } from "@/components";
+import { MenuFiltersByCategory, PaginatedList, SearchBar } from "@/components";
 import { SearchBarFormState } from "@/components/SearchBar";
 import { useAppSelector } from "@/hooks";
 import { BasicLayout } from "@/layouts";
@@ -13,7 +13,7 @@ import { selectVisibility } from "@/store/slices/visibilitySlice";
 import { EMPTY_RECIPES_MESSAGE } from "@/utils/constants";
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Drinks() {
   const dispatch = useDispatch();
@@ -66,23 +66,14 @@ function Drinks() {
         onFilterByAll={handleLoadInitialDrinks}
       />
 
-      <ul className="mt-5">
-        {menu.drinks.map(({ strDrink, strDrinkThumb, idDrink }, index) => {
-          return (
-            <Link key={idDrink} to={`/drinks/${idDrink}`}>
-              <li data-testid={`${index}-recipe-card`}>
-                <img
-                  src={strDrinkThumb}
-                  alt={strDrink}
-                  data-testid={`${index}-card-img`}
-                  className="img"
-                />
-                <p data-testid={`${index}-card-name`}>{strDrink}</p>
-              </li>
-            </Link>
-          );
-        })}
-      </ul>
+      <PaginatedList
+        items={menu.drinks.map(({ idDrink, strDrinkThumb, strDrink }) => ({
+          id: idDrink,
+          img: strDrinkThumb,
+          name: strDrink,
+        }))}
+        navigateTo={({ id }) => `/drinks/${id}`}
+      />
     </BasicLayout>
   );
 }

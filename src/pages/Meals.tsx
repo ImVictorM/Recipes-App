@@ -1,4 +1,4 @@
-import { MenuFiltersByCategory, SearchBar } from "@/components";
+import { MenuFiltersByCategory, PaginatedList, SearchBar } from "@/components";
 import { SearchBarFormState } from "@/components/SearchBar";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { BasicLayout } from "@/layouts";
@@ -12,7 +12,7 @@ import { selectMenu, setMeals } from "@/store/slices/menuSlice";
 import { selectVisibility } from "@/store/slices/visibilitySlice";
 import { EMPTY_RECIPES_MESSAGE } from "@/utils/constants";
 import { useCallback, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Meals() {
   const dispatch = useAppDispatch();
@@ -66,23 +66,14 @@ export default function Meals() {
         onFilterByAll={handleLoadInitialMeals}
       />
 
-      <ul className="mt-5">
-        {menu.meals.map(({ strMeal, strMealThumb, idMeal }, index) => {
-          return (
-            <Link key={idMeal} to={`/meals/${idMeal}`}>
-              <li data-testid={`${index}-recipe-card`}>
-                <img
-                  className="img"
-                  src={strMealThumb}
-                  alt={strMeal}
-                  data-testid={`${index}-card-img`}
-                />
-                <p data-testid={`${index}-card-name`}>{strMeal}</p>
-              </li>
-            </Link>
-          );
-        })}
-      </ul>
+      <PaginatedList
+        items={menu.meals.map(({ idMeal, strMealThumb, strMeal }) => ({
+          id: idMeal,
+          img: strMealThumb,
+          name: strMeal,
+        }))}
+        navigateTo={({ id }) => `/meals/${id}`}
+      />
     </BasicLayout>
   );
 }

@@ -1,0 +1,25 @@
+@use "../themes/" as *;
+@use "../abstracts/" as *;
+
+.footer {
+  background-color: map-get($map: $theme-colors, $key: "purple");
+  height: $footer-height;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:  0 -3px 4px 3px rgba(0, 0, 0, 0.2);
+}
+
+.footer-content {
+  max-width: calc($max-content-width / 2);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1em;
+  
+  @include respond-to("tabletS") {
+    padding: 0;
+  }
+}

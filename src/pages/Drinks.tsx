@@ -15,7 +15,7 @@ import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function Drinks() {
+export default function Drinks() {
   const dispatch = useDispatch();
   const visibility = useAppSelector(selectVisibility);
   const menu = useAppSelector(selectMenu);
@@ -52,9 +52,7 @@ function Drinks() {
 
   return (
     <BasicLayout containHeaderSearchBar>
-      <h1 className="mt-4" data-testid="page-title">
-        Drinks
-      </h1>
+      <h1 data-testid="page-title">Drinks</h1>
 
       {visibility.showSearchBar && (
         <SearchBar onSearch={handleCocktailsSearch} />
@@ -77,5 +75,3 @@ function Drinks() {
     </BasicLayout>
   );
 }
-
-export default Drinks;

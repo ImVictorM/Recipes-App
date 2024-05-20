@@ -102,11 +102,12 @@ export default function PaginatedList({
 
       <Pagination>
         <Pagination.Prev onClick={handleMoveToPreviousPage} />
-        {paginationItemsToShow.map((item) => {
+        {paginationItemsToShow.map((item, index) => {
           // if it is not a number, it is an ellipsis
           if (typeof item === "number") {
             return (
               <Pagination.Item
+                key={index}
                 active={currentPage === item}
                 onClick={() => handleMoveToSpecificPage(item)}
               >

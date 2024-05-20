@@ -1,0 +1,21 @@
+@use "../themes/" as *;
+@use "../abstracts/" as *;
+
+.header {
+  background-color: map-get($map: $theme-colors, $key: "yellow");
+  height: $header-height;
+  padding: 1em;
+
+  @include respond-to("tabletS") {
+    padding: 1em 2em;
+  }
+}
+
+.header-content {
+  max-width: $max-content-width;
+  width: 100%;
+}
+
+.header-search-button {
+  background-color: map-get($map: $theme-colors, $key: "yellow");
+}

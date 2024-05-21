@@ -3,6 +3,7 @@ import { profileIcon, searchIcon } from "@/assets/icons";
 import { headerLogo } from "@/assets/images";
 import { useAppDispatch } from "@/hooks";
 import { toggleSearchBarVisibility } from "@/store/slices/visibilitySlice";
+import { Container, Image, Stack } from "react-bootstrap";
 import "@/sass/components/_header.scss";
 
 export type HeaderProps = {
@@ -17,33 +18,38 @@ export default function Header({ containSearchBar }: HeaderProps) {
   };
 
   return (
-    <>
-      <header className="header d-flex align-items-center justify-content-center w-100">
-        <div className="header-content d-flex align-items-center justify-content-between">
-          <img src={headerLogo} alt="recipes app logo" />
+    <Container
+      as="header"
+      fluid
+      className="header d-flex align-items-center justify-content-center"
+    >
+      <Container
+        fluid
+        className="header-content d-flex align-items-center justify-content-between"
+      >
+        <Image src={headerLogo} alt="recipes app logo" />
 
-          <div className="d-flex gap-4">
-            {containSearchBar && (
-              <button
-                data-testid="search-top-btn"
-                type="button"
-                onClick={handleSearchBarVisibility}
-                className="header-search-button"
-              >
-                <img src={searchIcon} alt="search magnifying glass" />
-              </button>
-            )}
+        <Stack direction="horizontal" gap={4}>
+          {containSearchBar && (
+            <button
+              data-testid="search-top-btn"
+              type="button"
+              onClick={handleSearchBarVisibility}
+              className="header-search-button"
+            >
+              <Image src={searchIcon} alt="search magnifying glass" />
+            </button>
+          )}
 
-            <Link to="/profile">
-              <img
-                src={profileIcon}
-                alt="user profile"
-                data-testid="profile-top-btn"
-              />
-            </Link>
-          </div>
-        </div>
-      </header>
-    </>
+          <Link to="/profile">
+            <Image
+              src={profileIcon}
+              alt="user profile"
+              data-testid="profile-top-btn"
+            />
+          </Link>
+        </Stack>
+      </Container>
+    </Container>
   );
 }

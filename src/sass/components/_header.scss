@@ -4,17 +4,11 @@
 .header {
   background-color: map-get($map: $theme-colors, $key: "yellow");
   height: $header-height;
-  padding: 1em;
   box-shadow:  0 1px 4px 1px rgba(0, 0, 0, 0.2);
-
-  @include respond-to("tabletS") {
-    padding: 1em 2em;
-  }
 }
 
 .header-content {
   max-width: $max-content-width;
-  width: 100%;
 }
 
 .header-search-button {

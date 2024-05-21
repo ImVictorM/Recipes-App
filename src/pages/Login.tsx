@@ -4,6 +4,7 @@ import { logo } from "@/assets/images";
 import { useAppDispatch } from "@/hooks";
 import { setUser } from "@/store/slices/userSlice";
 import "@/sass/pages/_login.scss";
+import { Button, Container, Form, Image, Stack } from "react-bootstrap";
 
 export default function Login() {
   const [loginFormState, setLoginFormState] = useState({
@@ -44,45 +45,48 @@ export default function Login() {
   };
 
   return (
-    <div className="min-vh-100 p-0 container-fluid d-flex justify-content-center">
-      <main className="login">
-        <img src={logo} className="logo" alt="logo" />
-        <form className="login-form container-fluid" onSubmit={handleLogin}>
-          <h1 className="login-title">Login</h1>
-          <div className="login-inputs">
-            <input
+    <Container fluid className="min-vh-100 p-0 d-flex justify-content-center">
+      <Container as="main" fluid className="login">
+        <Image src={logo} className="logo" alt="logo" />
+
+        <Form className="login-form container-fluid" onSubmit={handleLogin}>
+          <Container as="h1" fluid className="login-title">
+            Login
+          </Container>
+
+          <Stack gap={2}>
+            <Form.Control
               type="email"
               placeholder="Enter your email"
               data-testid="email-input"
               name="email"
               value={loginFormState.email}
               onChange={handleFormChange}
-              className="form-control"
               maxLength={60}
             />
 
-            <input
+            <Form.Control
               type="password"
               placeholder="Enter your password"
               data-testid="password-input"
               name="password"
               value={loginFormState.password}
               onChange={handleFormChange}
-              className="form-control"
               maxLength={60}
             />
-          </div>
+          </Stack>
 
-          <button
-            className="btn btn-primary"
+          <Button
+            variant="primary"
             type="submit"
             data-testid="login-submit-btn"
             disabled={!isFormValid}
+            className="m-0"
           >
             Enter
-          </button>
-        </form>
-      </main>
-    </div>
+          </Button>
+        </Form>
+      </Container>
+    </Container>
   );
 }

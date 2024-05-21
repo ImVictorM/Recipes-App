@@ -1,5 +1,5 @@
-export { default as MenuFiltersByCategory } from "./MenuFiltersByCategory";
-export { default as PaginatedList } from "./PaginatedList";
+export { default as RecipeFiltersByCategory } from "./RecipeFiltersByCategory";
+export { default as RecipeListWithPagination } from "./RecipeListWithPagination";
 export { default as Footer } from "./Footer";
 export { default as Header } from "./Header";
 export { default as Loading } from "./Loading";

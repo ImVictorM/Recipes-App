@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import {
-  FilterOptions,
-  MenuCategory,
+  RecipeFilterOptions,
+  RecipeCategory,
   MenuRecipe,
   getFilterEndpointByOption,
 } from "./common";
 
-export type DrinkCategory = MenuCategory;
+export type DrinkCategory = RecipeCategory;
 
 export type Drink = MenuRecipe & {
   idDrink: string;
@@ -37,7 +37,7 @@ const cocktailClient = axios.create({
   baseURL: "https://www.thecocktaildb.com/api/json/v1/1/",
 });
 
-export const cocktailsCategories: MenuCategory[] = [
+export const cocktailsCategories: RecipeCategory[] = [
   {
     strCategory: "Ordinary Drink",
   },
@@ -89,7 +89,7 @@ export async function getCocktailDetailsById(id: string): Promise<Drink> {
 
 export async function getCocktailsByFilter(
   query: string,
-  option: FilterOptions
+  option: RecipeFilterOptions
 ) {
   const endpoint = getFilterEndpointByOption(query, option);
   const response: AxiosResponse<GetCocktailsResponse> =

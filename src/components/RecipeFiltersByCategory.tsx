@@ -1,20 +1,20 @@
-import { MenuCategory } from "@/services/menu/common";
-import "@/sass/components/_menuFiltersByCategory.scss";
+import { RecipeCategory } from "@/services/menu/common";
 import { leftArrowIcon, rightArrowIcon } from "@/assets/icons";
 import { useRef } from "react";
 import { useLinearScroll } from "@/hooks";
+import "@/sass/components/_recipeFiltersByCategory.scss";
 
-export type MenuFiltersByCategoryProps = {
-  categories: MenuCategory[];
+export type RecipeFiltersByCategoryProps = {
+  categories: RecipeCategory[];
   onFilterByCategory: (category: string) => void;
   onFilterByAll: () => void;
 };
 
-export default function MenuFiltersByCategory({
+export default function RecipeFiltersByCategory({
   onFilterByCategory,
   categories,
   onFilterByAll,
-}: MenuFiltersByCategoryProps) {
+}: RecipeFiltersByCategoryProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const { isAtEnd, isAtStart, scrollTo } = useLinearScroll(scrollerRef);
 

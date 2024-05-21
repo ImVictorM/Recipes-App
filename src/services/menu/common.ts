@@ -1,8 +1,8 @@
-export type MenuCategory = {
+export type RecipeCategory = {
   strCategory: string;
 };
 
-export enum FilterOptions {
+export enum RecipeFilterOptions {
   FIRST_LETTER = "firstLetter",
   NAME = "name",
   INGREDIENT = "ingredient",
@@ -51,17 +51,17 @@ export type MenuRecipe = {
 
 export const getFilterEndpointByOption = (
   query: string,
-  option: FilterOptions
+  option: RecipeFilterOptions
 ): string => {
   switch (option) {
-    case FilterOptions.NAME:
+    case RecipeFilterOptions.NAME:
       return `search.php?s=${query}`;
-    case FilterOptions.FIRST_LETTER:
+    case RecipeFilterOptions.FIRST_LETTER:
       return `search.php?f=${query}`;
 
-    case FilterOptions.INGREDIENT:
+    case RecipeFilterOptions.INGREDIENT:
       return `filter.php?i=${query}`;
-    case FilterOptions.CATEGORY:
+    case RecipeFilterOptions.CATEGORY:
       return `filter.php?c=${query}`;
   }
 };

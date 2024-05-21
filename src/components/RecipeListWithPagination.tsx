@@ -2,21 +2,21 @@ import { useMemo, useState } from "react";
 import { Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export type PaginatedListItem = {
+export type Item = {
   id: string;
   img: string;
   name: string;
 };
 
-export type PaginatedListProps = {
-  items: PaginatedListItem[];
-  navigateTo: (item: PaginatedListItem) => string;
+export type RecipeListWithPaginationProps = {
+  items: Item[];
+  navigateTo: (item: Item) => string;
 };
 
-export default function PaginatedList({
+export default function RecipeListWithPagination({
   items,
   navigateTo,
-}: PaginatedListProps) {
+}: RecipeListWithPaginationProps) {
   const ITEMS_PER_PAGE = 12;
   const MAX_PAGE_BLOCKS_UI = 7;
   const totalPages = Math.floor(items.length / ITEMS_PER_PAGE);

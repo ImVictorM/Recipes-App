@@ -1,5 +1,9 @@
 import { cocktailIcon } from "@/assets/icons";
-import { MenuFiltersByCategory, PaginatedList, SearchBar } from "@/components";
+import {
+  RecipeFiltersByCategory,
+  RecipeListWithPagination,
+  SearchBar,
+} from "@/components";
 import { SearchBarFormState } from "@/components/SearchBar";
 import { useAppSelector } from "@/hooks";
 import { BasicLayout } from "@/layouts";
@@ -8,7 +12,7 @@ import {
   getCocktails,
   getCocktailsByFilter,
 } from "@/services/menu/cocktailApi";
-import { FilterOptions } from "@/services/menu/common";
+import { RecipeFilterOptions } from "@/services/menu/common";
 import { selectMenu, setDrinks } from "@/store/slices/menuSlice";
 import { selectVisibility } from "@/store/slices/visibilitySlice";
 import { EMPTY_RECIPES_MESSAGE } from "@/utils/constants";
@@ -38,7 +42,10 @@ export default function Drinks() {
   };
 
   const handleFilterCocktailsByCategory = async (category: string) => {
-    const drinks = await getCocktailsByFilter(category, FilterOptions.CATEGORY);
+    const drinks = await getCocktailsByFilter(
+      category,
+      RecipeFilterOptions.CATEGORY
+    );
     dispatch(setDrinks(drinks));
   };
 
@@ -62,13 +69,13 @@ export default function Drinks() {
         <SearchBar onSearch={handleCocktailsSearch} />
       )}
 
-      <MenuFiltersByCategory
+      <RecipeFiltersByCategory
         categories={cocktailsCategories}
         onFilterByCategory={handleFilterCocktailsByCategory}
         onFilterByAll={handleLoadInitialDrinks}
       />
 
-      <PaginatedList
+      <RecipeListWithPagination
         items={menu.drinks.map(({ idDrink, strDrinkThumb, strDrink }) => ({
           id: idDrink,
           img: strDrinkThumb,

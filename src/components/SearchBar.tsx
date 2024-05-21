@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { FilterOptions } from "@/services/menu/common";
+import { RecipeFilterOptions } from "@/services/menu/common";
 import "../styles/components/searchBy.css";
 
 export type SearchBarFormState = {
   searchQuery: string;
-  searchFilter: FilterOptions;
+  searchFilter: RecipeFilterOptions;
 };
 
 export type SearchBarProps = {
@@ -14,7 +14,7 @@ export type SearchBarProps = {
 export default function SearchBar({ onSearch }: SearchBarProps) {
   const [formState, setFormState] = useState<SearchBarFormState>({
     searchQuery: "",
-    searchFilter: FilterOptions.NAME,
+    searchFilter: RecipeFilterOptions.NAME,
   });
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +30,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
 
     if (
       formState.searchQuery.length !== 1 &&
-      formState.searchFilter === FilterOptions.FIRST_LETTER
+      formState.searchFilter === RecipeFilterOptions.FIRST_LETTER
     ) {
       window.alert("Your search must have only 1 (one) character.");
       return;
@@ -49,7 +49,9 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
             placeholder="Search"
             id="search"
             maxLength={
-              formState.searchFilter === FilterOptions.FIRST_LETTER ? 1 : 60
+              formState.searchFilter === RecipeFilterOptions.FIRST_LETTER
+                ? 1
+                : 60
             }
             name="searchQuery"
             value={formState.searchQuery}
@@ -66,10 +68,12 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
               type="radio"
               data-testid="name-search-radio"
               id="name"
-              defaultChecked={formState.searchFilter === FilterOptions.NAME}
+              defaultChecked={
+                formState.searchFilter === RecipeFilterOptions.NAME
+              }
               name="searchFilter"
               onChange={handleFormChange}
-              value={FilterOptions.NAME}
+              value={RecipeFilterOptions.NAME}
             />
             Name
           </label>
@@ -81,10 +85,10 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
               id="ingredient"
               name="searchFilter"
               defaultChecked={
-                formState.searchFilter === FilterOptions.INGREDIENT
+                formState.searchFilter === RecipeFilterOptions.INGREDIENT
               }
               onChange={handleFormChange}
-              value={FilterOptions.INGREDIENT}
+              value={RecipeFilterOptions.INGREDIENT}
             />
             Ingredient
           </label>
@@ -92,14 +96,14 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
           <label htmlFor="firstLetter">
             <input
               defaultChecked={
-                formState.searchFilter === FilterOptions.FIRST_LETTER
+                formState.searchFilter === RecipeFilterOptions.FIRST_LETTER
               }
               type="radio"
               data-testid="first-letter-search-radio"
               id="firstLetter"
               name="searchFilter"
               onChange={handleFormChange}
-              value={FilterOptions.FIRST_LETTER}
+              value={RecipeFilterOptions.FIRST_LETTER}
             />
             First letter
           </label>

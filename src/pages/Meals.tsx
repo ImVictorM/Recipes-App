@@ -1,9 +1,13 @@
 import { mealIcon } from "@/assets/icons";
-import { MenuFiltersByCategory, PaginatedList, SearchBar } from "@/components";
+import {
+  RecipeFiltersByCategory,
+  RecipeListWithPagination,
+  SearchBar,
+} from "@/components";
 import { SearchBarFormState } from "@/components/SearchBar";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { BasicLayout } from "@/layouts";
-import { FilterOptions } from "@/services/menu/common";
+import { RecipeFilterOptions } from "@/services/menu/common";
 import {
   getMeals,
   getMealsByFilter,
@@ -39,7 +43,7 @@ export default function Meals() {
   const handleFilterMealsByCategory = async (category: string) => {
     const mealsByCategory = await getMealsByFilter(
       category,
-      FilterOptions.CATEGORY
+      RecipeFilterOptions.CATEGORY
     );
     dispatch(setMeals(mealsByCategory));
   };
@@ -62,13 +66,13 @@ export default function Meals() {
 
       {visibility.showSearchBar && <SearchBar onSearch={handleMealsSearch} />}
 
-      <MenuFiltersByCategory
+      <RecipeFiltersByCategory
         categories={mealsCategories}
         onFilterByCategory={handleFilterMealsByCategory}
         onFilterByAll={handleLoadInitialMeals}
       />
 
-      <PaginatedList
+      <RecipeListWithPagination
         items={menu.meals.map(({ idMeal, strMealThumb, strMeal }) => ({
           id: idMeal,
           img: strMealThumb,

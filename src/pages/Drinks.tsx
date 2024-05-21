@@ -1,3 +1,4 @@
+import { cocktailIcon } from "@/assets/icons";
 import { MenuFiltersByCategory, PaginatedList, SearchBar } from "@/components";
 import { SearchBarFormState } from "@/components/SearchBar";
 import { useAppSelector } from "@/hooks";
@@ -52,7 +53,10 @@ export default function Drinks() {
 
   return (
     <BasicLayout containHeaderSearchBar>
-      <h1 data-testid="page-title">Drinks</h1>
+      <div className="purple-centered-title">
+        <img src={cocktailIcon} alt="cocktail" />
+        <h1 data-testid="page-title">Drinks</h1>
+      </div>
 
       {visibility.showSearchBar && (
         <SearchBar onSearch={handleCocktailsSearch} />

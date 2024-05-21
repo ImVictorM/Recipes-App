@@ -15,12 +15,7 @@ export default function Footer() {
         </Link>
 
         <Link to="/meals">
-          <img
-            className="svg"
-            src={mealIcon}
-            alt="meal"
-            data-testid="meals-bottom-btn"
-          />
+          <img src={mealIcon} alt="meal" data-testid="meals-bottom-btn" />
         </Link>
       </nav>
     </footer>

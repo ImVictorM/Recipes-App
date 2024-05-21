@@ -1,0 +1,80 @@
+@use "../themes/" as *;
+@use "../abstracts/" as *;
+
+.filters {
+  position: relative;
+  max-width: calc($max-content-width / 2);
+  margin: 0 auto;
+  padding: 0 2.5em;
+
+  .filter-arrow-left,
+  .filter-arrow-right {
+    position: absolute;
+    width: 60px;
+    height: 100%;
+    top: 0;
+    display: flex;
+    align-items: center;
+
+    button {
+      background: transparent;
+      border-radius: 50%;
+      padding: 5px;
+
+      &:hover {
+        background-color: map-get($map: $theme-colors, $key: "yellow");
+      }
+      
+      img {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+
+  .filter-arrow-left {
+    left: 0;
+    background: linear-gradient(to right, #FFFFFF 80%, transparent);
+  }
+
+  .filter-arrow-right {
+    right: 0;
+    background: linear-gradient(to left, #FFFFFF 80%, transparent);
+    justify-content: flex-end;
+  }
+}
+
+.filters-scroller {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: auto;
+  gap: 0.5em;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overscroll-behavior-inline: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.snaps-inline {
+  scroll-snap-type: inline mandatory;
+
+  & > * {
+    scroll-snap-align: start;
+    scroll-padding-inline: 1rem;
+  }
+}
+
+.filter-button {
+  color: map-get($map: $theme-colors, $key: "black");
+  background-color: map-get($map: $theme-colors, $key: "gold");
+  border-radius: 12px;
+  padding: 0.2em 1.5em;
+
+  &:hover {
+    background-color: map-get($map: $theme-colors, $key: "yellow");
+  }
+}

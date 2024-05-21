@@ -6,3 +6,5 @@ export { default as searchIcon } from "./searchIcon.svg";
 export { default as shareIcon } from "./shareIcon.svg";
 export { default as whiteHeartIcon } from "./whiteHeartIcon.svg";
 export { default as recipeIcon } from "./recipeIcon.svg";
+export { default as leftArrowIcon } from "./leftArrowIcon.svg";
+export { default as rightArrowIcon } from "./rightArrowIcon.svg";

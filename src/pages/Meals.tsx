@@ -1,3 +1,4 @@
+import { mealIcon } from "@/assets/icons";
 import { MenuFiltersByCategory, PaginatedList, SearchBar } from "@/components";
 import { SearchBarFormState } from "@/components/SearchBar";
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -54,9 +55,10 @@ export default function Meals() {
 
   return (
     <BasicLayout containHeaderSearchBar>
-      <h1 className="mt-4" data-testid="page-title">
-        Meals
-      </h1>
+      <div className="purple-centered-title">
+        <img src={mealIcon} alt="meal" />
+        <h1 data-testid="page-title">Meals</h1>
+      </div>
 
       {visibility.showSearchBar && <SearchBar onSearch={handleMealsSearch} />}
 

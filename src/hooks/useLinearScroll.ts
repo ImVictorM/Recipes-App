@@ -13,9 +13,11 @@ export default function useLinearScroll(
 
     const handleScroll = () => {
       const threshold = 10;
+
       setIsAtStart(element.scrollLeft <= threshold);
       setIsAtEnd(
-        element.scrollWidth === element.scrollLeft + element.clientWidth
+        element.scrollWidth <=
+          element.scrollLeft + element.clientWidth + threshold
       );
     };
 

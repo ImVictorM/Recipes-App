@@ -117,8 +117,11 @@ export default function RecipeListWithPagination({
           })}
       </Row>
 
-      <Container fluid className="d-flex justify-content-center">
-        <Pagination>
+      <Container
+        fluid
+        className="d-flex justify-content-center align-items-center"
+      >
+        <Pagination className="my-4">
           <Pagination.Prev
             linkClassName="page-item"
             as="button"

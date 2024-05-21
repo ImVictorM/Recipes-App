@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { Pagination } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Card, Col, Container, Pagination, Row } from "react-bootstrap";
+import "@/sass/components/_recipeListWithPagination.scss";
 
 export type Item = {
   id: string;
@@ -78,48 +78,79 @@ export default function RecipeListWithPagination({
   };
 
   return (
-    <section>
-      <ul className="mt-5">
+    <Container as="section" fluid className="my-2">
+      <Row xs={1} sm={2} md={3} as="ul" className="list-unstyled p-0 g-4 my-2">
         {items
           .slice(uiItemsIndex.firstItemIndex, uiItemsIndex.lastItemIndex)
           .map((item, index) => {
             const { name, img, id } = item;
+
             return (
-              <li key={id} data-testid={`${index}-recipe-card`}>
-                <Link to={navigateTo(item)}>
-                  <img
-                    className="img"
-                    src={img}
-                    alt={name}
-                    data-testid={`${index}-card-img`}
-                  />
-                  <p data-testid={`${index}-card-name`}>{name}</p>
-                </Link>
-              </li>
+              <Col as="li" key={id} data-testid={`${index}-recipe-card`}>
+                <Card className="recipe-card shadow m-0">
+                  <Card.Link
+                    href={navigateTo(item)}
+                    className="text-decoration-none"
+                  >
+                    <Container fluid className="recipe-card--img-container p-0">
+                      <Card.Img
+                        className="recipe-card-img"
+                        variant="top"
+                        src={img}
+                        alt={name}
+                        data-testid={`${index}-card-img`}
+                      />
+                    </Container>
+
+                    <Card.Body className="recipe-card-body">
+                      <Card.Title
+                        className="recipe-card-body-title"
+                        data-testid={`${index}-card-name`}
+                      >
+                        {name}
+                      </Card.Title>
+                    </Card.Body>
+                  </Card.Link>
+                </Card>
+              </Col>
             );
           })}
-      </ul>
+      </Row>
 
-      <Pagination>
-        <Pagination.Prev onClick={handleMoveToPreviousPage} />
-        {paginationItemsToShow.map((item, index) => {
-          // if it is not a number, it is an ellipsis
-          if (typeof item === "number") {
+      <Container fluid className="d-flex justify-content-center">
+        <Pagination>
+          <Pagination.Prev
+            linkClassName="page-item"
+            as="button"
+            onClick={handleMoveToPreviousPage}
+          />
+          {paginationItemsToShow.map((item, index) => {
+            // if it is not a number, it is an ellipsis
+            if (typeof item === "number") {
+              return (
+                <Pagination.Item
+                  as="button"
+                  key={index}
+                  linkClassName="page-item"
+                  active={currentPage === item}
+                  onClick={() => handleMoveToSpecificPage(item)}
+                >
+                  {item}
+                </Pagination.Item>
+              );
+            }
+
             return (
-              <Pagination.Item
-                key={index}
-                active={currentPage === item}
-                onClick={() => handleMoveToSpecificPage(item)}
-              >
-                {item}
-              </Pagination.Item>
+              <Pagination.Ellipsis linkClassName="page-item" as="button" />
             );
-          }
-
-          return <Pagination.Ellipsis />;
-        })}
-        <Pagination.Next onClick={handleMoveToNextPage} />
-      </Pagination>
-    </section>
+          })}
+          <Pagination.Next
+            linkClassName="page-item"
+            as="button"
+            onClick={handleMoveToNextPage}
+          />
+        </Pagination>
+      </Container>
+    </Container>
   );
 }

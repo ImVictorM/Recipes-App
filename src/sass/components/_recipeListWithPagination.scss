@@ -1,0 +1,47 @@
+@use "../themes/" as *;
+
+.recipe-card {
+  &--img-container {
+    overflow: hidden;
+  }
+
+  &-img {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &:hover {
+    .recipe-card-img {
+      transform: scale(1.1);
+    }
+  }
+}
+
+
+.recipe-card-body {
+  min-height: 0;
+
+  &-title {
+    color: map-get($map: $theme-colors, $key: "black");
+  }
+}
+
+.page-item {
+  color: map-get($map: $theme-colors, $key: "black");
+  &.active {
+    span {
+      color: map-get($map: $theme-colors, $key: "black");
+      border: 1px solid darken(map-get($map: $theme-colors, $key: "gold"), 7.5%);
+      background-color: map-get($map: $theme-colors, $key: "gold");
+    }
+  }
+
+  &:hover {
+    color: darken(map-get($map: $theme-colors, $key: "gold"), 7.5%);
+  }
+
+  &:focus {
+    color: map-get($map: $theme-colors, $key: "black");
+    background: darken(map-get($map: $theme-colors, $key: "white"), 5%);
+    box-shadow: 0 0 0 0.25rem rgba(map-get($map: $theme-colors, $key: "gold"), 0.25);
+  }
+}

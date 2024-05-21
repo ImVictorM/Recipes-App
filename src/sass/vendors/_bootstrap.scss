@@ -2,6 +2,7 @@
 
 $purple: map-get($map: $theme-colors, $key: "purple");
 $gold: map-get($map: $theme-colors, $key: "gold");
+$yellow: map-get($map: $theme-colors, $key: "yellow");
 
 // Override bootstrap variables
 // *inputs
@@ -11,18 +12,14 @@ $input-focus-border-color: lighten($purple, 5%);
 
 @import "node_modules/bootstrap/scss/bootstrap";
 
-$btn-primary-bg: $gold;
-$btn-primary-hover: darken($btn-primary-bg,5%);
-$btn-primary-color: color-contrast($btn-primary-bg);
-
 .btn-primary {
   @include button-variant(
-    $background: $btn-primary-bg, 
-    $border: darken($btn-primary-bg, 7.5%), 
-    $color: $btn-primary-color,
-    $hover-background: $btn-primary-hover, 
-    $hover-border: darken($btn-primary-bg, 10%), 
-    $hover-color: color-contrast($btn-primary-hover),
-    $disabled-color: lighten($btn-primary-color, 20%),
+    $background: $gold,
+    $border: darken($gold, 7.5%), 
+    $color: color-contrast($gold),
+    $hover-background: $yellow, 
+    $hover-border: darken($yellow, 7.5%), 
+    $hover-color: color-contrast($yellow),
+    $disabled-color: lighten($gold, 30%),
   );
 }

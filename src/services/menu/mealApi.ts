@@ -31,8 +31,8 @@ export type GetMealCategoriesResponse = {
   meals: MealCategory[];
 };
 
-export type GetMealsResponse = {
-  meals: Meal[];
+export type MealApiResponse = {
+  meals: Meal[] | null;
 };
 
 const mealClient = axios.create({
@@ -85,19 +85,23 @@ export const mealsCategories: RecipeCategory[] = [
 ];
 
 export async function getMeals(name: string = ""): Promise<Meal[]> {
-  const response: AxiosResponse<GetMealsResponse> = await mealClient.get(
+  const response: AxiosResponse<MealApiResponse> = await mealClient.get(
     `search.php?s=${name}`
   );
 
   return response.data.meals || [];
 }
 
-export async function getMealDetailsById(id: string): Promise<Meal> {
-  const response: AxiosResponse<GetMealsResponse> = await mealClient.get(
+export async function getMealDetailsById(id: string): Promise<Meal | null> {
+  const response: AxiosResponse<MealApiResponse> = await mealClient.get(
     `lookup.php?i=${id}`
   );
 
-  return response.data.meals[0] || {};
+  if (response.data.meals) {
+    return response.data.meals[0];
+  }
+
+  return null;
 }
 
 export async function getMealsByFilter(
@@ -105,7 +109,7 @@ export async function getMealsByFilter(
   option: RecipeFilterOptions
 ): Promise<Meal[]> {
   const endpoint = getFilterEndpointByOption(query, option);
-  const response: AxiosResponse<GetMealsResponse> = await mealClient.get(
+  const response: AxiosResponse<MealApiResponse> = await mealClient.get(
     endpoint
   );
 

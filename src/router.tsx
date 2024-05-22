@@ -6,9 +6,20 @@ import {
   Login,
   Meals,
   // Profile,
-  // RecipeDetails,
+  RecipeDetails,
   // RecipeInProgress,
 } from "./pages";
+import { getMealDetailsById, getMeals } from "./services/menu/mealApi";
+import { RecipeDetailsItem } from "./pages/RecipeDetails";
+import {
+  getCocktailDetailsById,
+  getCocktails,
+} from "./services/menu/cocktailApi";
+import { toRecipeDetails } from "./utils/mappers";
+
+type ArgsWithId = {
+  id: string;
+};
 
 const routes: RouteObject[] = [
   {
@@ -29,31 +40,57 @@ const routes: RouteObject[] = [
   // },
   {
     path: "/drinks",
-    element: <Drinks />,
-    // children: [
-    //   {
-    //     path: ":id",
-    //     element: <RecipeDetails />,
-    //   },
-    //   {
-    //     path: ":id/in-progress",
-    //     element: <RecipeInProgress />,
-    //   },
-    // ],
+    children: [
+      {
+        index: true,
+        element: <Drinks />,
+      },
+      {
+        path: ":id",
+        element: <RecipeDetails />,
+        loader: async (args): Promise<RecipeDetailsItem> => {
+          const params = args.params as ArgsWithId;
+          const drink = await getCocktailDetailsById(params.id);
+
+          if (drink) {
+            const recommendationsForDrinks = await getMeals();
+            return toRecipeDetails(drink, recommendationsForDrinks);
+          }
+          throw new Response("Drink not found", { status: 404 });
+        },
+      },
+      // {
+      //   path: ":id/in-progress",
+      //   element: <RecipeInProgress />,
+      // },
+    ],
   },
   {
     path: "/meals",
-    element: <Meals />,
-    // children: [
-    //   {
-    //     path: ":id",
-    //     element: <RecipeDetails />,
-    //   },
-    //   {
-    //     path: ":id/in-progress",
-    //     element: <RecipeInProgress />,
-    //   },
-    // ],
+    children: [
+      {
+        index: true,
+        element: <Meals />,
+      },
+      {
+        path: ":id",
+        element: <RecipeDetails />,
+        loader: async (args): Promise<RecipeDetailsItem> => {
+          const params = args.params as ArgsWithId;
+          const meal = await getMealDetailsById(params.id);
+
+          if (meal) {
+            const recommendationsForMeals = await getCocktails();
+            return toRecipeDetails(meal, recommendationsForMeals);
+          }
+          throw new Response("Meal not found", { status: 404 });
+        },
+      },
+      // {
+      //   path: ":id/in-progress",
+      //   element: <RecipeInProgress />,
+      // },
+    ],
   },
 ];
 

@@ -29,8 +29,8 @@ export type GetCocktailCategoriesResponse = {
   drinks: DrinkCategory[];
 };
 
-export type GetCocktailsResponse = {
-  drinks: Drink[];
+export type CocktailApiResponse = {
+  drinks: Drink[] | null;
 };
 
 const cocktailClient = axios.create({
@@ -74,17 +74,25 @@ export const cocktailsCategories: RecipeCategory[] = [
 ];
 
 export async function getCocktails(name: string = ""): Promise<Drink[]> {
-  const response: AxiosResponse<GetCocktailsResponse> =
-    await cocktailClient.get(`search.php?s=${name}`);
+  const response: AxiosResponse<CocktailApiResponse> = await cocktailClient.get(
+    `search.php?s=${name}`
+  );
 
   return response.data.drinks || [];
 }
 
-export async function getCocktailDetailsById(id: string): Promise<Drink> {
-  const response: AxiosResponse<GetCocktailsResponse> =
-    await cocktailClient.get(`lookup.php?i=${id}`);
+export async function getCocktailDetailsById(
+  id: string
+): Promise<Drink | null> {
+  const response: AxiosResponse<CocktailApiResponse> = await cocktailClient.get(
+    `lookup.php?i=${id}`
+  );
 
-  return response.data.drinks[0] || {};
+  if (response.data.drinks) {
+    return response.data.drinks[0];
+  }
+
+  return null;
 }
 
 export async function getCocktailsByFilter(
@@ -92,8 +100,9 @@ export async function getCocktailsByFilter(
   option: RecipeFilterOptions
 ) {
   const endpoint = getFilterEndpointByOption(query, option);
-  const response: AxiosResponse<GetCocktailsResponse> =
-    await cocktailClient.get(endpoint);
+  const response: AxiosResponse<CocktailApiResponse> = await cocktailClient.get(
+    endpoint
+  );
 
   return response.data.drinks || [];
 }

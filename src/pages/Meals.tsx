@@ -2,9 +2,9 @@ import { mealIcon } from "@/assets/icons";
 import {
   RecipeFiltersByCategory,
   RecipeListWithPagination,
-  SearchBar,
+  RecipeSearchBar,
 } from "@/components";
-import { SearchBarFormState } from "@/components/SearchBar";
+import { RecipeSearchBarFormState } from "@/components/RecipeSearchBar";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { BasicLayout } from "@/layouts";
 import { RecipeFilterOptions } from "@/services/menu/common";
@@ -25,7 +25,7 @@ export default function Meals() {
   const menu = useAppSelector(selectMenu);
   const navigate = useNavigate();
 
-  const handleMealsSearch = async (formState: SearchBarFormState) => {
+  const handleMealsSearch = async (formState: RecipeSearchBarFormState) => {
     const meals = await getMealsByFilter(
       formState.searchQuery,
       formState.searchFilter
@@ -64,7 +64,9 @@ export default function Meals() {
         <h1 data-testid="page-title">Meals</h1>
       </div>
 
-      {visibility.showSearchBar && <SearchBar onSearch={handleMealsSearch} />}
+      {visibility.showSearchBar && (
+        <RecipeSearchBar onSearch={handleMealsSearch} />
+      )}
 
       <RecipeFiltersByCategory
         categories={mealsCategories}

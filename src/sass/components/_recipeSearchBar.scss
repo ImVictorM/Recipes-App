@@ -1,0 +1,28 @@
+@use "../themes/" as *;
+@use "../abstracts/" as *;
+
+.search-form {
+  max-width: 600px;
+  margin: 0.5em 1em;
+  margin-top: 1em;
+  position: relative;
+  background: map-get($map: $theme-colors, $key: "purple");
+  padding: 2em 1em 1em;
+  border-radius: 0 0 10px 10px;
+
+  @include respond-to("tabletS") {
+    margin: 0.5em auto;
+  }
+
+  .search-form--search-input {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: -1em;
+  }
+
+  .search-form--checkbox {
+    color: map-get($map: $theme-colors, $key: "white");
+    white-space: nowrap;
+  }
+}

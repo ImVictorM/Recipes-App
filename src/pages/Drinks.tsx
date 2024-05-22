@@ -2,9 +2,9 @@ import { cocktailIcon } from "@/assets/icons";
 import {
   RecipeFiltersByCategory,
   RecipeListWithPagination,
-  SearchBar,
+  RecipeSearchBar,
 } from "@/components";
-import { SearchBarFormState } from "@/components/SearchBar";
+import { RecipeSearchBarFormState } from "@/components/RecipeSearchBar";
 import { useAppSelector } from "@/hooks";
 import { BasicLayout } from "@/layouts";
 import {
@@ -26,7 +26,7 @@ export default function Drinks() {
   const menu = useAppSelector(selectMenu);
   const navigate = useNavigate();
 
-  const handleCocktailsSearch = async (formState: SearchBarFormState) => {
+  const handleCocktailsSearch = async (formState: RecipeSearchBarFormState) => {
     const drinks = await getCocktailsByFilter(
       formState.searchQuery,
       formState.searchFilter
@@ -66,7 +66,7 @@ export default function Drinks() {
       </div>
 
       {visibility.showSearchBar && (
-        <SearchBar onSearch={handleCocktailsSearch} />
+        <RecipeSearchBar onSearch={handleCocktailsSearch} />
       )}
 
       <RecipeFiltersByCategory

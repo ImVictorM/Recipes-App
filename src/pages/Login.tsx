@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { logo } from "@/assets/images";
 import { useAppDispatch } from "@/hooks";
 import { setUser } from "@/store/slices/userSlice";
-import "@/sass/pages/_login.scss";
 import { Button, Container, Form, Image, Stack } from "react-bootstrap";
+import "@/sass/pages/_login.scss";
 
 export default function Login() {
   const [loginFormState, setLoginFormState] = useState({

@@ -19,30 +19,30 @@ import { useNavigate } from "react-router-dom";
 import { AxiosRequestConfig } from "axios";
 import "@/sass/pages/_recipePage.scss";
 
-type RecipePageProps<T> = {
+type RecipesProps<T> = {
   icon: {
     src: string;
     alt: string;
   };
   title: string;
   categories: RecipeCategory[];
-  getRecipes: (config?: AxiosRequestConfig) => Promise<T[]>;
-  getRecipesByFilter: (
+  onGetRecipes: (config?: AxiosRequestConfig) => Promise<T[]>;
+  onGetRecipesByFilter: (
     query: string,
     filter: RecipeFilterOptions,
     config?: AxiosRequestConfig
   ) => Promise<T[]>;
-  recipeNavigateTo: (recipe: Recipe) => string;
+  onNavigateToRecipe: (recipe: Recipe) => string;
 };
 
-export default function RecipePage<T extends Drink | Meal>({
+export default function Recipes<T extends Drink | Meal>({
   categories,
-  getRecipes,
-  getRecipesByFilter,
+  onGetRecipes,
+  onGetRecipesByFilter,
   icon,
-  recipeNavigateTo,
+  onNavigateToRecipe,
   title,
-}: RecipePageProps<T>) {
+}: RecipesProps<T>) {
   const dispatch = useAppDispatch();
   const visibility = useAppSelector(selectVisibility);
   const menu = useAppSelector(selectMenu);
@@ -54,7 +54,7 @@ export default function RecipePage<T extends Drink | Meal>({
   const handleRecipesSearch = async (formState: RecipeSearchBarFormState) => {
     resetAbortController();
 
-    const response = await getRecipesByFilter(
+    const response = await onGetRecipesByFilter(
       formState.searchQuery,
       formState.searchFilter,
       {
@@ -66,7 +66,7 @@ export default function RecipePage<T extends Drink | Meal>({
     if (recipes.length === 0) {
       window.alert(EMPTY_RECIPES_MESSAGE);
     } else if (recipes.length === 1) {
-      navigate(recipeNavigateTo(recipes[0]));
+      navigate(onNavigateToRecipe(recipes[0]));
     } else {
       dispatch(setRecipes(recipes));
     }
@@ -75,7 +75,7 @@ export default function RecipePage<T extends Drink | Meal>({
   const handleFilterRecipesByCategory = async (category: string) => {
     resetAbortController();
 
-    const response = await getRecipesByFilter(
+    const response = await onGetRecipesByFilter(
       category,
       RecipeFilterOptions.CATEGORY,
       { signal: abortControllerRef.current?.signal }
@@ -87,13 +87,13 @@ export default function RecipePage<T extends Drink | Meal>({
   const handleLoadInitialRecipes = useCallback(async () => {
     resetAbortController();
 
-    const response = await getRecipes({
+    const response = await onGetRecipes({
       signal: abortControllerRef.current?.signal,
     });
     const recipes = response.map(toRecipe);
 
     dispatch(setRecipes(recipes));
-  }, [dispatch, getRecipes]);
+  }, [dispatch, onGetRecipes]);
 
   const resetAbortController = () => {
     abortControllerRef.current?.abort();
@@ -130,7 +130,7 @@ export default function RecipePage<T extends Drink | Meal>({
 
       <RecipeListWithPagination
         recipes={menu.recipes}
-        navigateTo={recipeNavigateTo}
+        navigateTo={onNavigateToRecipe}
       />
     </BasicLayout>
   );

@@ -6,4 +6,4 @@ export { default as MealDetail } from "./MealDetail";
 export { default as Profile } from "./Profile";
 export { default as RecipeDetails } from "./RecipeDetails";
 export { default as RecipeInProgress } from "./RecipeInProgress";
-export { default as RecipePage } from "./RecipePage";
+export { default as Recipes } from "./Recipes";

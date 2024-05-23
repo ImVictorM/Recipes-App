@@ -3,7 +3,7 @@ import {
   // DoneRecipes,
   // FavoriteRecipes,
   Login,
-  RecipePage,
+  Recipes,
   // Profile,
   RecipeDetails,
   // RecipeInProgress,
@@ -51,13 +51,13 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: (
-          <RecipePage
+          <Recipes
             categories={cocktailCategories}
-            getRecipes={getCocktails}
-            getRecipesByFilter={getCocktailsByFilter}
+            onGetRecipes={getCocktails}
+            onGetRecipesByFilter={getCocktailsByFilter}
             icon={{ src: cocktailIcon, alt: "cocktail" }}
             title="Drinks"
-            recipeNavigateTo={({ id }) => `/drinks/${id}`}
+            onNavigateToRecipe={({ id }) => `/drinks/${id}`}
           />
         ),
       },
@@ -89,15 +89,15 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: (
-          <RecipePage
+          <Recipes
             categories={mealCategories}
-            getRecipes={getMeals}
-            getRecipesByFilter={getMealsByFilter}
+            onGetRecipes={getMeals}
+            onGetRecipesByFilter={getMealsByFilter}
             icon={{
               src: mealIcon,
               alt: "meal",
             }}
-            recipeNavigateTo={({ id }) => `/meals/${id}`}
+            onNavigateToRecipe={({ id }) => `/meals/${id}`}
             title="Meals"
           />
         ),

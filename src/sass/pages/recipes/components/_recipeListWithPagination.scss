@@ -28,6 +28,7 @@
 
 .page-item {
   color: map-get($map: $theme-colors, $key: "black");
+
   &.active {
     span {
       color: map-get($map: $theme-colors, $key: "black");

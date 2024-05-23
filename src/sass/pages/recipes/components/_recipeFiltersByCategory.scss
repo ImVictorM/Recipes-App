@@ -1,11 +1,12 @@
 @use "@/sass/themes/" as *;
+@use "@/sass/vendors/bootstrap" as *;
 @use "@/sass/abstracts/" as *;
 
 .filters {
   position: relative;
   max-width: calc($max-content-width / 2);
   margin: 0 auto;
-  padding: 0 1em;
+  width: 100%;
 
   @include respond-to("tabletS") {
     padding: 0 2.5em;
@@ -81,14 +82,11 @@
 }
 
 .filter-button {
-  color: map-get($map: $theme-colors, $key: "black");
-  background-color: map-get($map: $theme-colors, $key: "gold");
+  @extend %primary-button;
+
   border-radius: 12px;
   padding: 0.2em 1.5em;
   box-shadow: 0 1px 3px rgb(0,0,0,0.25);
   white-space: nowrap;
-
-  &:hover {
-    background-color: map-get($map: $theme-colors, $key: "yellow");
-  }
+  margin: 0;
 }

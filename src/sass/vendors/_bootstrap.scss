@@ -1,30 +1,47 @@
 @use "../themes/" as *;
 
-$purple: map-get($map: $theme-colors, $key: "purple");
-$gold: map-get($map: $theme-colors, $key: "gold");
-$yellow: map-get($map: $theme-colors, $key: "yellow");
-
 // Override bootstrap variables
-// *inputs
-$input-border-color: lighten($purple, 30%);
-$input-focus-box-shadow: 0 0 0 0.25rem rgba($purple, 0.25);
-$input-focus-border-color: lighten($purple, 5%);
 
-// *radio
-$form-check-input-checked-border-color: darken($gold, 7.5%);
-$form-check-input-checked-bg-color: $gold;
-$form-check-input-focus-box-shadow: 0 0 0 0.25rem rgba($gold, 0.25);
+// *colors
+$primary: map-get($theme-colors, "gold");
+$secondary: map-get($theme-colors, "purple");
+$dark: map-get($theme-colors, "black");
+$white: map-get($theme-colors, "white");
+$danger: map-get($theme-colors, "red");
+
+
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    "primary": $primary,
+    "secondary": $secondary,
+    "dark": $dark,
+    "white": $white,
+    "danger": $danger,
+  ),
+);
+
+// *inputs
+$input-border-color: lighten($secondary, 30%);
+$input-focus-box-shadow: 0 0 0 0.25rem rgba($secondary, 0.25);
+$input-focus-border-color: lighten($secondary, 5%);
+
+// *card
+$card-title-color: $dark;
 
 @import "node_modules/bootstrap/scss/bootstrap";
 
 .btn-primary {
   @include button-variant(
-    $background: $gold,
-    $border: darken($gold, 7.5%), 
-    $color: color-contrast($gold),
-    $hover-background: $yellow, 
-    $hover-border: darken($yellow, 7.5%), 
-    $hover-color: color-contrast($yellow),
-    $disabled-color: lighten($gold, 30%),
+    $background: $primary,
+    $border: darken($primary, 7.5%), 
+    $color: color-contrast($primary),
+    $hover-background: map-get($theme-colors, "yellow"), 
+    $hover-border: darken(map-get($theme-colors, "yellow"), 7.5%), 
+    $hover-color: color-contrast(map-get($theme-colors, "yellow")),
   );
+}
+
+%primary-button {
+  @extend .btn, .btn-primary;
 }

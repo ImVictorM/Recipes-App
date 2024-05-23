@@ -107,7 +107,7 @@ export default function Recipes<T extends Drink | Meal>({
   };
 
   const handleFetchRecipesByCategory = async (category: string) => {
-    fetchWithControllers(async () => {
+    await fetchWithControllers(async () => {
       const response = await onGetRecipesByFilter(
         category,
         RecipeFilterOptions.CATEGORY,
@@ -119,7 +119,7 @@ export default function Recipes<T extends Drink | Meal>({
   };
 
   const handleFetchRecipesWithoutFilter = useCallback(async () => {
-    fetchWithControllers(async () => {
+    await fetchWithControllers(async () => {
       const response = await onGetRecipes({
         signal: abortControllerRef.current?.signal,
       });

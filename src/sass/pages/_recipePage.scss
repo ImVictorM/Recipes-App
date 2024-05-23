@@ -1,0 +1,15 @@
+@use "../themes/" as *;
+
+.recipe-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3em;
+
+  img {
+    width: 40px;
+    height: 40px;
+  }
+}
+

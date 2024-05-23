@@ -1,32 +1,31 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import { Meal } from "@/services/menu/mealApi";
-import { Drink } from "@/services/menu/cocktailApi";
+
+export type Recipe = {
+  id: string;
+  img: string;
+  name: string;
+};
 
 export type Menu = {
-  drinks: Drink[];
-  meals: Meal[];
+  recipes: Recipe[];
 };
 
 const initialState: Menu = {
-  drinks: [],
-  meals: [],
+  recipes: [],
 };
 
 const menuSlice = createSlice({
   name: "menu",
   initialState,
   reducers: {
-    setDrinks: (state, action: PayloadAction<Drink[]>) => {
-      state.drinks = action.payload;
-    },
-    setMeals: (state, action: PayloadAction<Meal[]>) => {
-      state.meals = action.payload;
+    setRecipes: (state, action: PayloadAction<Recipe[]>) => {
+      state.recipes = action.payload;
     },
   },
 });
 
 export const selectMenu = (state: RootState) => state.menu;
 
-export const { setDrinks, setMeals } = menuSlice.actions;
+export const { setRecipes } = menuSlice.actions;
 export default menuSlice;

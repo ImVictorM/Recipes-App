@@ -1,6 +1,7 @@
 import { RecipeDetailsItem } from "@/pages/RecipeDetails";
 import { Drink } from "@/services/menu/cocktailApi";
 import { Meal } from "@/services/menu/mealApi";
+import { Recipe } from "@/store/slices/menuSlice";
 
 function isMeal(recipe: Meal | Drink): recipe is Meal {
   return (recipe as Meal).strMeal !== undefined;
@@ -84,4 +85,24 @@ export function toRecipeDetails(
   throw new Error(
     "Unexpected error mapping the recipe to RecipeDetailsItem type"
   );
+}
+
+export function toRecipe(arg: Meal | Drink): Recipe {
+  if (isMeal(arg)) {
+    const mealRecipe = arg as Meal;
+    return {
+      id: mealRecipe.idMeal,
+      img: mealRecipe.strMealThumb,
+      name: mealRecipe.strMeal,
+    };
+  } else if (isDrink(arg)) {
+    const drinkRecipe = arg as Drink;
+    return {
+      id: drinkRecipe.idDrink,
+      img: drinkRecipe.strDrinkThumb,
+      name: drinkRecipe.strDrink,
+    };
+  }
+
+  throw new Error("Unexpected error mapping the recipe to Recipe type");
 }

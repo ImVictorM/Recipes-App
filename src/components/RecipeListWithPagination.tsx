@@ -1,25 +1,20 @@
 import { useMemo, useState } from "react";
 import { Card, Col, Container, Pagination, Row } from "react-bootstrap";
 import "@/sass/components/_recipeListWithPagination.scss";
-
-export type Item = {
-  id: string;
-  img: string;
-  name: string;
-};
+import { Recipe } from "@/store/slices/menuSlice";
 
 export type RecipeListWithPaginationProps = {
-  items: Item[];
-  navigateTo: (item: Item) => string;
+  recipes: Recipe[];
+  navigateTo: (recipe: Recipe) => string;
 };
 
 export default function RecipeListWithPagination({
-  items,
+  recipes,
   navigateTo,
 }: RecipeListWithPaginationProps) {
   const ITEMS_PER_PAGE = 12;
   const MAX_PAGE_BLOCKS_UI = 7;
-  const totalPages = Math.floor(items.length / ITEMS_PER_PAGE);
+  const totalPages = Math.floor(recipes.length / ITEMS_PER_PAGE);
   const [currentPage, setCurrentPage] = useState(1);
 
   const uiItemsIndex = useMemo(() => {
@@ -80,7 +75,7 @@ export default function RecipeListWithPagination({
   return (
     <Container as="section" fluid className="my-2">
       <Row xs={1} sm={2} md={3} as="ul" className="list-unstyled p-0 g-4 my-2">
-        {items
+        {recipes
           .slice(uiItemsIndex.firstItemIndex, uiItemsIndex.lastItemIndex)
           .map((item, index) => {
             const { name, img, id } = item;

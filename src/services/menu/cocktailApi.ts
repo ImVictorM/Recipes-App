@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import {
   RecipeFilterOptions,
   RecipeCategory,
@@ -37,7 +37,7 @@ const cocktailClient = axios.create({
   baseURL: "https://www.thecocktaildb.com/api/json/v1/1/",
 });
 
-export const cocktailsCategories: RecipeCategory[] = [
+export const cocktailCategories: RecipeCategory[] = [
   {
     strCategory: "Ordinary Drink",
   },
@@ -73,19 +73,24 @@ export const cocktailsCategories: RecipeCategory[] = [
   },
 ];
 
-export async function getCocktails(name: string = ""): Promise<Drink[]> {
+export async function getCocktails(
+  config?: AxiosRequestConfig
+): Promise<Drink[]> {
   const response: AxiosResponse<CocktailApiResponse> = await cocktailClient.get(
-    `search.php?s=${name}`
+    `search.php?s=`,
+    config
   );
 
   return response.data.drinks || [];
 }
 
 export async function getCocktailDetailsById(
-  id: string
+  id: string,
+  config?: AxiosRequestConfig
 ): Promise<Drink | null> {
   const response: AxiosResponse<CocktailApiResponse> = await cocktailClient.get(
-    `lookup.php?i=${id}`
+    `lookup.php?i=${id}`,
+    config
   );
 
   if (response.data.drinks) {
@@ -97,11 +102,13 @@ export async function getCocktailDetailsById(
 
 export async function getCocktailsByFilter(
   query: string,
-  option: RecipeFilterOptions
+  option: RecipeFilterOptions,
+  config?: AxiosRequestConfig
 ) {
   const endpoint = getFilterEndpointByOption(query, option);
   const response: AxiosResponse<CocktailApiResponse> = await cocktailClient.get(
-    endpoint
+    endpoint,
+    config
   );
 
   return response.data.drinks || [];

@@ -1,21 +1,28 @@
 import { RouteObject, createBrowserRouter } from "react-router-dom";
 import {
   // DoneRecipes,
-  Drinks,
   // FavoriteRecipes,
   Login,
-  Meals,
+  RecipePage,
   // Profile,
   RecipeDetails,
   // RecipeInProgress,
 } from "./pages";
-import { getMealDetailsById, getMeals } from "./services/menu/mealApi";
+import {
+  getMealDetailsById,
+  getMeals,
+  getMealsByFilter,
+  mealCategories,
+} from "./services/menu/mealApi";
 import { RecipeDetailsItem } from "./pages/RecipeDetails";
 import {
+  cocktailCategories,
   getCocktailDetailsById,
   getCocktails,
+  getCocktailsByFilter,
 } from "./services/menu/cocktailApi";
 import { toRecipeDetails } from "./utils/mappers";
+import { cocktailIcon, mealIcon } from "./assets/icons";
 
 type ArgsWithId = {
   id: string;
@@ -43,14 +50,25 @@ const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <Drinks />,
+        element: (
+          <RecipePage
+            categories={cocktailCategories}
+            getRecipes={getCocktails}
+            getRecipesByFilter={getCocktailsByFilter}
+            icon={{ src: cocktailIcon, alt: "cocktail" }}
+            title="Drinks"
+            recipeNavigateTo={({ id }) => `/drinks/${id}`}
+          />
+        ),
       },
       {
         path: ":id",
         element: <RecipeDetails />,
         loader: async (args): Promise<RecipeDetailsItem> => {
           const params = args.params as ArgsWithId;
-          const drink = await getCocktailDetailsById(params.id);
+          const drink = await getCocktailDetailsById(params.id, {
+            signal: args.request.signal,
+          });
 
           if (drink) {
             const recommendationsForDrinks = await getMeals();
@@ -70,14 +88,28 @@ const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <Meals />,
+        element: (
+          <RecipePage
+            categories={mealCategories}
+            getRecipes={getMeals}
+            getRecipesByFilter={getMealsByFilter}
+            icon={{
+              src: mealIcon,
+              alt: "meal",
+            }}
+            recipeNavigateTo={({ id }) => `/meals/${id}`}
+            title="Meals"
+          />
+        ),
       },
       {
         path: ":id",
         element: <RecipeDetails />,
         loader: async (args): Promise<RecipeDetailsItem> => {
           const params = args.params as ArgsWithId;
-          const meal = await getMealDetailsById(params.id);
+          const meal = await getMealDetailsById(params.id, {
+            signal: args.request.signal,
+          });
 
           if (meal) {
             const recommendationsForMeals = await getCocktails();

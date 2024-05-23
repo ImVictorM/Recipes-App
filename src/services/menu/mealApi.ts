@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import {
   RecipeFilterOptions,
   RecipeCategory,
@@ -39,7 +39,7 @@ const mealClient = axios.create({
   baseURL: "https://themealdb.com/api/json/v1/1/",
 });
 
-export const mealsCategories: RecipeCategory[] = [
+export const mealCategories: RecipeCategory[] = [
   {
     strCategory: "Beef",
   },
@@ -84,17 +84,22 @@ export const mealsCategories: RecipeCategory[] = [
   },
 ];
 
-export async function getMeals(name: string = ""): Promise<Meal[]> {
+export async function getMeals(config?: AxiosRequestConfig): Promise<Meal[]> {
   const response: AxiosResponse<MealApiResponse> = await mealClient.get(
-    `search.php?s=${name}`
+    `search.php?s=`,
+    config
   );
 
   return response.data.meals || [];
 }
 
-export async function getMealDetailsById(id: string): Promise<Meal | null> {
+export async function getMealDetailsById(
+  id: string,
+  config?: AxiosRequestConfig
+): Promise<Meal | null> {
   const response: AxiosResponse<MealApiResponse> = await mealClient.get(
-    `lookup.php?i=${id}`
+    `lookup.php?i=${id}`,
+    config
   );
 
   if (response.data.meals) {
@@ -106,11 +111,13 @@ export async function getMealDetailsById(id: string): Promise<Meal | null> {
 
 export async function getMealsByFilter(
   query: string,
-  option: RecipeFilterOptions
+  option: RecipeFilterOptions,
+  config?: AxiosRequestConfig
 ): Promise<Meal[]> {
   const endpoint = getFilterEndpointByOption(query, option);
   const response: AxiosResponse<MealApiResponse> = await mealClient.get(
-    endpoint
+    endpoint,
+    config
   );
 
   return response.data.meals || [];

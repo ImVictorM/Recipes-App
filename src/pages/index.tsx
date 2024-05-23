@@ -1,10 +1,9 @@
 export { default as DoneRecipes } from "./DoneRecipes";
 export { default as DrinkDetail } from "./DrinkDetail";
-export { default as Drinks } from "./Drinks";
 export { default as FavoriteRecipes } from "./FavoriteRecipes";
 export { default as Login } from "./Login";
 export { default as MealDetail } from "./MealDetail";
-export { default as Meals } from "./Meals";
 export { default as Profile } from "./Profile";
 export { default as RecipeDetails } from "./RecipeDetails";
 export { default as RecipeInProgress } from "./RecipeInProgress";
+export { default as RecipePage } from "./RecipePage";

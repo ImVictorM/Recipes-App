@@ -1,10 +1,10 @@
-import React from 'react';
-import '../styles/components/Loading.css';
+import { Spinner } from "react-bootstrap";
+import "@/sass/components/_loading.scss";
 
-export default class Loading extends React.Component {
-  render() {
-    return (
-      <div className="c-loader" />
-    );
-  }
+export default function Loading() {
+  return (
+    <div className="loading">
+      <Spinner variant="primary" animation="border" />
+    </div>
+  );
 }

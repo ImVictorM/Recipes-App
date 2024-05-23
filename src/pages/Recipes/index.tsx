@@ -14,9 +14,10 @@ import { Recipe, selectMenu, setRecipes } from "@/store/slices/menuSlice";
 import { selectVisibility } from "@/store/slices/visibilitySlice";
 import { EMPTY_RECIPES_MESSAGE } from "@/utils/constants";
 import { toRecipe } from "@/utils/mappers";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig, isAxiosError } from "axios";
+import { Loading } from "@/components";
 import "@/sass/pages/recipes/_recipes.scss";
 
 type RecipesProps<T> = {
@@ -47,58 +48,86 @@ export default function Recipes<T extends Drink | Meal>({
   const visibility = useAppSelector(selectVisibility);
   const menu = useAppSelector(selectMenu);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   // All the API calls in this page updates the same state using setRecipes,
   // so using a single abort controller is a good approach
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  const handleRecipesSearch = async (formState: RecipeSearchBarFormState) => {
-    resetAbortController();
+  const fetchWithControllers = useCallback(
+    async (fetch: () => Promise<void>, onCatch?: () => Promise<void>) => {
+      setIsLoading(true);
+      resetAbortController();
 
-    const response = await onGetRecipesByFilter(
-      formState.searchQuery,
-      formState.searchFilter,
-      {
-        signal: abortControllerRef.current?.signal,
+      try {
+        await fetch();
+      } catch (error) {
+        if (abortControllerRef.current?.signal.aborted) {
+          return;
+        } else if (isAxiosError(error) && error.config?.signal?.aborted) {
+          return;
+        }
+
+        if (onCatch) {
+          await onCatch();
+        } else {
+          console.error(error);
+        }
+      } finally {
+        setIsLoading(false);
       }
-    );
-    const recipes = response.map(toRecipe);
-
-    if (recipes.length === 0) {
-      window.alert(EMPTY_RECIPES_MESSAGE);
-    } else if (recipes.length === 1) {
-      navigate(onNavigateToRecipe(recipes[0]));
-    } else {
-      dispatch(setRecipes(recipes));
-    }
-  };
-
-  const handleFetchRecipesByCategory = async (category: string) => {
-    resetAbortController();
-
-    const response = await onGetRecipesByFilter(
-      category,
-      RecipeFilterOptions.CATEGORY,
-      { signal: abortControllerRef.current?.signal }
-    );
-    const recipes = response.map(toRecipe);
-    dispatch(setRecipes(recipes));
-  };
-
-  const handleFetchRecipesWithoutFilter = useCallback(async () => {
-    resetAbortController();
-
-    const response = await onGetRecipes({
-      signal: abortControllerRef.current?.signal,
-    });
-    const recipes = response.map(toRecipe);
-
-    dispatch(setRecipes(recipes));
-  }, [dispatch, onGetRecipes]);
+    },
+    []
+  );
 
   const resetAbortController = () => {
     abortControllerRef.current?.abort();
     abortControllerRef.current = new AbortController();
   };
+
+  const handleRecipesSearch = async (formState: RecipeSearchBarFormState) => {
+    await fetchWithControllers(async () => {
+      const response = await onGetRecipesByFilter(
+        formState.searchQuery,
+        formState.searchFilter,
+        {
+          signal: abortControllerRef.current?.signal,
+        }
+      );
+      const recipes = response.map(toRecipe);
+
+      if (recipes.length === 0) {
+        window.alert(EMPTY_RECIPES_MESSAGE);
+      } else if (recipes.length === 1) {
+        // If only one recipe is found, navigate to its RecipeDetails page
+        navigate(onNavigateToRecipe(recipes[0]));
+      } else {
+        dispatch(setRecipes(recipes));
+      }
+    });
+  };
+
+  const handleFetchRecipesByCategory = async (category: string) => {
+    fetchWithControllers(async () => {
+      const response = await onGetRecipesByFilter(
+        category,
+        RecipeFilterOptions.CATEGORY,
+        { signal: abortControllerRef.current?.signal }
+      );
+      const recipes = response.map(toRecipe);
+      dispatch(setRecipes(recipes));
+    });
+  };
+
+  const handleFetchRecipesWithoutFilter = useCallback(async () => {
+    fetchWithControllers(async () => {
+      const response = await onGetRecipes({
+        signal: abortControllerRef.current?.signal,
+      });
+      const recipes = response.map(toRecipe);
+
+      dispatch(setRecipes(recipes));
+    });
+  }, [dispatch, fetchWithControllers, onGetRecipes]);
 
   useEffect(() => {
     handleFetchRecipesWithoutFilter();
@@ -128,10 +157,14 @@ export default function Recipes<T extends Drink | Meal>({
         onFilterByAll={handleFetchRecipesWithoutFilter}
       />
 
-      <RecipeListWithPagination
-        recipes={menu.recipes}
-        navigateTo={onNavigateToRecipe}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <RecipeListWithPagination
+          recipes={menu.recipes}
+          navigateTo={onNavigateToRecipe}
+        />
+      )}
     </BasicLayout>
   );
 }

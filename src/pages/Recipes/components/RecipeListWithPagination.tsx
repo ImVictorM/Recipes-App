@@ -14,7 +14,7 @@ export default function RecipeListWithPagination({
 }: RecipeListWithPaginationProps) {
   const ITEMS_PER_PAGE = 12;
   const MAX_PAGE_BLOCKS_UI = 7;
-  const totalPages = Math.floor(recipes.length / ITEMS_PER_PAGE);
+  const totalPages = Math.max(Math.floor(recipes.length / ITEMS_PER_PAGE), 1);
   const [currentPage, setCurrentPage] = useState(1);
 
   const uiItemsIndex = useMemo(() => {
@@ -29,6 +29,7 @@ export default function RecipeListWithPagination({
       { length: totalPages },
       (_v, i) => i + 1
     );
+
     if (totalPages <= MAX_PAGE_BLOCKS_UI) {
       return allPaginationItems;
     }
@@ -73,8 +74,8 @@ export default function RecipeListWithPagination({
   };
 
   return (
-    <Container as="section" fluid className="my-2">
-      <Row xs={1} sm={2} md={3} as="ul" className="list-unstyled p-0 g-4 my-2">
+    <Container as="section" fluid>
+      <Row xs={1} sm={2} md={3} as="ul" className="list-unstyled p-0 g-4 m-0">
         {recipes
           .slice(uiItemsIndex.firstItemIndex, uiItemsIndex.lastItemIndex)
           .map((item, index) => {
@@ -139,7 +140,11 @@ export default function RecipeListWithPagination({
             }
 
             return (
-              <Pagination.Ellipsis linkClassName="page-item" as="button" />
+              <Pagination.Ellipsis
+                key={index}
+                linkClassName="page-item"
+                as="button"
+              />
             );
           })}
           <Pagination.Next

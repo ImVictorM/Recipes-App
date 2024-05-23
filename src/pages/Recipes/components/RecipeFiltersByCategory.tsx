@@ -2,7 +2,7 @@ import { RecipeCategory } from "@/services/menu/common";
 import { leftArrowIcon, rightArrowIcon } from "@/assets/icons";
 import { useRef } from "react";
 import { useLinearScroll } from "@/hooks";
-import "@/sass/components/_recipeFiltersByCategory.scss";
+import "@/sass/pages/recipes/components/_recipeFiltersByCategory.scss";
 
 export type RecipeFiltersByCategoryProps = {
   categories: RecipeCategory[];

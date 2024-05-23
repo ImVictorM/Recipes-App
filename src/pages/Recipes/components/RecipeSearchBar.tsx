@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { RecipeFilterOptions } from "@/services/menu/common";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import "@/sass/components/_recipeSearchBar.scss";
+import "@/sass/pages/recipes/components/_recipeSearchBar.scss";
 
 export type RecipeSearchBarFormState = {
   searchQuery: string;

@@ -1,5 +1,4 @@
 import { useLoaderData } from "react-router-dom";
-import "../styles/pages/RecipeDetals.css";
 import { shareIcon } from "@/assets/icons";
 import { useClipboardCopy } from "@/hooks";
 

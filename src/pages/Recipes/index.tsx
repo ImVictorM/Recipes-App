@@ -1,10 +1,10 @@
 import {
   RecipeFiltersByCategory,
   RecipeListWithPagination,
-} from "@/components";
+} from "./components";
 import RecipeSearchBar, {
   RecipeSearchBarFormState,
-} from "@/components/RecipeSearchBar";
+} from "@/pages/Recipes/components/RecipeSearchBar";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { BasicLayout } from "@/layouts";
 import { Drink } from "@/services/menu/cocktailApi";
@@ -17,7 +17,7 @@ import { toRecipe } from "@/utils/mappers";
 import { useCallback, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { AxiosRequestConfig } from "axios";
-import "@/sass/pages/_recipePage.scss";
+import "@/sass/pages/recipes/_recipes.scss";
 
 type RecipesProps<T> = {
   icon: {
@@ -72,7 +72,7 @@ export default function Recipes<T extends Drink | Meal>({
     }
   };
 
-  const handleFilterRecipesByCategory = async (category: string) => {
+  const handleFetchRecipesByCategory = async (category: string) => {
     resetAbortController();
 
     const response = await onGetRecipesByFilter(
@@ -84,7 +84,7 @@ export default function Recipes<T extends Drink | Meal>({
     dispatch(setRecipes(recipes));
   };
 
-  const handleLoadInitialRecipes = useCallback(async () => {
+  const handleFetchRecipesWithoutFilter = useCallback(async () => {
     resetAbortController();
 
     const response = await onGetRecipes({
@@ -101,13 +101,13 @@ export default function Recipes<T extends Drink | Meal>({
   };
 
   useEffect(() => {
-    handleLoadInitialRecipes();
+    handleFetchRecipesWithoutFilter();
 
     return () => {
       const { current } = abortControllerRef;
       current?.abort();
     };
-  }, [handleLoadInitialRecipes]);
+  }, [handleFetchRecipesWithoutFilter]);
 
   return (
     <BasicLayout containHeaderSearchBar>
@@ -124,8 +124,8 @@ export default function Recipes<T extends Drink | Meal>({
 
       <RecipeFiltersByCategory
         categories={categories}
-        onFilterByCategory={handleFilterRecipesByCategory}
-        onFilterByAll={handleLoadInitialRecipes}
+        onFilterByCategory={handleFetchRecipesByCategory}
+        onFilterByAll={handleFetchRecipesWithoutFilter}
       />
 
       <RecipeListWithPagination

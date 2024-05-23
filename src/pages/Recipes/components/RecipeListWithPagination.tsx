@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Card, Col, Container, Pagination, Row } from "react-bootstrap";
-import "@/sass/components/_recipeListWithPagination.scss";
 import { Recipe } from "@/store/slices/menuSlice";
+import "@/sass/pages/recipes/components/_recipeListWithPagination.scss";
 
 export type RecipeListWithPaginationProps = {
   recipes: Recipe[];

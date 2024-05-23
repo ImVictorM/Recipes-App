@@ -1,5 +1,5 @@
-@use "../abstracts/" as *;
-@use "../themes/" as *;
+@use "@/sass/themes/" as *;
+@use "@/sass/abstracts/" as *;
 
 .login {
   background-image: url("@/assets/images/loginBg.svg");

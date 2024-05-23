@@ -4,7 +4,7 @@ import { logo } from "@/assets/images";
 import { useAppDispatch } from "@/hooks";
 import { setUser } from "@/store/slices/userSlice";
 import { Button, Container, Form, Image, Stack } from "react-bootstrap";
-import "@/sass/pages/_login.scss";
+import "@/sass/pages/login/_login.scss";
 
 export default function Login() {
   const [loginFormState, setLoginFormState] = useState({

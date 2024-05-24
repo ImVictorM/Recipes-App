@@ -1,15 +1,15 @@
 import { shareIcon, heartFillIcon, heartOutlineIcon } from "@/assets/icons";
-import { useAppSelector, useAppDispatch, useClipboardCopy } from "@/hooks";
+import { useAppSelector, useAppDispatch } from "@/hooks";
 import {
   RecipeWithDetails,
   selectIsFavoriteRecipe,
   toggleFavoriteRecipe,
 } from "@/store/slices/menuSlice";
 import { selectUser } from "@/store/slices/userSlice";
-import "@/sass/components/_recipeHero.scss";
 import { Container, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { OverlayInjectedProps } from "react-bootstrap/esm/Overlay";
-import { useCallback } from "react";
+import { copyToClipboard } from "@/utils/clipboard";
+import { useState } from "react";
+import "@/sass/components/_recipeHero.scss";
 
 export type RecipeHeroProps = {
   recipe: RecipeWithDetails;
@@ -18,14 +18,20 @@ export type RecipeHeroProps = {
 export default function RecipeHero({ recipe }: RecipeHeroProps) {
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
-  const { copyToClipboard, successfullyCopiedMessage } = useClipboardCopy();
   const isFavorite = useAppSelector((state) =>
     selectIsFavoriteRecipe(state, recipe.id, user.email)
   );
+  const [shareTooltipMessage, setShareTooltipMessage] =
+    useState("Copy recipe link");
 
   const handleCopyToClipboard = () => {
     const currentUrl = window.location.href;
     copyToClipboard(currentUrl);
+    setShareTooltipMessage("Recipe link copied!");
+
+    setTimeout(() => {
+      setShareTooltipMessage("Copy recipe link");
+    }, 3000);
   };
 
   const handleToggleFavorite = () => {
@@ -39,28 +45,21 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
     backgroundPosition: "center",
   };
 
-  const renderShareButtonTooltip = useCallback(
-    (props: OverlayInjectedProps) => {
-      return (
-        <Tooltip id="tooltip" {...props}>
-          {successfullyCopiedMessage}
-        </Tooltip>
-      );
-    },
-    [successfullyCopiedMessage]
-  );
-
   return (
     <Container fluid as="section" className="hero" style={heroBackgroundStyle}>
       <Container
         fluid
-        className="d-flex justify-content-end align-items-center py-4"
+        className="d-flex justify-content-end align-items-center mt-2 py-4"
       >
         <div className="d-flex gap-3">
           <OverlayTrigger
-            placement="bottom"
-            overlay={(e) => renderShareButtonTooltip(e)}
-            trigger={["hover", "focus"]}
+            placement="left-end"
+            delay={{ show: 250, hide: 400 }}
+            overlay={(props) => (
+              <Tooltip id="copy-recipe-link-tooltip" {...props}>
+                {shareTooltipMessage}
+              </Tooltip>
+            )}
           >
             <button
               type="button"
@@ -72,18 +71,28 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
             </button>
           </OverlayTrigger>
 
-          <button
-            type="button"
-            onClick={handleToggleFavorite}
-            className="bg-transparent"
-            data-testid="favorite-btn"
+          <OverlayTrigger
+            placement="left-end"
+            delay={{ show: 250, hide: 400 }}
+            overlay={(props) => (
+              <Tooltip id="favorite-tooltip" {...props}>
+                {isFavorite ? "Unfavorite recipe" : "Favorite recipe"}
+              </Tooltip>
+            )}
           >
-            <img
-              src={isFavorite ? heartFillIcon : heartOutlineIcon}
-              alt="heart"
-              className="icon"
-            />
-          </button>
+            <button
+              type="button"
+              onClick={handleToggleFavorite}
+              className="bg-transparent"
+              data-testid="favorite-btn"
+            >
+              <img
+                src={isFavorite ? heartFillIcon : heartOutlineIcon}
+                alt="heart"
+                className="icon"
+              />
+            </button>
+          </OverlayTrigger>
         </div>
       </Container>
 
@@ -95,8 +104,6 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
           {recipe.category}
         </h3>
       </div>
-
-      {/* <p>{successfullyCopiedMessage}</p> */}
     </Container>
   );
 }

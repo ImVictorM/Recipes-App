@@ -12,7 +12,6 @@ import { RecipeCategory, RecipeFilterOptions } from "@/services/menu/common";
 import { Meal } from "@/services/menu/mealApi";
 import { Recipe, selectMenu, setRecipes } from "@/store/slices/menuSlice";
 import { selectVisibility } from "@/store/slices/visibilitySlice";
-import { EMPTY_RECIPES_MESSAGE } from "@/utils/constants";
 import { toRecipe } from "@/utils/mappers";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -96,7 +95,7 @@ export default function Recipes<T extends Drink | Meal>({
       const recipes = response.map(toRecipe);
 
       if (recipes.length === 0) {
-        window.alert(EMPTY_RECIPES_MESSAGE);
+        window.alert("Sorry, we haven't found any recipes for these filters.");
       } else if (recipes.length === 1) {
         // If only one recipe is found, navigate to its RecipeDetails page
         navigate(onNavigateToRecipe(recipes[0]));

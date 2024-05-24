@@ -2,26 +2,21 @@ import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
 import { getFromLocalStorage, setInLocalStorage } from "@/utils/localStorage";
 
+export type RecipeType = "drink" | "meal";
+
 export type Recipe = {
+  type: RecipeType;
   id: string;
   img: string;
   name: string;
 };
 
-export type RecipeRecommendation = {
-  name: string;
-  img: string;
-};
-
-export type RecipeWithDetails = {
-  id: string;
-  name: string;
-  img: string;
+export type RecipeWithDetails = Recipe & {
   ingredientsMeasures: [string, string][];
   instructions: string;
   video?: string;
   alcoholic?: string;
-  recommendedWith: RecipeRecommendation[];
+  recommendedWith: Recipe[];
   category: string;
   nationality?: string;
   tags?: string;

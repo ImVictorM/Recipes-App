@@ -100,9 +100,16 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
         <h1 data-testid="recipe-title" className="hero-text-title">
           {recipe.name}
         </h1>
-        <h3 data-testid="recipe-category" className="hero-text-category">
-          {recipe.category}
-        </h3>
+        <h4 data-testid="recipe-category" className="hero-text-category">
+          {recipe.alcoholic ? (
+            <>
+              <span data-testid="recipe-alcoholic">{recipe.alcoholic}</span>{" "}
+              {recipe.category}
+            </>
+          ) : (
+            recipe.category
+          )}
+        </h4>
       </div>
     </Container>
   );

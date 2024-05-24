@@ -7,3 +7,20 @@
   color: map-get($map: $theme-colors, $key: "purple");
 }
 
+.border-box {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid map-get($map: $theme-colors, $key: "slate");
+  padding: 2em 1em;
+  margin: 1em 0;
+}
+
+.snaps-inline {
+  scroll-snap-type: inline mandatory;
+
+  & > * {
+    scroll-snap-align: start;
+    scroll-padding-inline: 1rem;
+  }
+}
+

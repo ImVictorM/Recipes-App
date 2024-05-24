@@ -52,6 +52,7 @@ export function toRecipeDetails(
 
     return {
       id: mealRecipe.idMeal,
+      type: "meal",
       category: mealRecipe.strCategory,
       img: mealRecipe.strMealThumb,
       instructions: mealRecipe.strInstructions,
@@ -59,9 +60,11 @@ export function toRecipeDetails(
       name: mealRecipe.strMeal,
       video: mealRecipe.strYoutube || undefined,
       recommendedWith: drinkRecommendations.map(
-        ({ strDrink, strDrinkThumb }) => ({
+        ({ strDrink, strDrinkThumb, idDrink }) => ({
+          type: "drink",
           img: strDrinkThumb,
           name: strDrink,
+          id: idDrink,
         })
       ),
       nationality: mealRecipe.strArea,
@@ -72,15 +75,20 @@ export function toRecipeDetails(
     const mealRecommendations = recommendations as Meal[];
     return {
       id: drinkRecipe.idDrink,
+      type: "drink",
       category: drinkRecipe.strCategory,
       img: drinkRecipe.strDrinkThumb,
       instructions: drinkRecipe.strInstructions,
       name: drinkRecipe.strDrink,
       alcoholic: drinkRecipe.strAlcoholic,
-      recommendedWith: mealRecommendations.map(({ strMeal, strMealThumb }) => ({
-        img: strMealThumb,
-        name: strMeal,
-      })),
+      recommendedWith: mealRecommendations.map(
+        ({ strMeal, strMealThumb, idMeal }) => ({
+          type: "meal",
+          img: strMealThumb,
+          name: strMeal,
+          id: idMeal,
+        })
+      ),
       ingredientsMeasures: combineIngredientWithMeasure(drinkRecipe),
       tags: drinkRecipe.strTags || undefined,
     };
@@ -95,6 +103,7 @@ export function toRecipe(arg: Meal | Drink): Recipe {
   if (isMeal(arg)) {
     const mealRecipe = arg as Meal;
     return {
+      type: "meal",
       id: mealRecipe.idMeal,
       img: mealRecipe.strMealThumb,
       name: mealRecipe.strMeal,
@@ -102,6 +111,7 @@ export function toRecipe(arg: Meal | Drink): Recipe {
   } else if (isDrink(arg)) {
     const drinkRecipe = arg as Drink;
     return {
+      type: "drink",
       id: drinkRecipe.idDrink,
       img: drinkRecipe.strDrinkThumb,
       name: drinkRecipe.strDrink,

@@ -1,31 +1,5 @@
 @use "@/sass/themes/" as *;
 
-.recipe-card {
-  &--img-container {
-    border-radius: 5px 5px 0 0;
-    overflow: hidden;
-  }
-
-  &-img {
-    transition: transform 0.2s ease-in-out;
-  }
-
-  &:hover {
-    .recipe-card-img {
-      transform: scale(1.1);
-    }
-  }
-}
-
-
-.recipe-card-body {
-  min-height: 0;
-
-  &-title {
-    color: map-get($map: $theme-colors, $key: "black");
-  }
-}
-
 .page-item {
   color: map-get($map: $theme-colors, $key: "black");
 

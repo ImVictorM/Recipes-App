@@ -10,7 +10,7 @@ import { BasicLayout } from "@/layouts";
 import { Drink } from "@/services/menu/cocktailApi";
 import { RecipeCategory, RecipeFilterOptions } from "@/services/menu/common";
 import { Meal } from "@/services/menu/mealApi";
-import { Recipe, selectMenu, setRecipes } from "@/store/slices/menuSlice";
+import { selectMenu, setRecipes } from "@/store/slices/menuSlice";
 import { selectVisibility } from "@/store/slices/visibilitySlice";
 import { toRecipe } from "@/utils/mappers";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -32,7 +32,6 @@ type RecipesProps<T> = {
     filter: RecipeFilterOptions,
     config?: AxiosRequestConfig
   ) => Promise<T[]>;
-  onNavigateToRecipe: (recipe: Recipe) => string;
 };
 
 export default function Recipes<T extends Drink | Meal>({
@@ -40,7 +39,6 @@ export default function Recipes<T extends Drink | Meal>({
   onGetRecipes,
   onGetRecipesByFilter,
   icon,
-  onNavigateToRecipe,
   title,
 }: RecipesProps<T>) {
   const dispatch = useAppDispatch();
@@ -98,7 +96,8 @@ export default function Recipes<T extends Drink | Meal>({
         window.alert("Sorry, we haven't found any recipes for these filters.");
       } else if (recipes.length === 1) {
         // If only one recipe is found, navigate to its RecipeDetails page
-        navigate(onNavigateToRecipe(recipes[0]));
+        const recipe = recipes[0];
+        navigate(recipe.id);
       } else {
         dispatch(setRecipes(recipes));
       }
@@ -159,10 +158,7 @@ export default function Recipes<T extends Drink | Meal>({
       {isLoading ? (
         <Loading />
       ) : (
-        <RecipeListWithPagination
-          recipes={menu.recipes}
-          navigateTo={onNavigateToRecipe}
-        />
+        <RecipeListWithPagination recipes={menu.recipes} />
       )}
     </BasicLayout>
   );

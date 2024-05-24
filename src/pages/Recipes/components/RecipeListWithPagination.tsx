@@ -1,16 +1,15 @@
 import { useMemo, useState } from "react";
-import { Card, Col, Container, Pagination, Row } from "react-bootstrap";
+import { Col, Container, Pagination, Row } from "react-bootstrap";
 import { Recipe } from "@/store/slices/menuSlice";
+import { RecipeBasicCard } from "@/components";
 import "@/sass/pages/recipes/components/_recipeListWithPagination.scss";
 
 export type RecipeListWithPaginationProps = {
   recipes: Recipe[];
-  navigateTo: (recipe: Recipe) => string;
 };
 
 export default function RecipeListWithPagination({
   recipes,
-  navigateTo,
 }: RecipeListWithPaginationProps) {
   const ITEMS_PER_PAGE = 12;
   const MAX_PAGE_BLOCKS_UI = 7;
@@ -78,36 +77,10 @@ export default function RecipeListWithPagination({
       <Row xs={1} sm={2} md={3} as="ul" className="list-unstyled p-0 g-4 m-0">
         {recipes
           .slice(uiItemsIndex.firstItemIndex, uiItemsIndex.lastItemIndex)
-          .map((item, index) => {
-            const { name, img, id } = item;
-
+          .map((recipe, index) => {
             return (
-              <Col as="li" key={id} data-testid={`${index}-recipe-card`}>
-                <Card className="recipe-card shadow m-0">
-                  <Card.Link
-                    href={navigateTo(item)}
-                    className="text-decoration-none"
-                  >
-                    <Container fluid className="recipe-card--img-container p-0">
-                      <Card.Img
-                        className="recipe-card-img"
-                        variant="top"
-                        src={img}
-                        alt={name}
-                        data-testid={`${index}-card-img`}
-                      />
-                    </Container>
-
-                    <Card.Body className="recipe-card-body">
-                      <Card.Title
-                        className="recipe-card-body-title"
-                        data-testid={`${index}-card-name`}
-                      >
-                        {name}
-                      </Card.Title>
-                    </Card.Body>
-                  </Card.Link>
-                </Card>
+              <Col as="li" key={recipe.id} data-testid={`${index}-recipe-card`}>
+                <RecipeBasicCard recipe={recipe} index={index} scaleOnHover />
               </Col>
             );
           })}

@@ -72,15 +72,6 @@
   }
 }
 
-.snaps-inline {
-  scroll-snap-type: inline mandatory;
-
-  & > * {
-    scroll-snap-align: start;
-    scroll-padding-inline: 1rem;
-  }
-}
-
 .filter-button {
   @extend %primary-button;
 

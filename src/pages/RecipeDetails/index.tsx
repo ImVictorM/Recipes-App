@@ -1,12 +1,10 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { RecipeWithDetails } from "@/store/slices/menuSlice";
-import { RecipeHero } from "@/components";
+import { RecipeBasicCard, RecipeHero } from "@/components";
+import { Button, Container, Stack } from "react-bootstrap";
+import "@/sass/pages/recipeDetails/_recipeDetails.scss";
 
-export type RecipeDetailsProps = {
-  inProgress?: boolean;
-};
-
-export default function RecipeDetails({ inProgress }: RecipeDetailsProps) {
+export default function RecipeDetails() {
   const recipe = useLoaderData() as RecipeWithDetails;
   const navigate = useNavigate();
 
@@ -15,78 +13,74 @@ export default function RecipeDetails({ inProgress }: RecipeDetailsProps) {
   };
 
   return (
-    <div>
+    <main>
       <RecipeHero recipe={recipe} />
 
-      {recipe.alcoholic && (
-        <p data-testid="recipe-category">{recipe.alcoholic}</p>
-      )}
+      <Stack className="recipe-content" gap={4}>
+        <Stack>
+          <Container fluid as="section">
+            <h2>Ingredients</h2>
+            <ul className="ingredients border-box">
+              {recipe.ingredientsMeasures.map(
+                ([ingredient, measure], index) => (
+                  <li
+                    data-testid={`${index}-ingredient-name-and-measure`}
+                    key={index}
+                  >
+                    {`${ingredient} ${measure}`}
+                  </li>
+                )
+              )}
+            </ul>
+          </Container>
 
-      <div>
-        <h2>Ingredients</h2>
-        <ul>
-          {recipe.ingredientsMeasures.map(([ingredient, measure], index) => (
-            <li
-              data-testid={`${index}-ingredient-name-and-measure`}
-              key={index}
-            >
-              {`${ingredient} ${measure}`}
-            </li>
-          ))}
-        </ul>
-      </div>
+          <Container fluid as="section">
+            <h2>Instructions</h2>
+            <p data-testid="instructions" className="border-box">
+              {recipe.instructions}
+            </p>
+          </Container>
+        </Stack>
 
-      <p data-testid="instructions">{recipe.instructions}</p>
+        {recipe.video && (
+          <Container fluid as="section">
+            <div className="ratio ratio-16x9">
+              <iframe
+                data-testid="video"
+                title="youtube video"
+                src={recipe.video.replace("watch?v=", "embed/")}
+                frameBorder="0"
+                allowFullScreen
+              />
+            </div>
+          </Container>
+        )}
 
-      {recipe.video && (
-        <div className="ratio ratio-16x9 mb-3">
-          <iframe
-            data-testid="video"
-            title="youtube video"
-            src={recipe.video.replace("watch?v=", "embed/")}
-            frameBorder="0"
-            allowFullScreen
-          />
-        </div>
-      )}
-
-      <div className="row">
-        <div className="scrolling-wrapper">
-          {recipe.recommendedWith.map(({ img, name }, index) => {
-            return (
-              <div
-                key={name}
-                data-testid={`${index}-recommendation-card`}
-                className="card card-body me-3"
-              >
-                <img
-                  className="img-fluid"
-                  data-testid="recipe-photo"
-                  src={img}
-                  alt={name}
+        <Container fluid as="section">
+          <h3>Recommended drinks</h3>
+          <div className="recommended snaps-inline">
+            {recipe.recommendedWith.map((recipe, index) => {
+              return (
+                <RecipeBasicCard
+                  recipe={recipe}
+                  index={index}
+                  key={recipe.id}
                 />
-                <p
-                  data-testid={`${index}-recommendation-title`}
-                  className="text-center"
-                >
-                  {name}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+              );
+            })}
+          </div>
+        </Container>
+      </Stack>
 
-      {!inProgress && (
-        <button
-          type="button"
-          className="btn fixed-bottom"
-          data-testid="start-recipe-btn"
-          onClick={handleStartRecipe}
-        >
-          Start recipe
-        </button>
-      )}
-    </div>
+      <Button
+        variant="primary"
+        type="button"
+        className="fixed-bottom my-0"
+        data-testid="start-recipe-btn"
+        onClick={handleStartRecipe}
+      >
+        Start recipe
+      </Button>
+    </main>
   );
 }

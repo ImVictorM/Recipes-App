@@ -1,0 +1,26 @@
+@use "@/sass/abstracts" as *;
+
+.recipe-content {
+  margin-top: 3em;
+  margin-bottom: 5em;
+}
+
+.ingredients {
+  padding-left: 2rem;
+  
+  @include respond-to("tabletS") {
+    padding-left: 3rem;
+  }
+}
+
+
+.recommended {
+  width: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 45%;
+  gap: 0.5em;
+  overflow-x: auto;
+  overscroll-behavior-inline: none;
+  padding: 0.5em 0;
+}

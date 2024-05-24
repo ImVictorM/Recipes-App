@@ -57,7 +57,6 @@ const routes: RouteObject[] = [
             onGetRecipesByFilter={getCocktailsByFilter}
             icon={{ src: cocktailIcon, alt: "cocktail" }}
             title="Drinks"
-            onNavigateToRecipe={({ id }) => `/drinks/${id}`}
           />
         ),
       },
@@ -79,7 +78,7 @@ const routes: RouteObject[] = [
       },
       {
         path: ":id/in-progress",
-        element: <RecipeDetails inProgress />,
+        element: <RecipeDetails />,
       },
     ],
   },
@@ -97,14 +96,13 @@ const routes: RouteObject[] = [
               src: mealIcon,
               alt: "meal",
             }}
-            onNavigateToRecipe={({ id }) => `/meals/${id}`}
             title="Meals"
           />
         ),
       },
       {
         path: ":id/in-progress",
-        element: <RecipeDetails inProgress />,
+        element: <RecipeDetails />,
       },
       {
         path: ":id",

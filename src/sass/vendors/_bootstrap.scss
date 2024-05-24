@@ -8,6 +8,7 @@ $secondary: map-get($theme-colors, "purple");
 $dark: map-get($theme-colors, "black");
 $white: map-get($theme-colors, "white");
 $danger: map-get($theme-colors, "red");
+$headings-color: $dark;
 
 
 $theme-colors: map-merge(

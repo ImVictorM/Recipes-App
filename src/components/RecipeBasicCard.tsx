@@ -15,7 +15,7 @@ export default function RecipeBasicCard({
 }: RecipeBasicCardProps) {
   return (
     <Card
-      className={`${
+      className={`recipe-card ${
         scaleOnHover ? "recipe-card--scale-on-hover" : ""
       } shadow m-0`}
     >

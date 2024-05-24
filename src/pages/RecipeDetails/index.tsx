@@ -20,7 +20,7 @@ export default function RecipeDetails() {
         <Stack>
           <Container fluid as="section">
             <h2>Ingredients</h2>
-            <ul className="ingredients border-box">
+            <ul className="recipe-content-ingredients border-box">
               {recipe.ingredientsMeasures.map(
                 ([ingredient, measure], index) => (
                   <li
@@ -58,7 +58,7 @@ export default function RecipeDetails() {
 
         <Container fluid as="section">
           <h3>Recommended drinks</h3>
-          <div className="recommended snaps-inline">
+          <div className="recipe-content-recommended snaps-inline">
             {recipe.recommendedWith.map((recipe, index) => {
               return (
                 <RecipeBasicCard

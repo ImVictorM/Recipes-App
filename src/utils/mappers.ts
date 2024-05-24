@@ -1,7 +1,6 @@
-import { RecipeDetailsItem } from "@/pages/RecipeDetails";
 import { Drink } from "@/services/menu/cocktailApi";
 import { Meal } from "@/services/menu/mealApi";
-import { Recipe } from "@/store/slices/menuSlice";
+import { Recipe, RecipeWithDetails } from "@/store/slices/menuSlice";
 
 function isMeal(recipe: Meal | Drink): recipe is Meal {
   return (recipe as Meal).strMeal !== undefined;
@@ -36,54 +35,59 @@ function combineIngredientWithMeasure(recipe: Meal | Drink) {
 export function toRecipeDetails(
   recipe: Meal,
   recommendations: Drink[]
-): RecipeDetailsItem;
+): RecipeWithDetails;
 
 export function toRecipeDetails(
   recipe: Drink,
   recommendations: Meal[]
-): RecipeDetailsItem;
+): RecipeWithDetails;
 
 export function toRecipeDetails(
   recipe: Meal | Drink,
   recommendations: Meal[] | Drink[]
-): RecipeDetailsItem {
+): RecipeWithDetails {
   if (isMeal(recipe) && isDrink(recommendations[0])) {
     const mealRecipe = recipe as Meal;
     const drinkRecommendations = recommendations as Drink[];
 
     return {
+      id: mealRecipe.idMeal,
       category: mealRecipe.strCategory,
-      imgSrc: mealRecipe.strMealThumb,
+      img: mealRecipe.strMealThumb,
       instructions: mealRecipe.strInstructions,
+      tags: mealRecipe.strTags || undefined,
       name: mealRecipe.strMeal,
       video: mealRecipe.strYoutube || undefined,
       recommendedWith: drinkRecommendations.map(
         ({ strDrink, strDrinkThumb }) => ({
-          imgSrc: strDrinkThumb,
+          img: strDrinkThumb,
           name: strDrink,
         })
       ),
+      nationality: mealRecipe.strArea,
       ingredientsMeasures: combineIngredientWithMeasure(mealRecipe),
     };
   } else if (isDrink(recipe) && isMeal(recommendations[0])) {
     const drinkRecipe = recipe as Drink;
     const mealRecommendations = recommendations as Meal[];
     return {
+      id: drinkRecipe.idDrink,
       category: drinkRecipe.strCategory,
-      imgSrc: drinkRecipe.strDrinkThumb,
+      img: drinkRecipe.strDrinkThumb,
       instructions: drinkRecipe.strInstructions,
       name: drinkRecipe.strDrink,
       alcoholic: drinkRecipe.strAlcoholic,
       recommendedWith: mealRecommendations.map(({ strMeal, strMealThumb }) => ({
-        imgSrc: strMealThumb,
+        img: strMealThumb,
         name: strMeal,
       })),
       ingredientsMeasures: combineIngredientWithMeasure(drinkRecipe),
+      tags: drinkRecipe.strTags || undefined,
     };
   }
 
   throw new Error(
-    "Unexpected error mapping the recipe to RecipeDetailsItem type"
+    "Unexpected error mapping the recipe to RecipeWithDetails type"
   );
 }
 

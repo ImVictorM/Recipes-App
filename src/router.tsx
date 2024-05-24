@@ -14,7 +14,6 @@ import {
   getMealsByFilter,
   mealCategories,
 } from "./services/menu/mealApi";
-import { RecipeDetailsItem } from "./pages/RecipeDetails";
 import {
   cocktailCategories,
   getCocktailDetailsById,
@@ -23,6 +22,7 @@ import {
 } from "./services/menu/cocktailApi";
 import { toRecipeDetails } from "./utils/mappers";
 import { cocktailIcon, mealIcon } from "./assets/icons";
+import { RecipeWithDetails } from "./store/slices/menuSlice";
 
 type ArgsWithId = {
   id: string;
@@ -64,7 +64,7 @@ const routes: RouteObject[] = [
       {
         path: ":id",
         element: <RecipeDetails />,
-        loader: async (args): Promise<RecipeDetailsItem> => {
+        loader: async (args): Promise<RecipeWithDetails> => {
           const params = args.params as ArgsWithId;
           const drink = await getCocktailDetailsById(params.id, {
             signal: args.request.signal,
@@ -77,10 +77,10 @@ const routes: RouteObject[] = [
           throw new Response("Drink not found", { status: 404 });
         },
       },
-      // {
-      //   path: ":id/in-progress",
-      //   element: <RecipeInProgress />,
-      // },
+      {
+        path: ":id/in-progress",
+        element: <RecipeDetails inProgress />,
+      },
     ],
   },
   {
@@ -103,9 +103,13 @@ const routes: RouteObject[] = [
         ),
       },
       {
+        path: ":id/in-progress",
+        element: <RecipeDetails inProgress />,
+      },
+      {
         path: ":id",
         element: <RecipeDetails />,
-        loader: async (args): Promise<RecipeDetailsItem> => {
+        loader: async (args): Promise<RecipeWithDetails> => {
           const params = args.params as ArgsWithId;
           const meal = await getMealDetailsById(params.id, {
             signal: args.request.signal,
@@ -118,10 +122,6 @@ const routes: RouteObject[] = [
           throw new Response("Meal not found", { status: 404 });
         },
       },
-      // {
-      //   path: ":id/in-progress",
-      //   element: <RecipeInProgress />,
-      // },
     ],
   },
 ];

@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import { getFromLocalStorage, setInLocalStorage } from "../utils/localStorage";
 
 import "../styles/pages/RecipeInProgress.css";
-import "../styles/pages/RecipeDetals.css";
-import { blackHeartIcon, shareIcon, whiteHeartIcon } from "@/assets/icons";
 
 export default function RecipeInProgress({ history }) {
   const {
@@ -27,122 +25,7 @@ export default function RecipeInProgress({ history }) {
       [id]: [],
     },
   };
-  const [inProgressRecipes, setInProgressRecipes] = useState(INITIAL_STATE);
-  const separateIngredientsAndMeasures = (obj) => {
-    const entries = Object.entries(obj);
-    const extractIngredientsAndMeasure = entries.reduce(
-      (acc, element) => {
-        const accCopy = { ...acc };
-        const key = element[0];
-        const value = element[1];
-        if (key.includes("Ingredient") && value) {
-          accCopy.ingredients.push(value);
-        }
-        if (key.includes("Measure") && value !== " ") {
-          accCopy.measures.push(value);
-        }
-        return accCopy;
-      },
-      {
-        ingredients: [],
-        measures: [],
-      }
-    );
-    setIngredientsAndMeasure(extractIngredientsAndMeasure);
-  };
-  const verifyPathname = useCallback(
-    (categoryApi) => {
-      separateIngredientsAndMeasures(categoryApi[0]);
-      if (pathname.includes("drinks")) {
-        const {
-          strDrink,
-          strDrinkThumb,
-          idDrink,
-          strCategory,
-          strInstructions,
-          strAlcoholic,
-        } = categoryApi[0];
 
-        const data = {
-          instruction: strInstructions,
-          alcohol: strAlcoholic,
-          category: strCategory,
-          picture: strDrinkThumb,
-          title: strDrink,
-          id: idDrink,
-        };
-        setParameters(data);
-      } else {
-        const {
-          strMeal,
-          strMealThumb,
-          idMeal,
-          strCategory,
-          strInstructions,
-          strYoutube,
-        } = categoryApi[0];
-        const data = {
-          video: strYoutube,
-          instruction: strInstructions,
-          category: strCategory,
-          picture: strMealThumb,
-          title: strMeal,
-          id: idMeal,
-        };
-        setParameters(data);
-      }
-    },
-    [id, pathname]
-  );
-  useEffect(() => {
-    const handleFilter = async () => {
-      const categoryApi = await RecipeDetailsApi(id, pathname);
-      setDefaultApi(categoryApi[0]);
-      verifyPathname(categoryApi);
-    };
-    const favoriteRecipes = getFromLocalStorage("favoriteRecipes");
-    if (favoriteRecipes !== null) {
-      setFavorites(favoriteRecipes);
-    }
-    handleFilter();
-  }, [history, id, pathname, verifyPathname]);
-  const handleFavorite = () => {
-    const {
-      idDrink,
-      idMeal,
-      strArea,
-      strCategory,
-      strAlcoholic,
-      strDrink,
-      strMeal,
-      strDrinkThumb,
-      strMealThumb,
-    } = defaultApi;
-
-    const newFavorite = {
-      id: idDrink || idMeal,
-      type: pathname.includes("drink") ? "drink" : "meal",
-      nationality: strArea || "",
-      category: strCategory,
-      alcoholicOrNot: strAlcoholic || "",
-      name: strDrink || strMeal,
-      image: strDrinkThumb || strMealThumb,
-    };
-
-    const recipeIsFavorite = favorites.some(
-      (recipe) => Number(recipe.id) === Number(id)
-    );
-    if (recipeIsFavorite) {
-      const removedItem = favorites.filter(
-        (recipe) => Number(recipe.id) !== Number(id)
-      );
-      setInLocalStorage("favoriteRecipes", removedItem);
-      setFavorites(removedItem);
-    } else {
-      setInLocalStorage("favoriteRecipes", [...favorites, newFavorite]);
-      setFavorites([...favorites, newFavorite]);
-    }
-  };
   const { ingredients, measures } = ingredientsAndMeasures;
   const handleChecked = ({ target }) => {
     const { checked } = target;

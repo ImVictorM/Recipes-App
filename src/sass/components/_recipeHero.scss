@@ -1,0 +1,36 @@
+@use "../themes/" as *;
+
+.hero {
+  height: 40vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2em;
+}
+
+.hero-text {
+  text-transform: uppercase;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  &-title {
+    color: map-get($map: $theme-colors, $key: "white");
+  }
+
+  &-category {
+    color: map-get($map: $theme-colors, $key: "gold");
+    font-size: 1rem;
+  }
+
+  & > * {
+    margin: 0;
+  }
+}
+
+.icon {
+  width: 32px;
+}

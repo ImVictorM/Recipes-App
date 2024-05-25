@@ -1,5 +1,4 @@
 import { Header, Footer } from "@/components";
-import "../styles/pages/Profile.css";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { removeUser, selectUser } from "@/store/slices/userSlice";
 import { Link, useNavigate } from "react-router-dom";

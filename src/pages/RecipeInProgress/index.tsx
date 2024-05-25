@@ -1,32 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
-import { useParams } from "react-router-dom";
-import PropTypes from "prop-types";
-import { getFromLocalStorage, setInLocalStorage } from "../utils/localStorage";
-
-import "../styles/pages/RecipeInProgress.css";
-
-export default function RecipeInProgress({ history }) {
-  const {
-    location: { pathname },
-  } = history;
-  const keyToSearchFor = pathname.includes("meals") ? "meals" : "drinks";
-  const { id } = useParams();
-  const [favorites, setFavorites] = useState([]);
-  const [defaultApi, setDefaultApi] = useState({});
-  const [parameters, setParameters] = useState([]);
-  const [ingredientsAndMeasures, setIngredientsAndMeasure] = useState({
-    ingredients: [],
-    measures: [],
-  });
-  const INITIAL_STATE = {
-    drinks: {},
-    meals: {},
-    [keyToSearchFor]: {
-      [id]: [],
-    },
-  };
-
-  const { ingredients, measures } = ingredientsAndMeasures;
+export default function RecipeInProgress() {
   const handleChecked = ({ target }) => {
     const { checked } = target;
 
@@ -55,14 +27,7 @@ export default function RecipeInProgress({ history }) {
       });
     }
   };
-  useEffect(() => {
-    const localInProgress =
-      getFromLocalStorage("inProgressRecipes") || INITIAL_STATE;
-    setInProgressRecipes(localInProgress);
-  }, []);
-  useEffect(() => {
-    setInLocalStorage("inProgressRecipes", inProgressRecipes);
-  }, [inProgressRecipes]);
+
   return (
     <div className="container justify-content-center">
       <section>

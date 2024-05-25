@@ -47,10 +47,7 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
 
   return (
     <Container fluid as="section" className="hero" style={heroBackgroundStyle}>
-      <Container
-        fluid
-        className="d-flex justify-content-end align-items-center mt-2 py-4"
-      >
+      <Container fluid className="hero-container mt-2 py-4">
         <div className="d-flex gap-3">
           <OverlayTrigger
             placement="left-end"

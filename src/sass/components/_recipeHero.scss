@@ -1,10 +1,18 @@
 @use "../themes/" as *;
+@use "../abstracts/" as *;
 
 .hero {
   height: 40vh;
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+.hero-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  max-width: $max-content-width;
 }
 
 .hero-text {

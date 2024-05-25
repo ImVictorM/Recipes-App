@@ -1,5 +1,9 @@
-
 @use "@/sass/themes/" as *;
+
+.recipe-card {
+  max-width: 400px;
+  flex-grow: 1;
+}
 
 .recipe-card--scale-on-hover {
   .recipe-card-img {
@@ -23,6 +27,9 @@
   min-height: 0;
 
   &-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: map-get($map: $theme-colors, $key: "black");
   }
 }

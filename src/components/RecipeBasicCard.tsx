@@ -35,6 +35,7 @@ export default function RecipeBasicCard({
         <Card.Body className="recipe-card-body">
           <Card.Title
             className="recipe-card-body-title"
+            title={name}
             data-testid={`${index}-card-name`}
           >
             {name}

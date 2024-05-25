@@ -43,7 +43,7 @@ export default function RecipeDetails() {
         </Stack>
 
         {recipe.video && (
-          <Container fluid as="section">
+          <Container fluid as="section" className="recipe-content-video">
             <div className="ratio ratio-16x9">
               <iframe
                 data-testid="video"
@@ -75,7 +75,7 @@ export default function RecipeDetails() {
       <Button
         variant="primary"
         type="button"
-        className="fixed-bottom my-0"
+        className="recipe-start"
         data-testid="start-recipe-btn"
         onClick={handleStartRecipe}
       >

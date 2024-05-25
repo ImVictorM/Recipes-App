@@ -25,8 +25,11 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
     useState("Copy recipe link");
 
   const handleCopyToClipboard = () => {
-    const currentUrl = window.location.href;
-    copyToClipboard(currentUrl);
+    const endpoint =
+      recipe.type === "meal" ? `meals/${recipe.id}` : `drinks/${recipe.id}`;
+    const recipePath = `${window.origin}/${endpoint}`;
+
+    copyToClipboard(recipePath);
     setShareTooltipMessage("Recipe link copied!");
 
     setTimeout(() => {

@@ -1,32 +1,32 @@
 export default function RecipeInProgress() {
-  const handleChecked = ({ target }) => {
-    const { checked } = target;
+  // const handleChecked = ({ target }) => {
+  //   const { checked } = target;
 
-    const ingredientAndMeasure = target.nextSibling.innerText;
-    const prevCopy = inProgressRecipes[keyToSearchFor][id];
+  //   const ingredientAndMeasure = target.nextSibling.innerText;
+  //   const prevCopy = inProgressRecipes[keyToSearchFor][id];
 
-    if (checked) {
-      target.parentElement.className = "checked";
-      const newList = [...prevCopy, ingredientAndMeasure];
-      setInProgressRecipes({
-        ...inProgressRecipes,
-        [keyToSearchFor]: {
-          [id]: newList,
-        },
-      });
-    } else {
-      target.parentElement.className = "noChecked";
-      const newList = inProgressRecipes[keyToSearchFor][id].filter(
-        (element) => element !== ingredientAndMeasure
-      );
-      setInProgressRecipes({
-        ...inProgressRecipes,
-        [keyToSearchFor]: {
-          [id]: newList,
-        },
-      });
-    }
-  };
+  //   if (checked) {
+  //     target.parentElement.className = "checked";
+  //     const newList = [...prevCopy, ingredientAndMeasure];
+  //     setInProgressRecipes({
+  //       ...inProgressRecipes,
+  //       [keyToSearchFor]: {
+  //         [id]: newList,
+  //       },
+  //     });
+  //   } else {
+  //     target.parentElement.className = "noChecked";
+  //     const newList = inProgressRecipes[keyToSearchFor][id].filter(
+  //       (element) => element !== ingredientAndMeasure
+  //     );
+  //     setInProgressRecipes({
+  //       ...inProgressRecipes,
+  //       [keyToSearchFor]: {
+  //         [id]: newList,
+  //       },
+  //     });
+  //   }
+  // };
 
   return (
     <div className="container justify-content-center">

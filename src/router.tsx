@@ -6,7 +6,7 @@ import {
   Recipes,
   // Profile,
   RecipeDetails,
-  // RecipeInProgress,
+  RecipeInProgress,
 } from "./pages";
 import {
   getMealDetailsById,
@@ -78,7 +78,7 @@ const routes: RouteObject[] = [
       },
       {
         path: ":id/in-progress",
-        element: <RecipeDetails />,
+        element: <RecipeInProgress />,
       },
     ],
   },
@@ -101,10 +101,6 @@ const routes: RouteObject[] = [
         ),
       },
       {
-        path: ":id/in-progress",
-        element: <RecipeDetails />,
-      },
-      {
         path: ":id",
         element: <RecipeDetails />,
         loader: async (args): Promise<RecipeWithDetails> => {
@@ -119,6 +115,10 @@ const routes: RouteObject[] = [
           }
           throw new Response("Meal not found", { status: 404 });
         },
+      },
+      {
+        path: ":id/in-progress",
+        element: <RecipeInProgress />,
       },
     ],
   },

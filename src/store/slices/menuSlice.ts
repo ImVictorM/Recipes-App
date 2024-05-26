@@ -16,10 +16,13 @@ export type RecipeWithDetails = Recipe & {
   instructions: string;
   video?: string;
   alcoholic?: string;
-  recommendedWith: Recipe[];
   category: string;
   nationality?: string;
   tags?: string;
+};
+
+export type RecipeWithDetailsAndRecommendation = RecipeWithDetails & {
+  recommendations: Recipe[];
 };
 
 export type DoneRecipe = RecipeWithDetails & {

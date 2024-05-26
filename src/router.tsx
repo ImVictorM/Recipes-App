@@ -1,4 +1,8 @@
-import { RouteObject, createBrowserRouter } from "react-router-dom";
+import {
+  LoaderFunctionArgs,
+  RouteObject,
+  createBrowserRouter,
+} from "react-router-dom";
 import {
   // DoneRecipes,
   // FavoriteRecipes,
@@ -20,9 +24,15 @@ import {
   getCocktails,
   getCocktailsByFilter,
 } from "./services/menu/cocktailApi";
-import { toRecipeDetails } from "./utils/mappers";
+import {
+  toRecipeWithDetails,
+  toRecipeWithDetailsAndRecommendations,
+} from "./utils/mappers";
 import { cocktailIcon, mealIcon } from "./assets/icons";
-import { RecipeWithDetails } from "./store/slices/menuSlice";
+import {
+  RecipeWithDetails,
+  RecipeWithDetailsAndRecommendation,
+} from "./store/slices/menuSlice";
 
 type ArgsWithId = {
   id: string;
@@ -63,7 +73,9 @@ const routes: RouteObject[] = [
       {
         path: ":id",
         element: <RecipeDetails />,
-        loader: async (args): Promise<RecipeWithDetails> => {
+        loader: async (
+          args: LoaderFunctionArgs
+        ): Promise<RecipeWithDetailsAndRecommendation> => {
           const params = args.params as ArgsWithId;
           const drink = await getCocktailDetailsById(params.id, {
             signal: args.request.signal,
@@ -71,7 +83,10 @@ const routes: RouteObject[] = [
 
           if (drink) {
             const recommendationsForDrinks = await getMeals();
-            return toRecipeDetails(drink, recommendationsForDrinks);
+            return toRecipeWithDetailsAndRecommendations(
+              drink,
+              recommendationsForDrinks
+            );
           }
           throw new Response("Drink not found", { status: 404 });
         },
@@ -79,6 +94,19 @@ const routes: RouteObject[] = [
       {
         path: ":id/in-progress",
         element: <RecipeInProgress />,
+        loader: async (
+          args: LoaderFunctionArgs
+        ): Promise<RecipeWithDetails> => {
+          const params = args.params as ArgsWithId;
+          const drink = await getCocktailDetailsById(params.id, {
+            signal: args.request.signal,
+          });
+
+          if (drink) {
+            return toRecipeWithDetails(drink);
+          }
+          throw new Response("Drink not found", { status: 404 });
+        },
       },
     ],
   },
@@ -103,7 +131,9 @@ const routes: RouteObject[] = [
       {
         path: ":id",
         element: <RecipeDetails />,
-        loader: async (args): Promise<RecipeWithDetails> => {
+        loader: async (
+          args: LoaderFunctionArgs
+        ): Promise<RecipeWithDetailsAndRecommendation> => {
           const params = args.params as ArgsWithId;
           const meal = await getMealDetailsById(params.id, {
             signal: args.request.signal,
@@ -111,7 +141,10 @@ const routes: RouteObject[] = [
 
           if (meal) {
             const recommendationsForMeals = await getCocktails();
-            return toRecipeDetails(meal, recommendationsForMeals);
+            return toRecipeWithDetailsAndRecommendations(
+              meal,
+              recommendationsForMeals
+            );
           }
           throw new Response("Meal not found", { status: 404 });
         },
@@ -119,6 +152,19 @@ const routes: RouteObject[] = [
       {
         path: ":id/in-progress",
         element: <RecipeInProgress />,
+        loader: async (
+          args: LoaderFunctionArgs
+        ): Promise<RecipeWithDetails> => {
+          const params = args.params as ArgsWithId;
+          const meal = await getMealDetailsById(params.id, {
+            signal: args.request.signal,
+          });
+
+          if (meal) {
+            return toRecipeWithDetails(meal);
+          }
+          throw new Response("Meal not found", { status: 404 });
+        },
       },
     ],
   },

@@ -1,6 +1,10 @@
 import { Drink } from "@/services/menu/cocktailApi";
 import { Meal } from "@/services/menu/mealApi";
-import { Recipe, RecipeWithDetails } from "@/store/slices/menuSlice";
+import {
+  Recipe,
+  RecipeWithDetails,
+  RecipeWithDetailsAndRecommendation,
+} from "@/store/slices/menuSlice";
 
 function isMeal(recipe: Meal | Drink): recipe is Meal {
   return (recipe as Meal).strMeal !== undefined;
@@ -32,34 +36,72 @@ function combineIngredientWithMeasure(recipe: Meal | Drink) {
   }, []);
 }
 
-export function toRecipeDetails(
-  recipe: Meal,
-  recommendations: Drink[]
-): RecipeWithDetails;
+const getMappingErrorMessage = (type: string) =>
+  `Unexpected error mapping the recipe to ${type} type`;
 
-export function toRecipeDetails(
-  recipe: Drink,
-  recommendations: Meal[]
-): RecipeWithDetails;
+export function toRecipe(recipe: Meal | Drink): Recipe {
+  if (isMeal(recipe)) {
+    const mealRecipe = recipe as Meal;
 
-export function toRecipeDetails(
+    return {
+      type: "meal",
+      id: mealRecipe.idMeal,
+      img: mealRecipe.strMealThumb,
+      name: mealRecipe.strMeal,
+    };
+  } else if (isDrink(recipe)) {
+    const drinkRecipe = recipe as Drink;
+
+    return {
+      type: "drink",
+      id: drinkRecipe.idDrink,
+      img: drinkRecipe.strDrinkThumb,
+      name: drinkRecipe.strDrink,
+    };
+  }
+
+  throw new Error(getMappingErrorMessage("Recipe"));
+}
+
+export function toRecipeWithDetails(recipe: Meal | Drink): RecipeWithDetails {
+  if (isMeal(recipe)) {
+    const mealRecipe = recipe as Meal;
+
+    return {
+      ...toRecipe(mealRecipe),
+      category: mealRecipe.strCategory,
+      instructions: mealRecipe.strInstructions,
+      tags: mealRecipe.strTags || undefined,
+      video: mealRecipe.strYoutube || undefined,
+      nationality: mealRecipe.strArea,
+      ingredientsMeasures: combineIngredientWithMeasure(mealRecipe),
+    };
+  } else if (isDrink(recipe)) {
+    const drinkRecipe = recipe as Drink;
+
+    return {
+      ...toRecipe(drinkRecipe),
+      category: drinkRecipe.strCategory,
+      instructions: drinkRecipe.strInstructions,
+      alcoholic: drinkRecipe.strAlcoholic,
+      ingredientsMeasures: combineIngredientWithMeasure(drinkRecipe),
+      tags: drinkRecipe.strTags || undefined,
+    };
+  }
+
+  throw new Error(getMappingErrorMessage("RecipeWithDetails"));
+}
+
+export function toRecipeWithDetailsAndRecommendations(
   recipe: Meal | Drink,
   recommendations: Meal[] | Drink[]
-): RecipeWithDetails {
+): RecipeWithDetailsAndRecommendation {
   if (isMeal(recipe) && isDrink(recommendations[0])) {
-    const mealRecipe = recipe as Meal;
     const drinkRecommendations = recommendations as Drink[];
 
     return {
-      id: mealRecipe.idMeal,
-      type: "meal",
-      category: mealRecipe.strCategory,
-      img: mealRecipe.strMealThumb,
-      instructions: mealRecipe.strInstructions,
-      tags: mealRecipe.strTags || undefined,
-      name: mealRecipe.strMeal,
-      video: mealRecipe.strYoutube || undefined,
-      recommendedWith: drinkRecommendations.map(
+      ...toRecipeWithDetails(recipe),
+      recommendations: drinkRecommendations.map(
         ({ strDrink, strDrinkThumb, idDrink }) => ({
           type: "drink",
           img: strDrinkThumb,
@@ -67,21 +109,13 @@ export function toRecipeDetails(
           id: idDrink,
         })
       ),
-      nationality: mealRecipe.strArea,
-      ingredientsMeasures: combineIngredientWithMeasure(mealRecipe),
     };
   } else if (isDrink(recipe) && isMeal(recommendations[0])) {
-    const drinkRecipe = recipe as Drink;
     const mealRecommendations = recommendations as Meal[];
+
     return {
-      id: drinkRecipe.idDrink,
-      type: "drink",
-      category: drinkRecipe.strCategory,
-      img: drinkRecipe.strDrinkThumb,
-      instructions: drinkRecipe.strInstructions,
-      name: drinkRecipe.strDrink,
-      alcoholic: drinkRecipe.strAlcoholic,
-      recommendedWith: mealRecommendations.map(
+      ...toRecipeWithDetails(recipe),
+      recommendations: mealRecommendations.map(
         ({ strMeal, strMealThumb, idMeal }) => ({
           type: "meal",
           img: strMealThumb,
@@ -89,34 +123,10 @@ export function toRecipeDetails(
           id: idMeal,
         })
       ),
-      ingredientsMeasures: combineIngredientWithMeasure(drinkRecipe),
-      tags: drinkRecipe.strTags || undefined,
     };
   }
 
   throw new Error(
-    "Unexpected error mapping the recipe to RecipeWithDetails type"
+    getMappingErrorMessage("RecipeWithDetailsAndRecommendations")
   );
-}
-
-export function toRecipe(arg: Meal | Drink): Recipe {
-  if (isMeal(arg)) {
-    const mealRecipe = arg as Meal;
-    return {
-      type: "meal",
-      id: mealRecipe.idMeal,
-      img: mealRecipe.strMealThumb,
-      name: mealRecipe.strMeal,
-    };
-  } else if (isDrink(arg)) {
-    const drinkRecipe = arg as Drink;
-    return {
-      type: "drink",
-      id: drinkRecipe.idDrink,
-      img: drinkRecipe.strDrinkThumb,
-      name: drinkRecipe.strDrink,
-    };
-  }
-
-  throw new Error("Unexpected error mapping the recipe to Recipe type");
 }

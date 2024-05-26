@@ -14,7 +14,7 @@ export default function BasicLayout({
     <>
       <Header containSearchBar={containHeaderSearchBar} />
 
-      <main className="content">{children}</main>
+      <main className="basic-layout-content">{children}</main>
 
       <Footer />
     </>

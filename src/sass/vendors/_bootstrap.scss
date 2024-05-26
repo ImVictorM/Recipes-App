@@ -27,6 +27,9 @@ $input-border-color: lighten($secondary, 30%);
 $input-focus-box-shadow: 0 0 0 0.25rem rgba($secondary, 0.25);
 $input-focus-border-color: lighten($secondary, 5%);
 
+// *checkbox
+$form-check-input-border: 1px solid map-get($map: $theme-colors, $key: "slate");
+
 // *card
 $card-title-color: $dark;
 

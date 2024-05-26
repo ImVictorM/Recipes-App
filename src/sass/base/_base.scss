@@ -1,5 +1,6 @@
 @use "../themes/" as *;
-
+@use "../abstracts/" as *;
+@use "../vendors/" as *;
 
 .purple-title {
   text-transform: uppercase;
@@ -23,4 +24,32 @@
     scroll-padding-inline: 1rem;
   }
 }
+
+.button-fixed-bottom {
+  @extend %primary-button;
+
+  position: fixed;
+  bottom: 0;
+  left: 0.5em;
+  right: 0.5em;
+
+  @include respond-to("tabletS") {
+    left: auto;
+    right: 1em;
+    bottom: 1em;
+    width: auto;
+    border-radius: 30px;
+    padding: 1em 5em;
+    box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+}
+
+.recipe-ingredients {
+  padding-left: 2rem;
+  
+  @include respond-to("tabletS") {
+    padding-left: 3rem;
+  }
+}
+
 

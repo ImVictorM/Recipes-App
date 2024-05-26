@@ -1,11 +1,12 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { RecipeWithDetails } from "@/store/slices/menuSlice";
-import { RecipeBasicCard, RecipeHero } from "@/components";
-import { Button, Container, Stack } from "react-bootstrap";
+import { RecipeWithDetailsAndRecommendation } from "@/store/slices/menuSlice";
+import { RecipeBasicCard } from "@/components";
+import { Stack } from "react-bootstrap";
+import { HeroLayout } from "@/layouts";
 import "@/sass/pages/recipeDetails/_recipeDetails.scss";
 
 export default function RecipeDetails() {
-  const recipe = useLoaderData() as RecipeWithDetails;
+  const recipe = useLoaderData() as RecipeWithDetailsAndRecommendation;
   const navigate = useNavigate();
 
   const handleStartRecipe = () => {
@@ -13,14 +14,12 @@ export default function RecipeDetails() {
   };
 
   return (
-    <main>
-      <RecipeHero recipe={recipe} />
-
-      <Stack className="recipe-content" gap={4}>
+    <HeroLayout recipe={recipe}>
+      <Stack gap={4}>
         <Stack>
-          <Container fluid as="section">
+          <section>
             <h2>Ingredients</h2>
-            <ul className="recipe-content-ingredients border-box">
+            <ul className="recipe-ingredients border-box">
               {recipe.ingredientsMeasures.map(
                 ([ingredient, measure], index) => (
                   <li
@@ -32,34 +31,33 @@ export default function RecipeDetails() {
                 )
               )}
             </ul>
-          </Container>
+          </section>
 
-          <Container fluid as="section">
+          <section>
             <h2>Instructions</h2>
             <p data-testid="instructions" className="border-box">
               {recipe.instructions}
             </p>
-          </Container>
+          </section>
         </Stack>
 
         {recipe.video && (
-          <Container fluid as="section" className="recipe-content-video">
+          <section className="m-0" style={{ maxWidth: 800 }}>
             <div className="ratio ratio-16x9">
               <iframe
                 data-testid="video"
                 title="youtube video"
                 src={recipe.video.replace("watch?v=", "embed/")}
-                frameBorder="0"
                 allowFullScreen
               />
             </div>
-          </Container>
+          </section>
         )}
 
-        <Container fluid as="section">
+        <section>
           <h3>Recommended drinks</h3>
           <div className="recipe-content-recommended snaps-inline">
-            {recipe.recommendedWith.map((recipe, index) => {
+            {recipe.recommendations.map((recipe, index) => {
               return (
                 <RecipeBasicCard
                   recipe={recipe}
@@ -69,18 +67,17 @@ export default function RecipeDetails() {
               );
             })}
           </div>
-        </Container>
+        </section>
       </Stack>
 
-      <Button
-        variant="primary"
+      <button
         type="button"
-        className="recipe-start"
+        className="button-fixed-bottom"
         data-testid="start-recipe-btn"
         onClick={handleStartRecipe}
       >
         Start recipe
-      </Button>
-    </main>
+      </button>
+    </HeroLayout>
   );
 }

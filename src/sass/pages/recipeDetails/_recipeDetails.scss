@@ -1,50 +1,5 @@
 @use "@/sass/abstracts" as *;
 
-.recipe-start {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  
-  @include respond-to("tabletS") {
-    left: auto;
-    right: 1em;
-    bottom: 1em;
-    width: auto;
-    border-radius: 30px;
-    padding: 1em 5em;
-    box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  }
-}
-
-.recipe-content {
-  margin-top: 3em;
-  margin-bottom: 4em;
-  max-width: $max-content-width;
-
-  @include respond-to("tabletS") {
-    margin-bottom: 7em;
-  }
-
-  @include respond-to("desktopM") {
-    margin-left: 4rem;
-    margin-bottom: 3em;
-  }
-}
-
-.recipe-content-ingredients {
-  padding-left: 2rem;
-  
-  @include respond-to("tabletS") {
-    padding-left: 3rem;
-  }
-}
-
-.recipe-content-video {
-  max-width: 800px;
-  margin: 0;
-}
-
 .recipe-content-recommended {
   width: 100%;
   display: grid;

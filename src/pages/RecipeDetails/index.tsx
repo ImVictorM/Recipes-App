@@ -1,15 +1,39 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { RecipeWithDetailsAndRecommendation } from "@/store/slices/menuSlice";
+import {
+  RecipeWithDetailsAndRecommendation,
+  selectIsRecipeDone,
+  selectIsRecipeInProgress,
+  setRecipeInProgress,
+} from "@/store/slices/menuSlice";
 import { RecipeBasicCard } from "@/components";
 import { Stack } from "react-bootstrap";
 import { HeroLayout } from "@/layouts";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { selectUser } from "@/store/slices/userSlice";
+import { useRef } from "react";
 import "@/sass/pages/recipeDetails/_recipeDetails.scss";
 
 export default function RecipeDetails() {
   const recipe = useLoaderData() as RecipeWithDetailsAndRecommendation;
+  const user = useAppSelector(selectUser);
+  const isRecipeAlreadyDone = useAppSelector((state) =>
+    selectIsRecipeDone(state, recipe.id, user.email)
+  );
+  const isRecipeInProgress = useAppSelector((state) =>
+    selectIsRecipeInProgress(state, recipe, user.email)
+  );
+  // Needs to be static to no flicker the button
+  const isRecipeInProgressInitialStateRef = useRef(isRecipeInProgress);
+
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleStartRecipe = () => {
+    dispatch(setRecipeInProgress({ userEmail: user.email, recipe: recipe }));
+    navigate("in-progress");
+  };
+
+  const handleContinueRecipe = () => {
     navigate("in-progress");
   };
 
@@ -70,14 +94,26 @@ export default function RecipeDetails() {
         </section>
       </Stack>
 
-      <button
-        type="button"
-        className="button-fixed-bottom"
-        data-testid="start-recipe-btn"
-        onClick={handleStartRecipe}
-      >
-        Start recipe
-      </button>
+      {!isRecipeAlreadyDone &&
+        (isRecipeInProgressInitialStateRef.current ? (
+          <button
+            type="button"
+            className="button-fixed-bottom"
+            data-testid="continue-recipe-btn"
+            onClick={handleContinueRecipe}
+          >
+            Continue recipe
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="button-fixed-bottom"
+            data-testid="start-recipe-btn"
+            onClick={handleStartRecipe}
+          >
+            Start recipe
+          </button>
+        ))}
     </HeroLayout>
   );
 }

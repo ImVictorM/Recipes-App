@@ -2,12 +2,6 @@
 @use "../abstracts/" as *;
 @use "../vendors/" as *;
 
-.purple-title {
-  text-transform: uppercase;
-  font-weight: 700;
-  color: map-get($map: $theme-colors, $key: "purple");
-}
-
 .border-box {
   width: 100%;
   border-radius: 5px;

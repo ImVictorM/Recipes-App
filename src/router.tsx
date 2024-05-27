@@ -4,13 +4,13 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import {
-  // DoneRecipes,
   // FavoriteRecipes,
   Login,
   Recipes,
   // Profile,
   RecipeDetails,
   RecipeInProgress,
+  RecipesDone,
 } from "./pages";
 import {
   getMealDetailsById,
@@ -47,10 +47,10 @@ const routes: RouteObject[] = [
   //   path: "/favorite-recipes",
   //   element: <FavoriteRecipes />,
   // },
-  // {
-  //   path: "/done-recipes",
-  //   element: <DoneRecipes />,
-  // },
+  {
+    path: "/done-recipes",
+    element: <RecipesDone />,
+  },
   // {
   //   path: "/profile",
   //   element: <Profile />,

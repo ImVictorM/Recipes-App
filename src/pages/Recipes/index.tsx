@@ -16,7 +16,7 @@ import { toRecipe } from "@/utils/mappers";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AxiosRequestConfig, isAxiosError } from "axios";
-import { Loading } from "@/components";
+import { CenteredTitleWithIcon, Loading } from "@/components";
 import "@/sass/pages/recipes/_recipes.scss";
 
 type RecipesProps<T> = {
@@ -138,12 +138,7 @@ export default function Recipes<T extends Drink | Meal>({
 
   return (
     <BasicLayout containHeaderSearchBar>
-      <div className="recipe-title">
-        <img src={icon.src} alt={icon.alt} />
-        <h1 data-testid="page-title" className="purple-title">
-          {title}
-        </h1>
-      </div>
+      <CenteredTitleWithIcon icon={icon} title={title} />
 
       {visibility.showSearchBar && (
         <RecipeSearchBar onSearch={handleRecipesSearch} />

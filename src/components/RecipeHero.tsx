@@ -2,7 +2,7 @@ import { shareIcon, heartFillIcon, heartOutlineIcon } from "@/assets/icons";
 import { useAppSelector, useAppDispatch } from "@/hooks";
 import {
   RecipeWithDetails,
-  selectIsFavoriteRecipe,
+  selectIsRecipeFavorite,
   toggleFavoriteRecipe,
 } from "@/store/slices/menuSlice";
 import { selectUser } from "@/store/slices/userSlice";
@@ -19,7 +19,7 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const isFavorite = useAppSelector((state) =>
-    selectIsFavoriteRecipe(state, recipe.id, user.email)
+    selectIsRecipeFavorite(state, recipe.id, user.email)
   );
   const [shareTooltipMessage, setShareTooltipMessage] =
     useState("Copy recipe link");

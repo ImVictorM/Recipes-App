@@ -16,7 +16,7 @@ import "@/sass/pages/recipeDetails/_recipeDetails.scss";
 export default function RecipeDetails() {
   const recipe = useLoaderData() as RecipeWithDetailsAndRecommendation;
   const user = useAppSelector(selectUser);
-  const isRecipeAlreadyDone = useAppSelector((state) =>
+  const isRecipeDone = useAppSelector((state) =>
     selectIsRecipeDone(state, recipe.id, user.email)
   );
   const isRecipeInProgress = useAppSelector((state) =>
@@ -43,7 +43,7 @@ export default function RecipeDetails() {
         <Stack>
           <section>
             <h2>Ingredients</h2>
-            <ul className="recipe-ingredients border-box">
+            <ul className="ps-5 border-box">
               {recipe.ingredientsMeasures.map(
                 ([ingredient, measure], index) => (
                   <li
@@ -94,7 +94,7 @@ export default function RecipeDetails() {
         </section>
       </Stack>
 
-      {!isRecipeAlreadyDone &&
+      {!isRecipeDone &&
         (isRecipeInProgressInitialStateRef.current ? (
           <button
             type="button"

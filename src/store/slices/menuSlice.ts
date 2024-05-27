@@ -1,6 +1,6 @@
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import { getFromLocalStorage, setInLocalStorage } from "@/utils/localStorage";
+import { getFromLocalStorage, setToLocalStorage } from "@/utils/localStorage";
 
 export type RecipeType = "drink" | "meal";
 
@@ -25,28 +25,37 @@ export type RecipeWithDetailsAndRecommendation = RecipeWithDetails & {
   recommendations: Recipe[];
 };
 
-export type DoneRecipe = RecipeWithDetails & {
+export type RecipeDone = RecipeWithDetails & {
   doneDate: string;
 };
 
-export type InProgressRecipe = {
-  // id | ingredients
+/* 
+  Recipes in progress are indexed with the recipe id which leads to a list
+  of remaining ingredients to finish the recipe. If the list is 
+  empty, it means the recipe can be finished (all ingredients were checked).
+**/
+export type RecipeInProgress = {
   drinks: Record<string, string[]>;
   meals: Record<string, string[]>;
 };
 
 export type Menu = {
   recipes: Recipe[];
-  favoriteRecipes: Record<string, RecipeWithDetails[]>;
-  doneRecipes: Record<string, DoneRecipe[]>;
-  inProgressRecipes: Record<string, InProgressRecipe>;
+  recipesFavorite: Record<string, RecipeWithDetails[]>;
+  recipesDone: Record<string, RecipeDone[]>;
+  recipesInProgress: Record<string, RecipeInProgress>;
 };
+
+const recipesFavoriteLocalStorageKey = "favoriteRecipes";
+const recipesInProgressLocalStorageKey = "inProgressRecipes";
+const recipesDoneLocalStorageKey = "doneRecipes";
 
 const initialState: Menu = {
   recipes: [],
-  favoriteRecipes: getFromLocalStorage("favoriteRecipes") || {},
-  doneRecipes: {},
-  inProgressRecipes: getFromLocalStorage("inProgressRecipes") || {},
+  recipesFavorite: getFromLocalStorage(recipesFavoriteLocalStorageKey) || {},
+  recipesDone: getFromLocalStorage(recipesDoneLocalStorageKey) || {},
+  recipesInProgress:
+    getFromLocalStorage(recipesInProgressLocalStorageKey) || {},
 };
 
 const menuSlice = createSlice({
@@ -61,28 +70,77 @@ const menuSlice = createSlice({
       action: PayloadAction<{ userEmail: string; recipe: RecipeWithDetails }>
     ) => {
       const { recipe, userEmail } = action.payload;
-      const key = `${recipe.type}s` as keyof InProgressRecipe;
-      const initialInProgressState: InProgressRecipe = {
+      const key = `${recipe.type}s` as keyof RecipeInProgress;
+      const initialInProgressState: RecipeInProgress = {
         drinks: {},
         meals: {},
       };
       const userRecipesInProgress =
-        state.inProgressRecipes[userEmail] || initialInProgressState;
+        state.recipesInProgress[userEmail] || initialInProgressState;
 
       userRecipesInProgress[key][recipe.id] = recipe.ingredientsMeasures.map(
         ([ingredient]) => ingredient
       );
 
-      state.inProgressRecipes[userEmail] = userRecipesInProgress;
+      state.recipesInProgress[userEmail] = userRecipesInProgress;
 
-      setInLocalStorage("inProgressRecipes", state.inProgressRecipes);
+      setToLocalStorage(
+        recipesInProgressLocalStorageKey,
+        state.recipesInProgress
+      );
+    },
+    setRecipeDone: (
+      state,
+      action: PayloadAction<{ userEmail: string; recipe: RecipeDone }>
+    ) => {
+      const { recipe, userEmail } = action.payload;
+      const userRecipesDone = state.recipesDone[userEmail] || [];
+
+      state.recipesDone[userEmail] = [...userRecipesDone, recipe];
+
+      setToLocalStorage(recipesDoneLocalStorageKey, state.recipesDone);
+    },
+    toggleRecipeIngredient: (
+      state,
+      action: PayloadAction<{
+        ingredient: string;
+        recipeId: string;
+        recipeType: RecipeType;
+        isChecked: boolean;
+        userEmail: string;
+      }>
+    ) => {
+      const { ingredient, recipeId, recipeType, isChecked, userEmail } =
+        action.payload;
+      const recipeTypeKey = `${recipeType}s` as keyof RecipeInProgress;
+
+      if (!isChecked) {
+        // Adding a missing ingredient to the list
+        state.recipesInProgress[userEmail][recipeTypeKey][recipeId].push(
+          ingredient
+        );
+      } else {
+        // Remove checked ingredient from the list
+        const recipeIngredients =
+          state.recipesInProgress[userEmail][recipeTypeKey][recipeId];
+
+        state.recipesInProgress[userEmail][recipeTypeKey][recipeId] =
+          recipeIngredients.filter(
+            (currIngredient) => currIngredient !== ingredient
+          );
+      }
+
+      setToLocalStorage(
+        recipesInProgressLocalStorageKey,
+        state.recipesInProgress
+      );
     },
     toggleFavoriteRecipe: (
       state,
       action: PayloadAction<{ recipe: RecipeWithDetails; userEmail: string }>
     ) => {
       const { recipe, userEmail } = action.payload;
-      const userFavoriteRecipes = state.favoriteRecipes[userEmail] || [];
+      const userFavoriteRecipes = state.recipesFavorite[userEmail] || [];
       let isRecipeAlreadyFavorite = false;
 
       const updatedFavoriteRecipes: RecipeWithDetails[] =
@@ -92,19 +150,42 @@ const menuSlice = createSlice({
           return !recipeIsFavorite;
         });
 
-      state.favoriteRecipes[userEmail] = isRecipeAlreadyFavorite
+      state.recipesFavorite[userEmail] = isRecipeAlreadyFavorite
         ? updatedFavoriteRecipes
         : [...updatedFavoriteRecipes, recipe];
 
-      setInLocalStorage("favoriteRecipes", state.favoriteRecipes);
+      setToLocalStorage(recipesFavoriteLocalStorageKey, state.recipesFavorite);
+    },
+    removeRecipeInProgress: (
+      state,
+      action: PayloadAction<{
+        userEmail: string;
+        recipeId: string;
+        recipeType: RecipeType;
+      }>
+    ) => {
+      const { recipeId, userEmail, recipeType } = action.payload;
+      const recipeTypeKey = `${recipeType}s` as keyof RecipeInProgress;
+
+      const userRecipesInProgress = state.recipesInProgress[userEmail];
+
+      if (userRecipesInProgress && userRecipesInProgress[recipeTypeKey]) {
+        delete state.recipesInProgress[userEmail][recipeTypeKey][recipeId];
+
+        setToLocalStorage(
+          recipesInProgressLocalStorageKey,
+          state.recipesInProgress
+        );
+      }
     },
   },
 });
 
+/* Selects **/
 export const selectMenu = (state: RootState) => state.menu;
 
-export const selectIsFavoriteRecipe = createSelector(
-  (state: RootState) => state.menu.favoriteRecipes,
+export const selectIsRecipeFavorite = createSelector(
+  (state: RootState) => state.menu.recipesFavorite,
   (_state: RootState, recipeId: string) => recipeId,
   (_state: RootState, _recipeId: string, userEmail: string) => userEmail,
   (favoriteRecipes, recipeId: string, userEmail: string) => {
@@ -114,7 +195,7 @@ export const selectIsFavoriteRecipe = createSelector(
 );
 
 export const selectIsRecipeDone = createSelector(
-  (state: RootState) => state.menu.doneRecipes,
+  (state: RootState) => state.menu.recipesDone,
   (_state: RootState, recipeId: string) => recipeId,
   (_state: RootState, _recipeId: string, userEmail: string) => userEmail,
   (doneRecipes, recipeId, userEmail) => {
@@ -124,7 +205,7 @@ export const selectIsRecipeDone = createSelector(
 );
 
 export const selectIsRecipeInProgress = createSelector(
-  (state: RootState) => state.menu.inProgressRecipes,
+  (state: RootState) => state.menu.recipesInProgress,
   (_state: RootState, recipe: Recipe) => recipe,
   (_state: RootState, _recipe: Recipe, userEmail: string) => userEmail,
   (inProgressRecipes, recipe, userEmail) => {
@@ -134,17 +215,30 @@ export const selectIsRecipeInProgress = createSelector(
       return false;
     }
 
-    switch (recipe.type) {
-      case "drink":
-        return Boolean(userInProgressRecipes.drinks[recipe.id]);
-      case "meal":
-        return Boolean(userInProgressRecipes.meals[recipe.id]);
-      default:
-        return false;
-    }
+    const key = `${recipe.type}s` as keyof RecipeInProgress;
+
+    return Boolean(userInProgressRecipes[key][recipe.id]);
   }
 );
 
-export const { setRecipes, toggleFavoriteRecipe, setRecipeInProgress } =
-  menuSlice.actions;
+export const selectRecipeInProgressIngredients = createSelector(
+  (state: RootState) => state.menu.recipesInProgress,
+  (_state: RootState, recipe: Recipe) => recipe,
+  (_state: RootState, _recipe: Recipe, userEmail: string) => userEmail,
+  (inProgressRecipes, recipe, userEmail): string[] | null => {
+    const recipeTypeKey = `${recipe.type}s` as keyof RecipeInProgress;
+
+    return inProgressRecipes[userEmail][recipeTypeKey][recipe.id];
+  }
+);
+
+export const {
+  setRecipes,
+  toggleFavoriteRecipe,
+  setRecipeInProgress,
+  toggleRecipeIngredient,
+  setRecipeDone,
+  removeRecipeInProgress,
+} = menuSlice.actions;
+
 export default menuSlice;

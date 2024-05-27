@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import { getFromLocalStorage, setInLocalStorage } from "@/utils/localStorage";
+import { getFromLocalStorage, setToLocalStorage } from "@/utils/localStorage";
 
 export type User = {
   email: string;
@@ -24,7 +24,7 @@ const userSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.email = action.payload.email;
       state.password = action.payload.password;
-      setInLocalStorage(userKey, state);
+      setToLocalStorage(userKey, state);
     },
     removeUser: (state) => {
       state.email = "";

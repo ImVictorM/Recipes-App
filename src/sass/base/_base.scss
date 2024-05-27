@@ -44,12 +44,5 @@
   }
 }
 
-.recipe-ingredients {
-  padding-left: 2rem;
-  
-  @include respond-to("tabletS") {
-    padding-left: 3rem;
-  }
-}
 
 

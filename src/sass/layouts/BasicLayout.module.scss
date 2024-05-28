@@ -1,6 +1,6 @@
-@use "../abstracts/" as *;
+@use "../abstracts/variables" as *;
 
-.basic-layout-content {
+.content {
   max-width: $max-content-width;
   width: 100%;
   margin: 0 auto;

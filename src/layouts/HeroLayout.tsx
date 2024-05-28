@@ -1,7 +1,7 @@
 import { RecipeHero } from "@/components";
 import { RecipeWithDetails } from "@/store/slices/menuSlice";
 import { PropsWithChildren } from "react";
-import "@/sass/layouts/_heroLayout.scss";
+import styles from "@/sass/layouts/HeroLayout.module.scss";
 
 export type HeroLayoutProps = PropsWithChildren & {
   recipe: RecipeWithDetails;
@@ -12,7 +12,7 @@ export default function HeroLayout({ recipe, children }: HeroLayoutProps) {
     <>
       <RecipeHero recipe={recipe} />
 
-      <main className="hero-layout-content">{children}</main>
+      <main className={`${styles.content}`}>{children}</main>
     </>
   );
 }

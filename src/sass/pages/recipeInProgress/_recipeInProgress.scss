@@ -1,5 +1,0 @@
-@use "@/sass/themes" as *;
-
-.checked-ingredient {
-  text-decoration: line-through solid map-get($map: $theme-colors, $key: "black");
-} 

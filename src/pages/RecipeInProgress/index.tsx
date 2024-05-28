@@ -13,7 +13,6 @@ import { Form, Stack } from "react-bootstrap";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useEffect, useMemo } from "react";
 import { formatDateToDDMMYYYY } from "@/utils/date";
-import "@/sass/pages/recipeInProgress/_recipeInProgress.scss";
 
 export default function RecipeInProgress() {
   const recipe = useLoaderData() as RecipeWithDetails;
@@ -116,7 +115,7 @@ export default function RecipeInProgress() {
                         name={ingredient}
                       />
                       <Form.Check.Label
-                        className={checked ? "checked-ingredient" : ""}
+                        className={checked ? "line-through" : ""}
                       >{`${ingredient} ${measure}`}</Form.Check.Label>
                     </Form.Check>
                   );

@@ -1,7 +1,7 @@
-@use "@/sass/themes/" as *;
-@use "@/sass/abstracts/" as *;
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/mixins" as *;
 
-.search-form {
+.form {
   max-width: 600px;
   margin: 0.5em 1em;
   margin-top: 1em;
@@ -14,14 +14,14 @@
     margin: 0.5em auto;
   }
 
-  .search-form--search-input {
+  &__input {
     position: absolute;
     right: 0;
     left: 0;
     top: -1em;
   }
 
-  .search-form--checkbox {
+  &__checkbox {
     color: map-get($map: $theme-colors, $key: "white");
     white-space: nowrap;
   }

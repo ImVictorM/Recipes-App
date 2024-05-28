@@ -1,5 +1,5 @@
-@use "@/sass/themes/" as *;
-@use "@/sass/abstracts/" as *;
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/mixins" as *;
 
 .login {
   background-image: url("@/assets/images/loginBg.svg");
@@ -22,7 +22,7 @@
   }
 }
 
-.login-form {
+.login__form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,11 +36,11 @@
   }
 }
 
-.logo {
+.login__logo {
   width: 250px;
 }
 
-.login-title {
+.login__title {
   text-align: center;
   color: map-get($map: $theme-colors, $key: "purple");
   font-style: italic;

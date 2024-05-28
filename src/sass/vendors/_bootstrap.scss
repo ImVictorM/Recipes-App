@@ -1,8 +1,10 @@
-@use "../themes/" as *;
+@use "../themes/theme" as *;
 
-// Override bootstrap variables
+/*
+  Override bootstrap variables
+**/
 
-// *colors
+/* colors **/
 $primary: map-get($theme-colors, "gold");
 $secondary: map-get($theme-colors, "purple");
 $dark: map-get($theme-colors, "black");
@@ -10,7 +12,7 @@ $white: map-get($theme-colors, "white");
 $danger: map-get($theme-colors, "red");
 $headings-color: $dark;
 
-
+/* theme **/
 $theme-colors: map-merge(
   $theme-colors,
   (
@@ -22,19 +24,56 @@ $theme-colors: map-merge(
   ),
 );
 
-// *inputs
+/* inputs **/
 $input-border-color: lighten($secondary, 30%);
 $input-focus-box-shadow: 0 0 0 0.25rem rgba($secondary, 0.25);
 $input-focus-border-color: lighten($secondary, 5%);
 
-// *checkbox
+/* checkbox **/
 $form-check-input-border: 1px solid map-get($map: $theme-colors, $key: "slate");
 
-// *card
+/* card **/
 $card-title-color: $dark;
 
 @import "node_modules/bootstrap/scss/bootstrap";
 
+/*
+  Override pagination class
+**/
+.pagination {
+  @extend .pagination;
+
+  .page-item {
+    @extend .page-item;
+
+    & > * {
+      color: map-get($map: $theme-colors, $key: "black");
+
+      &:hover {
+        color: darken(map-get($map: $theme-colors, $key: "gold"), 7.5%);
+      }
+
+      &:focus {
+        color: map-get($map: $theme-colors, $key: "black");
+        background: darken(map-get($map: $theme-colors, $key: "white"), 5%);
+        box-shadow: 0 0 0 0.25rem rgba(map-get($map: $theme-colors, $key: "gold"), 0.25);
+      }
+    }
+    
+  
+    &.active {
+      span {
+        color: map-get($map: $theme-colors, $key: "black");
+        border: 1px solid darken(map-get($map: $theme-colors, $key: "gold"), 7.5%);
+        background-color: map-get($map: $theme-colors, $key: "gold");
+      }
+    }
+  }
+}
+
+/*
+  Override primary button styles
+**/
 .btn-primary {
   @include button-variant(
     $background: $primary,

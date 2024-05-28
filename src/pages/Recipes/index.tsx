@@ -14,7 +14,6 @@ import { CenteredTitleWithIcon, Loading } from "@/components";
 import RecipesFilterBySearch, {
   RecipesFilterBySearchFormState,
 } from "./components/RecipesFilterBySearch";
-import "@/sass/pages/recipes/_recipes.scss";
 
 type RecipesProps<T> = {
   icon: {

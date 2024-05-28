@@ -4,7 +4,7 @@ import { logo } from "@/assets/images";
 import { useAppDispatch } from "@/hooks";
 import { setUser } from "@/store/slices/userSlice";
 import { Button, Container, Form, Image, Stack } from "react-bootstrap";
-import "@/sass/pages/login/_login.scss";
+import styles from "@/sass/pages/Login/style.module.scss";
 
 export default function Login() {
   const [loginFormState, setLoginFormState] = useState({
@@ -46,11 +46,14 @@ export default function Login() {
 
   return (
     <Container fluid className="min-vh-100 p-0 d-flex justify-content-center">
-      <Container as="main" fluid className="login">
-        <Image src={logo} className="logo" alt="logo" />
+      <Container as="main" fluid className={`${styles.login}`}>
+        <Image src={logo} className={`${styles.login__logo}`} alt="logo" />
 
-        <Form className="login-form container-fluid" onSubmit={handleLogin}>
-          <Container as="h1" fluid className="login-title">
+        <Form
+          className={`${styles.login__form} container-fluid`}
+          onSubmit={handleLogin}
+        >
+          <Container as="h1" fluid className={`${styles.login__title}`}>
             Login
           </Container>
 

@@ -38,5 +38,6 @@
   }
 }
 
-
-
+.line-through {
+  text-decoration: line-through solid map-get($map: $theme-colors, $key: "black");
+}

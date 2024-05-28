@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { Col, Container, Pagination, Row } from "react-bootstrap";
 import { Recipe } from "@/store/slices/menuSlice";
 import { RecipeBasicCard } from "@/components";
-import "@/sass/pages/recipes/components/_recipesWithPagination.scss";
 
 export type RecipesWithPaginationProps = {
   recipes: Recipe[];
@@ -91,11 +90,7 @@ export default function RecipesWithPagination({
         className="d-flex justify-content-center align-items-center"
       >
         <Pagination className="my-4">
-          <Pagination.Prev
-            linkClassName="page-item"
-            as="button"
-            onClick={handleMoveToPreviousPage}
-          />
+          <Pagination.Prev as="button" onClick={handleMoveToPreviousPage} />
           {paginationItemsToShow.map((item, index) => {
             // if it is not a number, it is an ellipsis
             if (typeof item === "number") {
@@ -103,7 +98,6 @@ export default function RecipesWithPagination({
                 <Pagination.Item
                   as="button"
                   key={index}
-                  linkClassName="page-item"
                   active={currentPage === item}
                   onClick={() => handleMoveToSpecificPage(item)}
                 >
@@ -112,19 +106,9 @@ export default function RecipesWithPagination({
               );
             }
 
-            return (
-              <Pagination.Ellipsis
-                key={index}
-                linkClassName="page-item"
-                as="button"
-              />
-            );
+            return <Pagination.Ellipsis key={index} as="button" />;
           })}
-          <Pagination.Next
-            linkClassName="page-item"
-            as="button"
-            onClick={handleMoveToNextPage}
-          />
+          <Pagination.Next as="button" onClick={handleMoveToNextPage} />
         </Pagination>
       </Container>
     </Container>

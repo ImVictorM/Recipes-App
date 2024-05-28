@@ -1,6 +1,7 @@
-@use "@/sass/themes/" as *;
+@use "@/sass/themes/theme" as *;
 @use "@/sass/vendors/bootstrap" as *;
-@use "@/sass/abstracts/" as *;
+@use "@/sass/abstracts/variables" as *;
+@use "@/sass/abstracts/mixins" as *;
 
 .filters {
   position: relative;
@@ -12,8 +13,8 @@
     padding: 0 2.5em;
   }
 
-  .filter-arrow-left,
-  .filter-arrow-right {
+  .filters__arrow-left,
+  .filters__arrow-right {
     position: absolute;
     width: 40px;
     height: 100%;
@@ -43,36 +44,30 @@
     }
   }
 
-  .filter-arrow-left {
+  .filters__arrow-left {
     left: 0;
     background: linear-gradient(to right, #FFFFFF 80%, transparent);
   }
 
-  .filter-arrow-right {
+  .filters__arrow-right {
     right: 0;
     background: linear-gradient(to left, #FFFFFF 80%, transparent);
     justify-content: flex-end;
   }
 }
 
-.filters-scroller {
-  width: 100%;
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: auto;
-  gap: 0.5em;
-  overflow-x: auto;
+.filters__scroller {
+  @include scroll-inline(auto);
+
   -ms-overflow-style: none;
   scrollbar-width: none;
-  overscroll-behavior-inline: none;
-  padding: 0.5em 0;
 
   &::-webkit-scrollbar {
     display: none;
   }
 }
 
-.filter-button {
+.filter__scroller__button {
   @extend %primary-button;
 
   border-radius: 12px;

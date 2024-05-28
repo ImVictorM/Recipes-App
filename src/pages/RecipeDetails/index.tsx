@@ -11,7 +11,7 @@ import { HeroLayout } from "@/layouts";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { selectUser } from "@/store/slices/userSlice";
 import { useRef } from "react";
-import "@/sass/pages/recipeDetails/_recipeDetails.scss";
+import styles from "@/sass/pages/RecipeDetails/style.module.scss";
 
 export default function RecipeDetails() {
   const recipe = useLoaderData() as RecipeWithDetailsAndRecommendation;
@@ -80,7 +80,7 @@ export default function RecipeDetails() {
 
         <section>
           <h3>Recommended drinks</h3>
-          <div className="recipe-content-recommended snaps-inline">
+          <div className={`${styles.recipe__recommendations} snaps-inline`}>
             {recipe.recommendations.map((recipe, index) => {
               return (
                 <RecipeBasicCard

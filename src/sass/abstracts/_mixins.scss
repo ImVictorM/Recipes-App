@@ -18,3 +18,14 @@
          + 'Please make sure it is defined in `$breakpoints` map.';
   }
 }
+
+@mixin scroll-inline($minColumnWidth: auto) {
+  width: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: $minColumnWidth;
+  gap: 0.5em;
+  overflow-x: auto;
+  overscroll-behavior-inline: none;
+  padding: 0.5em 0;
+}

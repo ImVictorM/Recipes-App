@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { RecipeFilterOptions } from "@/services/menu/common";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import "@/sass/pages/recipes/components/_recipesFilterBySearch.scss";
+import styles from "@/sass/pages/Recipes/components/RecipesFilterBySearch.module.scss";
 
 export type RecipesFilterBySearchFormState = {
   searchQuery: string;
@@ -52,11 +52,11 @@ export default function RecipesFilterBySearch({
   };
 
   return (
-    <Form className="search-form" onSubmit={handleSearchSubmit}>
+    <Form className={`${styles.form}`} onSubmit={handleSearchSubmit}>
       <Form.Control
         data-testid="search-input"
         placeholder="Search for recipes"
-        className="search-form--search-input"
+        className={`${styles.form__input}`}
         maxLength={
           formState.searchFilter === RecipeFilterOptions.FIRST_LETTER ? 1 : 60
         }
@@ -81,7 +81,7 @@ export default function RecipesFilterBySearch({
               name="searchFilter"
               onChange={handleCheckboxInputChange}
               value={RecipeFilterOptions.NAME}
-              className="search-form--checkbox"
+              className={`${styles.form__checkbox}`}
             />
           </Col>
           <Col>
@@ -97,7 +97,7 @@ export default function RecipesFilterBySearch({
               }
               onChange={handleCheckboxInputChange}
               value={RecipeFilterOptions.INGREDIENT}
-              className="search-form--checkbox"
+              className={`${styles.form__checkbox}`}
             />
           </Col>
           <Col>
@@ -113,7 +113,7 @@ export default function RecipesFilterBySearch({
               name="searchFilter"
               onChange={handleCheckboxInputChange}
               value={RecipeFilterOptions.FIRST_LETTER}
-              className="search-form--checkbox"
+              className={`${styles.form__checkbox}`}
             />
           </Col>
         </Row>

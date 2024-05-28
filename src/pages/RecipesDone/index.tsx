@@ -3,6 +3,8 @@ import { CenteredTitleWithIcon, RecipesFilterByType } from "@/components";
 import { BasicLayout } from "@/layouts";
 
 export default function RecipesDone() {
+  const handleFilterByType = () => {};
+
   return (
     <BasicLayout>
       <CenteredTitleWithIcon
@@ -10,7 +12,7 @@ export default function RecipesDone() {
         icon={{ src: checkCircularIcon, alt: "check" }}
       />
 
-      <RecipesFilterByType />
+      <RecipesFilterByType onFilterByType={handleFilterByType} />
     </BasicLayout>
   );
 }

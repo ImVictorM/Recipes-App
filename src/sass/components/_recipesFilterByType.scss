@@ -1,0 +1,30 @@
+@use "../themes/" as *;
+@use "../abstracts/mixins" as *;
+
+  ///d-flex justify-content-center gap-5 my-3
+.recipes-filter {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+
+  @include respond-to("tabletS") {
+    gap: 3rem;
+  }
+}
+
+.button-filter {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  &-text {
+    color: map-get($map: $theme-colors, $key: "gray")
+  }
+}

@@ -1,7 +1,7 @@
-import { RecipeHero } from "@/components";
+import { RecipeHero } from "./components";
 import { RecipeWithDetails } from "@/store/slices/menuSlice";
 import { PropsWithChildren } from "react";
-import styles from "@/sass/layouts/HeroLayout.module.scss";
+import styles from "@/sass/layouts/HeroLayout/style.module.scss";
 
 export type HeroLayoutProps = PropsWithChildren & {
   recipe: RecipeWithDetails;

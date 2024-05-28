@@ -1,4 +1,3 @@
-import { Header, Footer } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { removeUser, selectUser } from "@/store/slices/userSlice";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,7 +14,7 @@ export default function Profile() {
 
   return (
     <div>
-      <Header title="Profile" />
+      {/* <Header title="Profile" /> */}
       <h4 className="text-center mt-5 email" data-testid="profile-email">
         {user.email}
       </h4>
@@ -40,7 +39,7 @@ export default function Profile() {
         </button>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

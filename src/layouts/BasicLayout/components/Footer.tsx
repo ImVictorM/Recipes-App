@@ -1,6 +1,6 @@
 import { cocktailIcon, mealIcon } from "@/assets/icons";
 import { Container, Image, Nav } from "react-bootstrap";
-import styles from "@/sass/components/Footer.module.scss";
+import styles from "@/sass/layouts/BasicLayout/components/Footer.module.scss";
 
 export default function Footer() {
   return (

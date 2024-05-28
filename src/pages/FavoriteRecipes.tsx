@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
-import Header from '../components/Header';
+import { Component } from "react";
+// import Header from "../layouts/BasicLayout/components/Header";
 
 class FavoriteRecipes extends Component {
   render() {
     return (
-      <div>
-        <Header title="Favorite Recipes" search={ false } />
-      </div>
+      <div>{/* <Header title="Favorite Recipes" search={false} /> */}</div>
     );
   }
 }

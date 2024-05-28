@@ -9,7 +9,7 @@ import { selectUser } from "@/store/slices/userSlice";
 import { Container, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { copyToClipboard } from "@/utils/clipboard";
 import { useState } from "react";
-import styles from "@/sass/components/RecipeHero.module.scss";
+import styles from "@/sass/layouts/HeroLayout/components/RecipeHero.module.scss";
 
 export type RecipeHeroProps = {
   recipe: RecipeWithDetails;

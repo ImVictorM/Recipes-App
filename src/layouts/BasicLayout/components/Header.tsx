@@ -4,7 +4,7 @@ import { headerLogo } from "@/assets/images";
 import { useAppDispatch } from "@/hooks";
 import { toggleSearchBarVisibility } from "@/store/slices/visibilitySlice";
 import { Container, Image, Stack } from "react-bootstrap";
-import styles from "@/sass/components/Header.module.scss";
+import styles from "@/sass/layouts/BasicLayout/components/Header.module.scss";
 
 export type HeaderProps = {
   containSearchBar?: boolean;

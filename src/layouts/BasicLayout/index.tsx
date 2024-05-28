@@ -1,6 +1,6 @@
-import { Footer, Header } from "@/components";
+import { Footer, Header } from "./components";
 import { PropsWithChildren } from "react";
-import styles from "@/sass/layouts/BasicLayout.module.scss";
+import styles from "@/sass/layouts/BasicLayout/style.module.scss";
 
 export type BasicLayoutProps = PropsWithChildren & {
   containHeaderSearchBar?: boolean;

@@ -1,6 +1,6 @@
 import { cocktailIcon, mealIcon } from "@/assets/icons";
 import { Container, Image, Nav } from "react-bootstrap";
-import "@/sass/components/_footer.scss";
+import styles from "@/sass/components/Footer.module.scss";
 
 export default function Footer() {
   return (
@@ -8,9 +8,9 @@ export default function Footer() {
       as="footer"
       fluid
       data-testid="footer"
-      className="footer fixed-bottom"
+      className={`${styles.footer} fixed-bottom`}
     >
-      <Nav as="nav" className="footer-content">
+      <Nav as="nav" className={`${styles.footer__nav}`}>
         <Nav.Item>
           <Nav.Link href="/drinks">
             <Image

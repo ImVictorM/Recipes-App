@@ -9,7 +9,7 @@ import { selectUser } from "@/store/slices/userSlice";
 import { Container, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { copyToClipboard } from "@/utils/clipboard";
 import { useState } from "react";
-import "@/sass/components/_recipeHero.scss";
+import styles from "@/sass/components/RecipeHero.module.scss";
 
 export type RecipeHeroProps = {
   recipe: RecipeWithDetails;
@@ -49,8 +49,17 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
   };
 
   return (
-    <Container fluid as="section" className="hero" style={heroBackgroundStyle}>
-      <Container fluid className="hero-container mt-2 py-4">
+    <Container
+      fluid
+      as="section"
+      className={`${styles.hero}`}
+      style={heroBackgroundStyle}
+    >
+      <Container
+        as="header"
+        fluid
+        className={`${styles.hero__header} mt-2 py-4`}
+      >
         <div className="d-flex gap-3">
           <OverlayTrigger
             placement="left-end"
@@ -67,7 +76,11 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
               data-testid="share-btn"
               className="bg-transparent"
             >
-              <img src={shareIcon} alt="share" className="icon" />
+              <img
+                src={shareIcon}
+                alt="share"
+                className={`${styles.hero__header__icon}`}
+              />
             </button>
           </OverlayTrigger>
 
@@ -89,18 +102,24 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
               <img
                 src={isFavorite ? heartFillIcon : heartOutlineIcon}
                 alt="heart"
-                className="icon"
+                className={`${styles.hero__header__icon}`}
               />
             </button>
           </OverlayTrigger>
         </div>
       </Container>
 
-      <div className="hero-text">
-        <h1 data-testid="recipe-title" className="hero-text-title">
+      <div className={`${styles.hero__presentation}`}>
+        <h1
+          data-testid="recipe-title"
+          className={`${styles.hero__presentation__title}`}
+        >
           {recipe.name}
         </h1>
-        <h4 data-testid="recipe-category" className="hero-text-category">
+        <h4
+          data-testid="recipe-category"
+          className={`${styles.hero__presentation__category}`}
+        >
           {recipe.alcoholic ? (
             <>
               <span data-testid="recipe-alcoholic">{recipe.alcoholic}</span>{" "}

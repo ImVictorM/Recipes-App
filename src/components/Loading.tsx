@@ -1,9 +1,9 @@
 import { Spinner } from "react-bootstrap";
-import "@/sass/components/_loading.scss";
+import styles from "@/sass/components/Loading.module.scss";
 
 export default function Loading() {
   return (
-    <div className="loading">
+    <div className={`${styles.loading}`}>
       <Spinner variant="primary" animation="border" />
     </div>
   );

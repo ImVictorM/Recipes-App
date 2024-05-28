@@ -4,7 +4,7 @@ import { headerLogo } from "@/assets/images";
 import { useAppDispatch } from "@/hooks";
 import { toggleSearchBarVisibility } from "@/store/slices/visibilitySlice";
 import { Container, Image, Stack } from "react-bootstrap";
-import "@/sass/components/_header.scss";
+import styles from "@/sass/components/Header.module.scss";
 
 export type HeaderProps = {
   containSearchBar?: boolean;
@@ -18,15 +18,8 @@ export default function Header({ containSearchBar }: HeaderProps) {
   };
 
   return (
-    <Container
-      as="header"
-      fluid
-      className="header d-flex align-items-center justify-content-center"
-    >
-      <Container
-        fluid
-        className="header-content d-flex align-items-center justify-content-between"
-      >
+    <Container as="header" fluid className={`${styles.header}`}>
+      <Container fluid className={`${styles.header__inner}`}>
         <Image src={headerLogo} alt="recipes app logo" />
 
         <Stack direction="horizontal" gap={4}>
@@ -35,7 +28,7 @@ export default function Header({ containSearchBar }: HeaderProps) {
               data-testid="search-top-btn"
               type="button"
               onClick={handleSearchBarVisibility}
-              className="header-search-button"
+              className={`${styles["header__search-button"]}`}
             >
               <Image src={searchIcon} alt="search magnifying glass" />
             </button>

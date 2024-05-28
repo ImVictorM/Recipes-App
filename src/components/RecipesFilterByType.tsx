@@ -3,8 +3,8 @@ import {
   mealCircularIcon,
   cocktailCircularIcon,
 } from "@/assets/icons";
-import "@/sass/components/_recipesFilterByType.scss";
 import { RecipeType } from "@/store/slices/menuSlice";
+import styles from "@/sass/components/RecipesFilterByType.module.scss";
 
 export type RecipesFilterByTypeProps = {
   onFilterByType: (type: RecipeType | "all") => void;
@@ -14,32 +14,41 @@ export default function RecipesFilterByType({
   onFilterByType,
 }: RecipesFilterByTypeProps) {
   return (
-    <div className="recipes-filter">
-      <button onClick={() => onFilterByType("all")} className="button-filter">
+    <div className={`${styles.filters}`}>
+      <button
+        onClick={() => onFilterByType("all")}
+        className={`${styles.filters__button}`}
+      >
         <img
           src={mealAndDrinkCircularIcon}
           alt="circular icon an hamburger and a soda"
-          className="button-filter-img"
+          className={`${styles.filters__button__img}`}
         />
-        <span className="button-filter-text">All</span>
+        <span className={`${styles.filters__button__text}`}>All</span>
       </button>
 
-      <button onClick={() => onFilterByType("meal")} className="button-filter">
+      <button
+        onClick={() => onFilterByType("meal")}
+        className={`${styles.filters__button}`}
+      >
         <img
           src={mealCircularIcon}
           alt="circular icon with a plate and cutlery"
-          className="button-filter-img"
+          className={`${styles.filters__button__img}`}
         />
-        <span className="button-filter-text">Food</span>
+        <span className={`${styles.filters__button__text}`}>Food</span>
       </button>
 
-      <button onClick={() => onFilterByType("drink")} className="button-filter">
+      <button
+        onClick={() => onFilterByType("drink")}
+        className={`${styles.filters__button}`}
+      >
         <img
-          className="button-filter-img"
+          className={`${styles.filters__button__img}`}
           src={cocktailCircularIcon}
           alt="circular icon with a cocktail"
         />
-        <span className="button-filter-text">Drinks</span>
+        <span className={`${styles.filters__button__text}`}>Drinks</span>
       </button>
     </div>
   );

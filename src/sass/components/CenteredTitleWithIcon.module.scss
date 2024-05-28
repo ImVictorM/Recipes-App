@@ -1,17 +1,17 @@
-@use "../themes/" as *;
+@use "../themes/theme" as *;
 
-.centered-title {
+.title {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  img {
+  &__img {
     width: 40px;
     height: 40px;
   }
 
-  h1 {
+  &__text {
     text-transform: uppercase;
     font-weight: 700;
     color: map-get($map: $theme-colors, $key: "purple");

@@ -1,6 +1,6 @@
 import { Card, Container } from "react-bootstrap";
 import { Recipe } from "@/store/slices/menuSlice";
-import "@/sass/components/_recipeBasicCard.scss";
+import styles from "@/sass/components/RecipeBasicCard.module.scss";
 
 export type RecipeBasicCardProps = {
   recipe: Recipe;
@@ -15,15 +15,15 @@ export default function RecipeBasicCard({
 }: RecipeBasicCardProps) {
   return (
     <Card
-      className={`recipe-card ${
-        scaleOnHover ? "recipe-card--scale-on-hover" : ""
+      className={`${styles["recipe-card"]} ${
+        scaleOnHover ? `${styles["recipe-card--scale-on-hover"]}` : ""
       } shadow m-0`}
     >
       <Card.Link
         href={type === "meal" ? `/meals/${id}` : `/drinks/${id}`}
         className="text-decoration-none"
       >
-        <Container fluid className="recipe-card-img p-0">
+        <Container fluid className={`${styles["recipe-card__img"]}`}>
           <Card.Img
             variant="top"
             src={img}
@@ -32,9 +32,9 @@ export default function RecipeBasicCard({
           />
         </Container>
 
-        <Card.Body className="recipe-card-body">
+        <Card.Body className={`${styles["recipe-card__body"]}`}>
           <Card.Title
-            className="recipe-card-body-title"
+            className={`${styles["recipe-card__body__title"]}`}
             title={name}
             data-testid={`${index}-card-name`}
           >

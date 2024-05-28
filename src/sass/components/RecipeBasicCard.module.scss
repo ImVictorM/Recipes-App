@@ -1,4 +1,4 @@
-@use "@/sass/themes/" as *;
+@use "../themes/theme" as *;
 
 .recipe-card {
   max-width: 400px;
@@ -6,8 +6,9 @@
 }
 
 .recipe-card--scale-on-hover {
-  .recipe-card-img {
+  .recipe-card__img {
     border-radius: 5px 5px 0 0;
+    padding: 0;
     overflow: hidden;
 
     img {
@@ -17,16 +18,16 @@
 
 
   &:hover, &:focus {
-    .recipe-card-img img {
+    .recipe-card__img img {
       transform: scale(1.1);
     }
   }
 }
 
-.recipe-card-body {
+.recipe-card__body {
   min-height: 0;
 
-  &-title {
+  &__title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

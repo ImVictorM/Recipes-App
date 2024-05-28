@@ -1,5 +1,5 @@
 import { checkCircularIcon } from "@/assets/icons";
-import { CenteredTitleWithIcon, RecipesFilter } from "@/components";
+import { CenteredTitleWithIcon, RecipesFilterByType } from "@/components";
 import { BasicLayout } from "@/layouts";
 
 export default function RecipesDone() {
@@ -10,7 +10,7 @@ export default function RecipesDone() {
         icon={{ src: checkCircularIcon, alt: "check" }}
       />
 
-      <RecipesFilter />
+      <RecipesFilterByType />
     </BasicLayout>
   );
 }

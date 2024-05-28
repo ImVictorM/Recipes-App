@@ -1,10 +1,4 @@
-import {
-  RecipeFiltersByCategory,
-  RecipeListWithPagination,
-} from "./components";
-import RecipeSearchBar, {
-  RecipeSearchBarFormState,
-} from "@/pages/Recipes/components/RecipeSearchBar";
+import { RecipesFilterByCategory, RecipesWithPagination } from "./components";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { BasicLayout } from "@/layouts";
 import { Drink } from "@/services/menu/cocktailApi";
@@ -17,6 +11,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AxiosRequestConfig, isAxiosError } from "axios";
 import { CenteredTitleWithIcon, Loading } from "@/components";
+import RecipesFilterBySearch, {
+  RecipesFilterBySearchFormState,
+} from "./components/RecipesFilterBySearch";
 import "@/sass/pages/recipes/_recipes.scss";
 
 type RecipesProps<T> = {
@@ -81,7 +78,9 @@ export default function Recipes<T extends Drink | Meal>({
     abortControllerRef.current = new AbortController();
   };
 
-  const handleRecipesSearch = async (formState: RecipeSearchBarFormState) => {
+  const handleRecipesSearch = async (
+    formState: RecipesFilterBySearchFormState
+  ) => {
     await fetchWithControllers(async () => {
       const response = await onGetRecipesByFilter(
         formState.searchQuery,
@@ -141,10 +140,10 @@ export default function Recipes<T extends Drink | Meal>({
       <CenteredTitleWithIcon icon={icon} title={title} />
 
       {visibility.showSearchBar && (
-        <RecipeSearchBar onSearch={handleRecipesSearch} />
+        <RecipesFilterBySearch onSearch={handleRecipesSearch} />
       )}
 
-      <RecipeFiltersByCategory
+      <RecipesFilterByCategory
         categories={categories}
         onFilterByCategory={handleFetchRecipesByCategory}
         onFilterByAll={handleFetchRecipesWithoutFilter}
@@ -153,7 +152,7 @@ export default function Recipes<T extends Drink | Meal>({
       {isLoading ? (
         <Loading />
       ) : (
-        <RecipeListWithPagination recipes={menu.recipes} />
+        <RecipesWithPagination recipes={menu.recipes} />
       )}
     </BasicLayout>
   );

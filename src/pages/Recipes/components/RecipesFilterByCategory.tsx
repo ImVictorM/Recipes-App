@@ -2,19 +2,19 @@ import { RecipeCategory } from "@/services/menu/common";
 import { arrowLeftIcon, arrowRightIcon } from "@/assets/icons";
 import { useRef } from "react";
 import { useLinearScroll } from "@/hooks";
-import "@/sass/pages/recipes/components/_recipeFiltersByCategory.scss";
+import "@/sass/pages/recipes/components/_recipesFilterByCategory.scss";
 
-export type RecipeFiltersByCategoryProps = {
+export type RecipesFilterByCategoryProps = {
   categories: RecipeCategory[];
   onFilterByCategory: (category: string) => void;
   onFilterByAll: () => void;
 };
 
-export default function RecipeFiltersByCategory({
+export default function RecipesFilterByCategory({
   onFilterByCategory,
   categories,
   onFilterByAll,
-}: RecipeFiltersByCategoryProps) {
+}: RecipesFilterByCategoryProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const { isAtEnd, isAtStart, scrollTo } = useLinearScroll(scrollerRef);
 

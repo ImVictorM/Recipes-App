@@ -2,15 +2,15 @@ import { useMemo, useState } from "react";
 import { Col, Container, Pagination, Row } from "react-bootstrap";
 import { Recipe } from "@/store/slices/menuSlice";
 import { RecipeBasicCard } from "@/components";
-import "@/sass/pages/recipes/components/_recipeListWithPagination.scss";
+import "@/sass/pages/recipes/components/_recipesWithPagination.scss";
 
-export type RecipeListWithPaginationProps = {
+export type RecipesWithPaginationProps = {
   recipes: Recipe[];
 };
 
-export default function RecipeListWithPagination({
+export default function RecipesWithPagination({
   recipes,
-}: RecipeListWithPaginationProps) {
+}: RecipesWithPaginationProps) {
   const ITEMS_PER_PAGE = 12;
   const MAX_PAGE_BLOCKS_UI = 7;
   const totalPages = Math.max(Math.floor(recipes.length / ITEMS_PER_PAGE), 1);

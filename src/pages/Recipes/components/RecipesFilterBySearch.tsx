@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { RecipeFilterOptions } from "@/services/menu/common";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import "@/sass/pages/recipes/components/_recipeSearchBar.scss";
+import "@/sass/pages/recipes/components/_recipesFilterBySearch.scss";
 
-export type RecipeSearchBarFormState = {
+export type RecipesFilterBySearchFormState = {
   searchQuery: string;
   searchFilter: RecipeFilterOptions;
 };
 
-export type RecipeSearchBarProps = {
-  onSearch: (formState: RecipeSearchBarFormState) => void;
+export type RecipesFilterBySearchProps = {
+  onSearch: (formState: RecipesFilterBySearchFormState) => void;
 };
 
-export default function RecipeSearchBar({ onSearch }: RecipeSearchBarProps) {
-  const [formState, setFormState] = useState<RecipeSearchBarFormState>({
+export default function RecipesFilterBySearch({
+  onSearch,
+}: RecipesFilterBySearchProps) {
+  const [formState, setFormState] = useState<RecipesFilterBySearchFormState>({
     searchQuery: "",
     searchFilter: RecipeFilterOptions.NAME,
   });

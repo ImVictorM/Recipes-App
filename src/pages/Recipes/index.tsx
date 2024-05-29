@@ -1,4 +1,4 @@
-import { RecipesFilterByCategory, RecipesWithPagination } from "./components";
+import { RecipesFilterByCategory } from "./components";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { BasicLayout } from "@/layouts";
 import { Drink } from "@/services/menu/cocktailApi";
@@ -10,7 +10,12 @@ import { toRecipe } from "@/utils/mappers";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AxiosRequestConfig, isAxiosError } from "axios";
-import { CenteredTitleWithIcon, Loading } from "@/components";
+import {
+  CenteredTitleWithIcon,
+  LoadingSpinner,
+  RecipeBasicCard,
+  ListWithPagination,
+} from "@/components";
 import RecipesFilterBySearch, {
   RecipesFilterBySearchFormState,
 } from "./components/RecipesFilterBySearch";
@@ -42,6 +47,7 @@ export default function Recipes<T extends Drink | Meal>({
   const menu = useAppSelector(selectMenu);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+
   // All the API calls in this page updates the same state using setRecipes,
   // so using a single abort controller is a good approach
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -77,7 +83,7 @@ export default function Recipes<T extends Drink | Meal>({
     abortControllerRef.current = new AbortController();
   };
 
-  const handleRecipesSearch = async (
+  const handleFetchRecipesBySearch = async (
     formState: RecipesFilterBySearchFormState
   ) => {
     await fetchWithControllers(async () => {
@@ -139,7 +145,7 @@ export default function Recipes<T extends Drink | Meal>({
       <CenteredTitleWithIcon icon={icon} title={title} />
 
       {visibility.showSearchBar && (
-        <RecipesFilterBySearch onSearch={handleRecipesSearch} />
+        <RecipesFilterBySearch onSearch={handleFetchRecipesBySearch} />
       )}
 
       <RecipesFilterByCategory
@@ -149,9 +155,19 @@ export default function Recipes<T extends Drink | Meal>({
       />
 
       {isLoading ? (
-        <Loading />
+        <LoadingSpinner />
       ) : (
-        <RecipesWithPagination recipes={menu.recipes} />
+        <ListWithPagination
+          onCreateItemCard={(recipe, index) => (
+            <RecipeBasicCard
+              data-testid={`${index}-recipe-card`}
+              recipe={recipe}
+              index={index}
+              scaleOnHover
+            />
+          )}
+          items={menu.recipes}
+        />
       )}
     </BasicLayout>
   );

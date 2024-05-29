@@ -1,18 +1,22 @@
 import { useMemo, useState } from "react";
 import { Col, Container, Pagination, Row } from "react-bootstrap";
-import { Recipe } from "@/store/slices/menuSlice";
-import { RecipeBasicCard } from "@/components";
 
-export type RecipesWithPaginationProps = {
-  recipes: Recipe[];
+export type ItemWithId = {
+  id: string;
 };
 
-export default function RecipesWithPagination({
-  recipes,
-}: RecipesWithPaginationProps) {
+export type ListWithPaginationProps<T extends ItemWithId> = {
+  items: T[];
+  onCreateItemCard: (item: T, index: number) => React.ReactElement;
+};
+
+export default function ListWithPagination<T extends ItemWithId>({
+  items,
+  onCreateItemCard,
+}: ListWithPaginationProps<T>) {
   const ITEMS_PER_PAGE = 12;
   const MAX_PAGE_BLOCKS_UI = 7;
-  const totalPages = Math.max(Math.floor(recipes.length / ITEMS_PER_PAGE), 1);
+  const totalPages = Math.max(Math.floor(items.length / ITEMS_PER_PAGE), 1);
   const [currentPage, setCurrentPage] = useState(1);
 
   const uiItemsIndex = useMemo(() => {
@@ -74,12 +78,12 @@ export default function RecipesWithPagination({
   return (
     <Container as="section" fluid>
       <Row xs={1} sm={2} md={3} as="ul" className="list-unstyled p-0 g-4 m-0">
-        {recipes
+        {items
           .slice(uiItemsIndex.firstItemIndex, uiItemsIndex.lastItemIndex)
-          .map((recipe, index) => {
+          .map((item, index) => {
             return (
-              <Col as="li" key={recipe.id} data-testid={`${index}-recipe-card`}>
-                <RecipeBasicCard recipe={recipe} index={index} scaleOnHover />
+              <Col as="li" key={item.id}>
+                {onCreateItemCard(item, index)}
               </Col>
             );
           })}

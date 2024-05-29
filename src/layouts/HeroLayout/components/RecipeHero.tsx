@@ -1,5 +1,9 @@
 import { shareIcon, heartFillIcon, heartOutlineIcon } from "@/assets/icons";
-import { useAppSelector, useAppDispatch } from "@/hooks";
+import {
+  useAppSelector,
+  useAppDispatch,
+  useCopyToClipboardWithTooltip,
+} from "@/hooks";
 import {
   RecipeWithDetails,
   selectIsRecipeFavorite,
@@ -7,9 +11,11 @@ import {
 } from "@/store/slices/menuSlice";
 import { selectUser } from "@/store/slices/userSlice";
 import { Container, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { copyToClipboard } from "@/utils/clipboard";
-import { useState } from "react";
 import styles from "@/sass/layouts/HeroLayout/components/RecipeHero.module.scss";
+import {
+  SHARE_TOOLTIP_MESSAGE_INITIAL,
+  SHARE_TOOLTIP_MESSAGE_ON_COPY,
+} from "@/utils/constants";
 
 export type RecipeHeroProps = {
   recipe: RecipeWithDetails;
@@ -21,20 +27,17 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
   const isFavorite = useAppSelector((state) =>
     selectIsRecipeFavorite(state, recipe.id, user.email)
   );
-  const [shareTooltipMessage, setShareTooltipMessage] =
-    useState("Copy recipe link");
+  const { copyAndSetTooltipMessage, tooltipMessage: shareTooltipMessage } =
+    useCopyToClipboardWithTooltip(
+      SHARE_TOOLTIP_MESSAGE_INITIAL,
+      SHARE_TOOLTIP_MESSAGE_ON_COPY
+    );
 
   const handleCopyToClipboard = () => {
-    const endpoint =
-      recipe.type === "meal" ? `meals/${recipe.id}` : `drinks/${recipe.id}`;
+    const endpoint = `${recipe.type}s/${recipe.id}`;
     const recipePath = `${window.origin}/${endpoint}`;
 
-    copyToClipboard(recipePath);
-    setShareTooltipMessage("Recipe link copied!");
-
-    setTimeout(() => {
-      setShareTooltipMessage("Copy recipe link");
-    }, 3000);
+    copyAndSetTooltipMessage(recipePath);
   };
 
   const handleToggleFavorite = () => {

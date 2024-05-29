@@ -71,7 +71,7 @@ export function toRecipeWithDetails(recipe: Meal | Drink): RecipeWithDetails {
       ...toRecipe(mealRecipe),
       category: mealRecipe.strCategory,
       instructions: mealRecipe.strInstructions,
-      tags: mealRecipe.strTags || undefined,
+      tags: mealRecipe.strTags?.match(/[A-Z][a-z]*/g) || [],
       video: mealRecipe.strYoutube || undefined,
       nationality: mealRecipe.strArea,
       ingredientsMeasures: combineIngredientWithMeasure(mealRecipe),
@@ -85,7 +85,7 @@ export function toRecipeWithDetails(recipe: Meal | Drink): RecipeWithDetails {
       instructions: drinkRecipe.strInstructions,
       alcoholic: drinkRecipe.strAlcoholic,
       ingredientsMeasures: combineIngredientWithMeasure(drinkRecipe),
-      tags: drinkRecipe.strTags || undefined,
+      tags: drinkRecipe.strTags?.match(/[A-Z][a-z]*/g) || [],
     };
   }
 

@@ -18,7 +18,7 @@ export type RecipeWithDetails = Recipe & {
   alcoholic?: string;
   category: string;
   nationality?: string;
-  tags?: string;
+  tags: string[];
 };
 
 export type RecipeWithDetailsAndRecommendation = RecipeWithDetails & {
@@ -229,6 +229,22 @@ export const selectRecipeInProgressIngredients = createSelector(
     const recipeTypeKey = `${recipe.type}s` as keyof RecipeInProgress;
 
     return inProgressRecipes[userEmail][recipeTypeKey][recipe.id];
+  }
+);
+
+export const selectRecipesDone = createSelector(
+  (state: RootState) => state.menu.recipesDone,
+  (_state: RootState, userEmail: string) => userEmail,
+  (recipesDone, userEmail): RecipeDone[] => {
+    return recipesDone[userEmail] || [];
+  }
+);
+
+export const selectRecipesDoneByType = createSelector(
+  selectRecipesDone,
+  (_state: RootState, _userEmail: string, recipeType: RecipeType) => recipeType,
+  (userRecipesDone, recipeType): RecipeDone[] => {
+    return userRecipesDone.filter((recipe) => recipe.type === recipeType);
   }
 );
 

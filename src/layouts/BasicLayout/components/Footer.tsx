@@ -12,18 +12,18 @@ export default function Footer() {
     >
       <Nav as="nav" className={`${styles.footer__nav}`}>
         <Nav.Item>
+          <Nav.Link href="/meals">
+            <Image src={mealIcon} alt="meal" data-testid="meals-bottom-btn" />
+          </Nav.Link>
+        </Nav.Item>
+
+        <Nav.Item>
           <Nav.Link href="/drinks">
             <Image
               src={cocktailIcon}
               alt="cocktail"
               data-testid="drinks-bottom-btn"
             />
-          </Nav.Link>
-        </Nav.Item>
-
-        <Nav.Item>
-          <Nav.Link href="/meals">
-            <Image src={mealIcon} alt="meal" data-testid="meals-bottom-btn" />
           </Nav.Link>
         </Nav.Item>
       </Nav>

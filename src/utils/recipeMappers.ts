@@ -1,5 +1,5 @@
-import { Drink } from "@/services/menu/cocktailApi";
-import { Meal } from "@/services/menu/mealApi";
+import { Drink } from "@/services/menu/cocktailService";
+import { Meal } from "@/services/menu/mealService";
 import {
   Recipe,
   RecipeWithDetails,

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { copyToClipboard } from "@/utils/clipboard";
+import { copyToClipboard } from "@/utils/clipboardCopy";
 
 export default function useCopyToClipboardWithTooltip(
   initialMessage: string,

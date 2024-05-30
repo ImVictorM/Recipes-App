@@ -17,17 +17,17 @@ import {
   getMeals,
   getMealsByFilter,
   mealCategories,
-} from "./services/menu/mealApi";
+} from "./services/menu/mealService";
 import {
   cocktailCategories,
   getCocktailDetailsById,
   getCocktails,
   getCocktailsByFilter,
-} from "./services/menu/cocktailApi";
+} from "./services/menu/cocktailService";
 import {
   toRecipeWithDetails,
   toRecipeWithDetailsAndRecommendations,
-} from "./utils/mappers";
+} from "./utils/recipeMappers";
 import { cocktailIcon, mealIcon } from "./assets/icons";
 import {
   RecipeWithDetails,

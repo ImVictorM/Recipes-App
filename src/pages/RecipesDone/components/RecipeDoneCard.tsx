@@ -50,7 +50,7 @@ export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
             href={recipeEndpoint}
           >
             <Card.Title
-              className={`${styles.card__title} m-0`}
+              className={`${styles.card__title} text-truncate m-0`}
               title={recipe.name}
               as="h5"
             >
@@ -82,7 +82,7 @@ export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
           <Card.Subtitle
             title={recipeSubtitle}
             as="h6"
-            className={`${styles.card__subtitle}`}
+            bsPrefix={`${styles.card__subtitle} m-0 text-truncate`}
           >
             {recipeSubtitle}
           </Card.Subtitle>

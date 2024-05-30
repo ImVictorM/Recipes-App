@@ -16,11 +16,7 @@
 }
 
 .card__title {
-  overflow: hidden;
   transition: all 0.2s ease;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
   &:hover, &:focus {
     color: map-get($map: $theme-colors, $key: "gold")
@@ -33,10 +29,7 @@
 }
 
 .card__subtitle {
-  color: map-get($map: $theme-colors, $key: "gray") !important;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  color: map-get($map: $theme-colors, $key: "gray");
 }
 
 .card__alcoholic {
@@ -50,7 +43,9 @@
 }
 
 .cards__tags {
-  @include scroll-inline(auto);
+  display: flex;
+  overflow-x: auto;
+
   padding: 0;
   margin: 0;
   gap: 0.25rem;
@@ -65,9 +60,9 @@
 }
 
 .card__tags__tag {
-  display: inline;
-  background-color: map-get($map: $theme-colors, $key: "lightGray");
+  display: inline-block;
   max-width: fit-content;
+  background-color: map-get($map: $theme-colors, $key: "lightGray");
   padding: 0.1rem 0.4rem;
   border-radius: 30px;
   color: map-get($map: $theme-colors, $key: "gray");

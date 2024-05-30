@@ -19,10 +19,6 @@
 
 .card__subtitle {
   color: map-get($map: $theme-colors, $key: "gray");
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin: 0;
 }
 
 .card__alcoholic {

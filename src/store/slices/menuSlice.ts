@@ -138,18 +138,21 @@ const menuSlice = createSlice({
         state.recipesInProgress
       );
     },
-    toggleFavoriteRecipe: (
+    toggleRecipeFavorite: (
       state,
       action: PayloadAction<{ recipe: RecipeWithDetails; userEmail: string }>
     ) => {
       const { recipe, userEmail } = action.payload;
-      const userFavoriteRecipes = state.recipesFavorite[userEmail] || [];
+      const userFavoriteRecipes: RecipeWithDetails[] =
+        state.recipesFavorite[userEmail] || [];
       let isRecipeAlreadyFavorite = false;
 
       const updatedFavoriteRecipes: RecipeWithDetails[] =
         userFavoriteRecipes.filter((favoriteRecipe) => {
           const recipeIsFavorite = favoriteRecipe.id === recipe.id;
-          isRecipeAlreadyFavorite = recipeIsFavorite;
+          if (recipeIsFavorite) {
+            isRecipeAlreadyFavorite = true;
+          }
           return !recipeIsFavorite;
         });
 
@@ -269,7 +272,7 @@ export const selectRecipesFavoriteByType = createSelector(
 
 export const {
   setRecipes,
-  toggleFavoriteRecipe,
+  toggleRecipeFavorite,
   setRecipeInProgress,
   toggleRecipeIngredient,
   setRecipeDone,

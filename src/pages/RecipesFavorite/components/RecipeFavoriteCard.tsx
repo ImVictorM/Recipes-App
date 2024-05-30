@@ -1,6 +1,6 @@
 import {
   RecipeWithDetails,
-  toggleFavoriteRecipe,
+  toggleRecipeFavorite,
 } from "@/store/slices/menuSlice";
 import styles from "@/sass/pages/RecipesFavorite/components/RecipeFavoriteCard.module.scss";
 import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -37,7 +37,7 @@ export default function RecipeFavoriteCard({
     );
 
   const handleToggleRecipeFavorite = () => {
-    dispatch(toggleFavoriteRecipe({ recipe: recipe, userEmail: user.email }));
+    dispatch(toggleRecipeFavorite({ recipe: recipe, userEmail: user.email }));
   };
 
   const handleCopyRecipeLink = () => {
@@ -75,7 +75,7 @@ export default function RecipeFavoriteCard({
         <div className="d-flex align-items-end justify-content-between">
           <Card.Subtitle
             as="h6"
-            bsPrefix={`${styles.card__subtitle}`}
+            bsPrefix={`${styles.card__subtitle} text-truncate m-0`}
             title={recipeSubtitle}
           >
             {recipeSubtitle}

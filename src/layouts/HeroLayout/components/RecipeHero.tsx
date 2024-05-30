@@ -7,7 +7,7 @@ import {
 import {
   RecipeWithDetails,
   selectIsRecipeFavorite,
-  toggleFavoriteRecipe,
+  toggleRecipeFavorite,
 } from "@/store/slices/menuSlice";
 import { selectUser } from "@/store/slices/userSlice";
 import { Container, OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -41,7 +41,7 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
   };
 
   const handleToggleFavorite = () => {
-    dispatch(toggleFavoriteRecipe({ recipe: recipe, userEmail: user.email }));
+    dispatch(toggleRecipeFavorite({ recipe: recipe, userEmail: user.email }));
   };
 
   const heroBackgroundStyle = {

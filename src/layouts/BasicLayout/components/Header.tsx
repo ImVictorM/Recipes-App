@@ -18,11 +18,11 @@ export default function Header({ containSearchBar }: HeaderProps) {
   };
 
   return (
-    <Container as="header" fluid className={`${styles.header}`}>
+    <header className={`${styles.header}`}>
       <Container fluid className={`${styles.header__inner}`}>
         <Image src={headerLogo} alt="recipes app logo" />
 
-        <Stack direction="horizontal" gap={4}>
+        <Stack direction="horizontal" gap={3}>
           {containSearchBar && (
             <button
               data-testid="search-top-btn"
@@ -43,6 +43,6 @@ export default function Header({ containSearchBar }: HeaderProps) {
           </Link>
         </Stack>
       </Container>
-    </Container>
+    </header>
   );
 }

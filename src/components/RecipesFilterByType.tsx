@@ -6,10 +6,10 @@ import {
 import { RecipeType } from "@/store/slices/menuSlice";
 import styles from "@/sass/components/RecipesFilterByType.module.scss";
 
-export type FilterRecipeType = RecipeType | "all";
+export type RecipeTypeOrAll = RecipeType | "all";
 
 export type RecipesFilterByTypeProps = {
-  onFilterByType: (type: FilterRecipeType) => void;
+  onFilterByType: (type: RecipeTypeOrAll) => void;
 };
 
 export default function RecipesFilterByType({

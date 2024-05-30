@@ -3,6 +3,7 @@ export { default as arrowRightIcon } from "./arrowRightIcon.svg";
 export { default as checkCircularIcon } from "./checkCircularIcon.svg";
 export { default as cocktailCircularIcon } from "./cocktailCircularIcon.svg";
 export { default as cocktailIcon } from "./cocktailIcon.svg";
+export { default as heartCircularIcon } from "./heartCircularIcon.svg";
 export { default as heartFillIcon } from "./heartFillIcon.svg";
 export { default as heartOutlineIcon } from "./heartOutlineIcon.svg";
 export { default as mealAndDrinkCircularIcon } from "./mealAndDrinkCircularIcon.svg";

@@ -13,21 +13,21 @@ import {
 import { selectUser } from "@/store/slices/userSlice";
 import { RecipeDoneCard } from "./components";
 import { useState } from "react";
-import { FilterRecipeType } from "@/components/RecipesFilterByType";
+import { RecipeTypeOrAll } from "@/components/RecipesFilterByType";
 
 export default function RecipesDone() {
   const user = useAppSelector(selectUser);
-  const [recipesType, setRecipesType] = useState<FilterRecipeType>("all");
+  const [recipesDoneType, setRecipesType] = useState<RecipeTypeOrAll>("all");
 
   const recipesDone = useAppSelector((state) => {
-    if (recipesType === "all") {
+    if (recipesDoneType === "all") {
       return selectRecipesDone(state, user.email);
     } else {
-      return selectRecipesDoneByType(state, user.email, recipesType);
+      return selectRecipesDoneByType(state, user.email, recipesDoneType);
     }
   });
 
-  const handleFilterByType = (type: FilterRecipeType) => {
+  const handleFilterByType = (type: RecipeTypeOrAll) => {
     setRecipesType(type);
   };
 

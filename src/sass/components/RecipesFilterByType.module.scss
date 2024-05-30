@@ -1,5 +1,5 @@
-@use "../themes/theme" as *;
-@use "../abstracts/mixins" as *;
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/mixins" as *;
 
 .filters {
   display: flex;

@@ -96,13 +96,13 @@ export default function ListWithPagination<T extends ItemWithId>({
   };
 
   return (
-    <Container as="section" fluid>
+    <section>
       <Row {...showBySize} as="ul" className="list-unstyled p-0 g-4 m-0 mb-5">
         {items
           .slice(uiItemsIndex.firstItemIndex, uiItemsIndex.lastItemIndex)
           .map((item, index) => {
             return (
-              <Col as="li" key={item.id} className="d-flex">
+              <Col as="li" key={item.id} className="d-flex px-1">
                 {onCreateItemCard(item, index)}
               </Col>
             );
@@ -139,6 +139,6 @@ export default function ListWithPagination<T extends ItemWithId>({
           </Pagination>
         </Container>
       )}
-    </Container>
+    </section>
   );
 }

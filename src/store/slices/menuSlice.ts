@@ -25,7 +25,7 @@ export type RecipeWithDetailsAndRecommendation = RecipeWithDetails & {
   recommendations: Recipe[];
 };
 
-export type RecipeDone = RecipeWithDetails & {
+export type RecipeWithDetailsAndDoneDate = RecipeWithDetails & {
   doneDate: string;
 };
 
@@ -42,7 +42,7 @@ export type RecipeInProgress = {
 export type Menu = {
   recipes: Recipe[];
   recipesFavorite: Record<string, RecipeWithDetails[]>;
-  recipesDone: Record<string, RecipeDone[]>;
+  recipesDone: Record<string, RecipeWithDetailsAndDoneDate[]>;
   recipesInProgress: Record<string, RecipeInProgress>;
 };
 
@@ -91,7 +91,10 @@ const menuSlice = createSlice({
     },
     setRecipeDone: (
       state,
-      action: PayloadAction<{ userEmail: string; recipe: RecipeDone }>
+      action: PayloadAction<{
+        userEmail: string;
+        recipe: RecipeWithDetailsAndDoneDate;
+      }>
     ) => {
       const { recipe, userEmail } = action.payload;
       const userRecipesDone = state.recipesDone[userEmail] || [];
@@ -235,7 +238,7 @@ export const selectRecipeInProgressIngredients = createSelector(
 export const selectRecipesDone = createSelector(
   (state: RootState) => state.menu.recipesDone,
   (_state: RootState, userEmail: string) => userEmail,
-  (recipesDone, userEmail): RecipeDone[] => {
+  (recipesDone, userEmail): RecipeWithDetailsAndDoneDate[] => {
     return recipesDone[userEmail] || [];
   }
 );
@@ -243,8 +246,24 @@ export const selectRecipesDone = createSelector(
 export const selectRecipesDoneByType = createSelector(
   selectRecipesDone,
   (_state: RootState, _userEmail: string, recipeType: RecipeType) => recipeType,
-  (userRecipesDone, recipeType): RecipeDone[] => {
+  (userRecipesDone, recipeType): RecipeWithDetailsAndDoneDate[] => {
     return userRecipesDone.filter((recipe) => recipe.type === recipeType);
+  }
+);
+
+export const selectRecipesFavorite = createSelector(
+  (state: RootState) => state.menu.recipesFavorite,
+  (_state: RootState, userEmail: string) => userEmail,
+  (recipesFavorite, userEmail): RecipeWithDetails[] => {
+    return recipesFavorite[userEmail] || [];
+  }
+);
+
+export const selectRecipesFavoriteByType = createSelector(
+  selectRecipesFavorite,
+  (_state: RootState, _userEmail: string, recipeType: RecipeType) => recipeType,
+  (userRecipesFavorite, recipeType) => {
+    return userRecipesFavorite.filter((recipe) => recipe.type === recipeType);
   }
 );
 

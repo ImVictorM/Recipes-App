@@ -1,6 +1,6 @@
-@use "../themes/" as *;
-@use "../abstracts/" as *;
-@use "../vendors/" as *;
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/mixins" as *;
+@use "@/sass/vendors/bootstrap" as *;
 
 .border-box {
   width: 100%;
@@ -20,7 +20,7 @@
 }
 
 .button-fixed-bottom {
-  @extend %primary-button;
+  @extend %default-primary-button;
 
   position: fixed;
   bottom: 0;

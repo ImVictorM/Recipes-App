@@ -68,7 +68,7 @@
 }
 
 .filter__scroller__button {
-  @extend %primary-button;
+  @extend %default-primary-button;
 
   border-radius: 12px;
   padding: 0.2em 1.5em;

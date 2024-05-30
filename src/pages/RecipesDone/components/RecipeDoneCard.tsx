@@ -1,4 +1,4 @@
-import { RecipeDone } from "@/store/slices/menuSlice";
+import { RecipeWithDetailsAndDoneDate } from "@/store/slices/menuSlice";
 import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import styles from "@/sass/pages/RecipesDone/components/RecipeDoneCard.module.scss";
 import { shareIcon } from "@/assets/icons";
@@ -9,7 +9,7 @@ import {
 } from "@/utils/constants";
 
 export type RecipeDoneCardProps = {
-  recipe: RecipeDone;
+  recipe: RecipeWithDetailsAndDoneDate;
 };
 
 export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {

@@ -1,8 +1,9 @@
 import { RecipeCategory } from "@/services/menu/common";
 import { arrowLeftIcon, arrowRightIcon } from "@/assets/icons";
 import { useRef } from "react";
-import { useLinearScroll } from "@/hooks";
+import { useScrollLinearManual } from "@/hooks";
 import styles from "@/sass/pages/Recipes/components/RecipesFilterByCategory.module.scss";
+import { ScrollLinearContainer } from "@/components";
 
 export type RecipesFilterByCategoryProps = {
   categories: RecipeCategory[];
@@ -16,8 +17,7 @@ export default function RecipesFilterByCategory({
   onFilterByAll,
 }: RecipesFilterByCategoryProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const { isAtEnd, isAtStart, scrollTo, isDragging } =
-    useLinearScroll(scrollerRef);
+  const { isAtEnd, isAtStart, scrollTo } = useScrollLinearManual(scrollerRef);
 
   return (
     <div className={`${styles.filters}`}>
@@ -29,12 +29,11 @@ export default function RecipesFilterByCategory({
         </div>
       )}
 
-      <div
+      <ScrollLinearContainer
         className={`
-        ${styles.filters__scroller} ${
-          !isDragging ? "snaps-inline" : "active-dragging"
-        } hide-scroll`}
+        ${styles.filters__scroller} hide-scroll`}
         ref={scrollerRef}
+        as="div"
       >
         <button
           type="button"
@@ -58,7 +57,7 @@ export default function RecipesFilterByCategory({
             </button>
           );
         })}
-      </div>
+      </ScrollLinearContainer>
 
       {!isAtEnd && (
         <div className={`${styles["filters__arrow-right"]}`}>

@@ -1,8 +1,16 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 
+export type LinearScrollOptions = {
+  scrollAmount?: number;
+  isOverflow?: boolean;
+};
+
 export default function useLinearScroll(
   ref: RefObject<HTMLElement>,
-  scrollAmount: number = 200
+  { isOverflow = true, scrollAmount = 200 }: LinearScrollOptions = {
+    scrollAmount: 200,
+    isOverflow: true,
+  }
 ) {
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
@@ -14,7 +22,7 @@ export default function useLinearScroll(
   const scrollLeftRef = useRef(0);
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current || !isOverflow) return;
     const element = ref.current;
 
     const onScroll = () => {
@@ -33,8 +41,7 @@ export default function useLinearScroll(
         e.preventDefault();
 
         element.scrollTo({
-          left: element.scrollLeft + e.deltaY * 2,
-          behavior: "smooth",
+          left: element.scrollLeft + e.deltaY,
         });
       }
     };
@@ -83,7 +90,7 @@ export default function useLinearScroll(
       element.removeEventListener("mouseup", onMouseUp);
       element.removeEventListener("mousemove", onMouseMove);
     };
-  }, [ref]);
+  }, [isOverflow, ref]);
 
   /* Use this to manually scroll **/
   const scrollTo = (direction: "left" | "right") => {

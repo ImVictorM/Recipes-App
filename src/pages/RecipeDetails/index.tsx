@@ -8,7 +8,7 @@ import {
 import { RecipeBasicCard } from "@/components";
 import { Stack } from "react-bootstrap";
 import { HeroLayout } from "@/layouts";
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { useAppDispatch, useAppSelector, useLinearScroll } from "@/hooks";
 import { selectUser } from "@/store/slices/userSlice";
 import { useRef } from "react";
 import styles from "@/sass/pages/RecipeDetails/style.module.scss";
@@ -24,6 +24,8 @@ export default function RecipeDetails() {
   );
   // Needs to be static to no flicker the button
   const isRecipeInProgressInitialStateRef = useRef(isRecipeInProgress);
+  const recommendationsRef = useRef<HTMLDivElement>(null);
+  const { isDragging } = useLinearScroll(recommendationsRef);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -80,7 +82,12 @@ export default function RecipeDetails() {
 
         <section>
           <h3>Recommended drinks</h3>
-          <div className={`${styles.recipe__recommendations} snaps-inline`}>
+          <div
+            ref={recommendationsRef}
+            className={`${styles.recipe__recommendations} ${
+              isDragging ? "active-dragging" : "snaps-inline"
+            }`}
+          >
             {recipe.recommendations.map((recipe, index) => {
               return (
                 <RecipeBasicCard

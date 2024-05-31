@@ -2,11 +2,16 @@ import { RecipeWithDetailsAndDoneDate } from "@/store/slices/menuSlice";
 import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import styles from "@/sass/pages/RecipesDone/components/RecipeDoneCard.module.scss";
 import { shareIcon } from "@/assets/icons";
-import { useCopyToClipboardWithTooltip } from "@/hooks";
+import {
+  useCopyToClipboardWithTooltip,
+  useLinearScroll,
+  useOverflow,
+} from "@/hooks";
 import {
   SHARE_TOOLTIP_MESSAGE_INITIAL,
   SHARE_TOOLTIP_MESSAGE_ON_COPY,
 } from "@/utils/constants";
+import { useRef } from "react";
 
 export type RecipeDoneCardProps = {
   recipe: RecipeWithDetailsAndDoneDate;
@@ -19,6 +24,9 @@ export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
       SHARE_TOOLTIP_MESSAGE_INITIAL,
       SHARE_TOOLTIP_MESSAGE_ON_COPY
     );
+  const tagsRef = useRef<HTMLUListElement>(null);
+  const { isOverflow } = useOverflow(tagsRef);
+  const { isDragging } = useLinearScroll(tagsRef, { isOverflow });
 
   const recipeSubtitle = recipe.nationality
     ? `${recipe.nationality} - ${recipe.category}`
@@ -101,7 +109,12 @@ export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
           {`Done in: ${recipe.doneDate}`}
         </Card.Text>
 
-        <ul className={`${styles.cards__tags} hide-scroll snaps-inline`}>
+        <ul
+          ref={tagsRef}
+          className={`${styles.cards__tags} ${
+            isDragging ? "active-dragging" : "snaps-inline"
+          } hide-scroll`}
+        >
           {recipe.tags.map((tag) => (
             <li key={tag} className={`${styles.card__tags__tag}`}>
               {tag}

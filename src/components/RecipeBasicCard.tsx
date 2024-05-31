@@ -1,4 +1,4 @@
-import { Card, Container } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Recipe } from "@/store/slices/menuSlice";
 import styles from "@/sass/components/RecipeBasicCard.module.scss";
 
@@ -23,14 +23,14 @@ export default function RecipeBasicCard({
         href={type === "meal" ? `/meals/${id}` : `/drinks/${id}`}
         className="text-decoration-none"
       >
-        <Container fluid className={`${styles["recipe-card__img"]}`}>
+        <div className={`${styles["recipe-card__img"]}`}>
           <Card.Img
             variant="top"
             src={img}
             alt={name}
             data-testid={`${index}-card-img`}
           />
-        </Container>
+        </div>
 
         <Card.Body className={`${styles["recipe-card__body"]}`}>
           <Card.Title

@@ -21,7 +21,6 @@
 
 .snaps-inline {
   scroll-snap-type: inline mandatory;
-  transition: scroll-snap-type 0.3s ease;
 
   & > * {
     scroll-snap-align: start;

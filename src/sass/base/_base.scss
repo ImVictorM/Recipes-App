@@ -10,13 +10,28 @@
   margin: 1em 0;
 }
 
+.hide-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .snaps-inline {
   scroll-snap-type: inline mandatory;
+  transition: scroll-snap-type 0.3s ease;
 
   & > * {
     scroll-snap-align: start;
     scroll-padding-inline: 1rem;
   }
+}
+
+.active-dragging {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
 }
 
 .button-fixed-bottom {

@@ -101,7 +101,7 @@ export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
           {`Done in: ${recipe.doneDate}`}
         </Card.Text>
 
-        <ul className={`${styles.cards__tags} snaps-inline`}>
+        <ul className={`${styles.cards__tags} hide-scroll snaps-inline`}>
           {recipe.tags.map((tag) => (
             <li key={tag} className={`${styles.card__tags__tag}`}>
               {tag}

@@ -16,7 +16,8 @@ export default function RecipesFilterByCategory({
   onFilterByAll,
 }: RecipesFilterByCategoryProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const { isAtEnd, isAtStart, scrollTo } = useLinearScroll(scrollerRef);
+  const { isAtEnd, isAtStart, scrollTo, isDragging } =
+    useLinearScroll(scrollerRef);
 
   return (
     <div className={`${styles.filters}`}>
@@ -29,7 +30,10 @@ export default function RecipesFilterByCategory({
       )}
 
       <div
-        className={`${styles.filters__scroller} snaps-inline`}
+        className={`
+        ${styles.filters__scroller} ${
+          !isDragging ? "snaps-inline" : "active-dragging"
+        } hide-scroll`}
         ref={scrollerRef}
       >
         <button

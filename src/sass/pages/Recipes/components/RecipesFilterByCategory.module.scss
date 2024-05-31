@@ -58,13 +58,6 @@
 
 .filters__scroller {
   @include scroll-inline(auto);
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .filter__scroller__button {

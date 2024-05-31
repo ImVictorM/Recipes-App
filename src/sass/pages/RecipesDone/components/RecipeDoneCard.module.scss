@@ -50,13 +50,6 @@
   margin: 0;
   gap: 0.25rem;
   margin-top: auto;
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .card__tags__tag {

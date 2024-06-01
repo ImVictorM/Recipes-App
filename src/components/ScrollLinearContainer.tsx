@@ -17,7 +17,11 @@ export type ScrollLinearContainerProps<T extends React.ElementType> =
     }
   >;
 
-function ScrollLinearContainerComponent<T extends React.ElementType = "div">(
+const DEFAULT_COMPONENT = "div";
+
+function ScrollLinearContainerComponent<
+  T extends React.ElementType = typeof DEFAULT_COMPONENT
+>(
   {
     scrollWithMouseWheel = true,
     as,
@@ -27,7 +31,7 @@ function ScrollLinearContainerComponent<T extends React.ElementType = "div">(
   }: ScrollLinearContainerProps<T>,
   ref?: PolymorphicRef<T>
 ): React.ReactElement | null {
-  const Component = as || "div";
+  const Component = as || DEFAULT_COMPONENT;
   const componentRef = useFallbackRef(ref);
   const [isMouseDown, setIsMouseDown] = useState(false);
   const startXRef = useRef<number>(0);
@@ -114,9 +118,9 @@ function ScrollLinearContainerComponent<T extends React.ElementType = "div">(
   );
 }
 
-const ScrollLinearContainer = React.forwardRef(
+export const ScrollLinearContainer = React.forwardRef(
   ScrollLinearContainerComponent
-) as <T extends React.ElementType = "div">(
+) as <T extends React.ElementType = typeof DEFAULT_COMPONENT>(
   props: ScrollLinearContainerProps<T>
 ) => React.ReactElement | null;
 

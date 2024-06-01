@@ -2,7 +2,7 @@ import { useFallbackRef, useOverflow } from "@/hooks";
 import {
   PolymorphicComponentPropWithRef,
   PolymorphicRef,
-} from "@/types/PolymorphicTypes";
+} from "@/types/polymorphicTypes";
 import React, { useEffect, useRef, useState } from "react";
 
 /* 
@@ -13,7 +13,7 @@ export type ScrollLinearContainerProps<T extends React.ElementType> =
   PolymorphicComponentPropWithRef<
     T,
     {
-      scrollWithMouseWheel: boolean;
+      scrollWithMouseWheel?: boolean;
     }
   >;
 
@@ -26,7 +26,7 @@ function ScrollLinearContainerComponent<T extends React.ElementType = "div">(
     ...restProps
   }: ScrollLinearContainerProps<T>,
   ref?: PolymorphicRef<T>
-) {
+): React.ReactElement | null {
   const Component = as || "div";
   const componentRef = useFallbackRef(ref);
   const [isMouseDown, setIsMouseDown] = useState(false);
@@ -114,6 +114,10 @@ function ScrollLinearContainerComponent<T extends React.ElementType = "div">(
   );
 }
 
-const ScrollLinearContainer = React.forwardRef(ScrollLinearContainerComponent);
+const ScrollLinearContainer = React.forwardRef(
+  ScrollLinearContainerComponent
+) as <T extends React.ElementType = "div">(
+  props: ScrollLinearContainerProps<T>
+) => React.ReactElement | null;
 
 export default ScrollLinearContainer;

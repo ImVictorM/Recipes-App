@@ -1,4 +1,4 @@
-import { PolymorphicRef } from "@/types/PolymorphicTypes";
+import { PolymorphicRef } from "@/types/polymorphicTypes";
 import { useRef } from "react";
 
 export default function useFallbackRef<T extends React.ElementType>(

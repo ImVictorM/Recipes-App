@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { profileIcon, searchIcon } from "@/assets/icons";
-import { headerLogo } from "@/assets/images";
+import { ProfileIcon, SearchIcon } from "@/assets/icons";
+import { HeaderLogo } from "@/assets/images";
 import { useAppDispatch } from "@/hooks";
 import { toggleSearchBarVisibility } from "@/store/slices/visibilitySlice";
-import { Container, Image, Stack } from "react-bootstrap";
+import { Container, Stack } from "react-bootstrap";
 import styles from "@/sass/layouts/BasicLayout/components/Header.module.scss";
 
 export type HeaderProps = {
@@ -20,7 +20,7 @@ export default function Header({ containSearchBar }: HeaderProps) {
   return (
     <header className={`${styles.header}`}>
       <Container fluid className={`${styles.header__inner}`}>
-        <Image src={headerLogo} alt="recipes app logo" />
+        <HeaderLogo aria-label="recipes app logo" />
 
         <Stack direction="horizontal" gap={3}>
           {containSearchBar && (
@@ -30,16 +30,12 @@ export default function Header({ containSearchBar }: HeaderProps) {
               onClick={handleSearchBarVisibility}
               className={`${styles["header__search-button"]}`}
             >
-              <Image src={searchIcon} alt="search magnifying glass" />
+              <SearchIcon role="img" aria-label="search magnifying glass" />
             </button>
           )}
 
-          <Link to="/profile">
-            <Image
-              src={profileIcon}
-              alt="user profile"
-              data-testid="profile-top-btn"
-            />
+          <Link to="/profile" data-testid="profile-top-btn">
+            <ProfileIcon role="img" aria-label="circular profile user" />
           </Link>
         </Stack>
       </Container>

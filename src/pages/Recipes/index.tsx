@@ -22,7 +22,7 @@ import RecipesFilterBySearch, {
 
 type RecipesProps<T> = {
   icon: {
-    src: string;
+    element: React.FC<React.SVGProps<SVGElement>>;
     alt: string;
   };
   title: string;

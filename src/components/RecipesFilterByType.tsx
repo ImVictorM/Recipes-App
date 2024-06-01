@@ -1,7 +1,7 @@
 import {
-  mealAndDrinkCircularIcon,
-  mealCircularIcon,
-  cocktailCircularIcon,
+  MealAndDrinkCircularIcon,
+  MealCircularIcon,
+  CocktailCircularIcon,
 } from "@/assets/icons";
 import { RecipeType } from "@/store/slices/menuSlice";
 import styles from "@/sass/components/RecipesFilterByType.module.scss";
@@ -21,10 +21,10 @@ export default function RecipesFilterByType({
         onClick={() => onFilterByType("all")}
         className={`${styles.filters__button}`}
       >
-        <img
-          src={mealAndDrinkCircularIcon}
-          alt="circular icon an hamburger and a soda"
+        <MealAndDrinkCircularIcon
+          role="img"
           className={`${styles.filters__button__img}`}
+          aria-label="circular icon an hamburger and a soda"
         />
         <span className={`${styles.filters__button__text}`}>All</span>
       </button>
@@ -33,10 +33,10 @@ export default function RecipesFilterByType({
         onClick={() => onFilterByType("meal")}
         className={`${styles.filters__button}`}
       >
-        <img
-          src={mealCircularIcon}
-          alt="circular icon with a plate and cutlery"
+        <MealCircularIcon
+          role="img"
           className={`${styles.filters__button__img}`}
+          aria-label="circular icon with a plate and cutlery"
         />
         <span className={`${styles.filters__button__text}`}>Food</span>
       </button>
@@ -45,11 +45,12 @@ export default function RecipesFilterByType({
         onClick={() => onFilterByType("drink")}
         className={`${styles.filters__button}`}
       >
-        <img
+        <CocktailCircularIcon
+          role="img"
           className={`${styles.filters__button__img}`}
-          src={cocktailCircularIcon}
-          alt="circular icon with a cocktail"
+          aria-label="circular icon with a cocktail"
         />
+
         <span className={`${styles.filters__button__text}`}>Drinks</span>
       </button>
     </div>

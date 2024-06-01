@@ -1,5 +1,5 @@
-import { cocktailIcon, mealIcon } from "@/assets/icons";
-import { Container, Image, Nav } from "react-bootstrap";
+import { CocktailIcon, MealIcon } from "@/assets/icons";
+import { Container, Nav } from "react-bootstrap";
 import styles from "@/sass/layouts/BasicLayout/components/Footer.module.scss";
 
 export default function Footer() {
@@ -12,18 +12,17 @@ export default function Footer() {
     >
       <Nav as="nav" className={`${styles.footer__nav}`}>
         <Nav.Item>
-          <Nav.Link href="/meals">
-            <Image src={mealIcon} alt="meal" data-testid="meals-bottom-btn" />
+          <Nav.Link href="/meals" data-testid="meals-bottom-btn">
+            <MealIcon
+              role="img"
+              aria-label="meal plate in the middle with fork to the left and knife to the right"
+            />
           </Nav.Link>
         </Nav.Item>
 
         <Nav.Item>
-          <Nav.Link href="/drinks">
-            <Image
-              src={cocktailIcon}
-              alt="cocktail"
-              data-testid="drinks-bottom-btn"
-            />
+          <Nav.Link href="/drinks" data-testid="drinks-bottom-btn">
+            <CocktailIcon role="img" aria-label="cocktail glass" />
           </Nav.Link>
         </Nav.Item>
       </Nav>

@@ -1,4 +1,4 @@
-import { heartCircularIcon } from "@/assets/icons";
+import { HeartCircularIcon } from "@/assets/icons";
 import {
   CenteredTitleWithIcon,
   ListWithPagination,
@@ -38,8 +38,8 @@ export default function RecipesFavorite() {
     <BasicLayout>
       <CenteredTitleWithIcon
         icon={{
-          src: heartCircularIcon,
-          alt: "circular yellow heart",
+          element: HeartCircularIcon,
+          alt: "circular heart",
         }}
         title="Favorites"
       />

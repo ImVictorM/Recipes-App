@@ -1,7 +1,7 @@
 import { RecipeWithDetailsAndDoneDate } from "@/store/slices/menuSlice";
 import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import styles from "@/sass/pages/RecipesDone/components/RecipeDoneCard.module.scss";
-import { shareIcon } from "@/assets/icons";
+import { ShareIcon } from "@/assets/icons";
 import { useCopyToClipboardWithTooltip } from "@/hooks";
 import {
   SHARE_TOOLTIP_MESSAGE_INITIAL,
@@ -74,7 +74,7 @@ export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
               data-testid="share-btn"
               className={`${styles.card__share} flex-shrink-0`}
             >
-              <img src={shareIcon} alt="share" />
+              <ShareIcon role="img" aria-label="share" />
             </button>
           </OverlayTrigger>
         </div>

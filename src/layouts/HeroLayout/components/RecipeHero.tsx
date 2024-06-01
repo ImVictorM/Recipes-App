@@ -1,4 +1,4 @@
-import { shareIcon, heartFillIcon, heartOutlineIcon } from "@/assets/icons";
+import { ShareIcon, HeartFillIcon, HeartOutlineIcon } from "@/assets/icons";
 import {
   useAppSelector,
   useAppDispatch,
@@ -79,10 +79,10 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
               data-testid="share-btn"
               className="bg-transparent"
             >
-              <img
-                src={shareIcon}
-                alt="share"
+              <ShareIcon
                 className={`${styles.hero__header__icon}`}
+                aria-label="share"
+                role="img"
               />
             </button>
           </OverlayTrigger>
@@ -102,11 +102,19 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
               className="bg-transparent"
               data-testid="favorite-btn"
             >
-              <img
-                src={isFavorite ? heartFillIcon : heartOutlineIcon}
-                alt="heart"
-                className={`${styles.hero__header__icon}`}
-              />
+              {isFavorite ? (
+                <HeartFillIcon
+                  aria-label="fill heart"
+                  className={`${styles.hero__header__icon}`}
+                  role="img"
+                />
+              ) : (
+                <HeartOutlineIcon
+                  aria-label="outline hollow heart"
+                  className={`${styles.hero__header__icon}`}
+                  role="img"
+                />
+              )}
             </button>
           </OverlayTrigger>
         </div>

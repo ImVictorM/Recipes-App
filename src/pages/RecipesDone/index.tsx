@@ -1,4 +1,4 @@
-import { checkCircularIcon } from "@/assets/icons";
+import { CheckCircularIcon } from "@/assets/icons";
 import {
   CenteredTitleWithIcon,
   ListWithPagination,
@@ -35,7 +35,7 @@ export default function RecipesDone() {
     <BasicLayout>
       <CenteredTitleWithIcon
         title="Done Recipes"
-        icon={{ src: checkCircularIcon, alt: "check" }}
+        icon={{ element: CheckCircularIcon, alt: "circular check" }}
       />
 
       <RecipesFilterByType onFilterByType={handleFilterByType} />

@@ -1,3 +1,3 @@
-export { default as logo } from "./logo.svg";
-export { default as loginBg } from "./loginBg.svg";
-export { default as headerLogo } from "./headerLogo.svg";
+export { default as Logo } from "./logo.svg";
+export { default as LoginBg } from "./loginBg.svg";
+export { default as HeaderLogo } from "./headerLogo.svg";

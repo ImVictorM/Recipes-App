@@ -1,5 +1,5 @@
 import { RecipeCategory } from "@/services/menu/common";
-import { arrowLeftIcon, arrowRightIcon } from "@/assets/icons";
+import { ArrowLeftIcon, ArrowRightIcon } from "@/assets/icons";
 import { useRef } from "react";
 import { useScrollLinearManual } from "@/hooks";
 import styles from "@/sass/pages/Recipes/components/RecipesFilterByCategory.module.scss";
@@ -24,7 +24,7 @@ export default function RecipesFilterByCategory({
       {!isAtStart && (
         <div className={`${styles["filters__arrow-left"]}`}>
           <button onClick={() => scrollTo("left")}>
-            <img src={arrowLeftIcon} alt="arrow to the left" />
+            <ArrowLeftIcon role="img" aria-label="arrow to the left" />
           </button>
         </div>
       )}
@@ -62,7 +62,7 @@ export default function RecipesFilterByCategory({
       {!isAtEnd && (
         <div className={`${styles["filters__arrow-right"]}`}>
           <button onClick={() => scrollTo("right")}>
-            <img src={arrowRightIcon} alt="arrow to the right" />
+            <ArrowRightIcon role="img" aria-label="arrow to the right" />
           </button>
         </div>
       )}

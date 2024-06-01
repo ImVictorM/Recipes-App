@@ -6,7 +6,7 @@ import {
 import {
   Login,
   Recipes,
-  // Profile,
+  Profile,
   RecipeDetails,
   RecipeInProgress,
   RecipesDone,
@@ -28,7 +28,7 @@ import {
   toRecipeWithDetails,
   toRecipeWithDetailsAndRecommendations,
 } from "./utils/recipeMappers";
-import { cocktailIcon, mealIcon } from "./assets/icons";
+import { CocktailIcon, MealIcon } from "./assets/icons";
 import {
   RecipeWithDetails,
   RecipeWithDetailsAndRecommendation,
@@ -51,10 +51,10 @@ const routes: RouteObject[] = [
     path: "/done-recipes",
     element: <RecipesDone />,
   },
-  // {
-  //   path: "/profile",
-  //   element: <Profile />,
-  // },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
   {
     path: "/drinks",
     children: [
@@ -65,7 +65,7 @@ const routes: RouteObject[] = [
             categories={cocktailCategories}
             onGetRecipes={getCocktails}
             onGetRecipesByFilter={getCocktailsByFilter}
-            icon={{ src: cocktailIcon, alt: "cocktail" }}
+            icon={{ element: CocktailIcon, alt: "cocktail" }}
             title="Drinks"
           />
         ),
@@ -121,7 +121,7 @@ const routes: RouteObject[] = [
             onGetRecipes={getMeals}
             onGetRecipesByFilter={getMealsByFilter}
             icon={{
-              src: mealIcon,
+              element: MealIcon,
               alt: "meal",
             }}
             title="Meals"

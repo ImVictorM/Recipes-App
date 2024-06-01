@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { logo } from "@/assets/images";
+import { Logo } from "@/assets/images";
 import { useAppDispatch } from "@/hooks";
 import { setUser } from "@/store/slices/userSlice";
-import { Button, Container, Form, Image, Stack } from "react-bootstrap";
+import { Button, Container, Form, Stack } from "react-bootstrap";
 import styles from "@/sass/pages/Login/style.module.scss";
 
 export default function Login() {
@@ -47,7 +47,7 @@ export default function Login() {
   return (
     <Container fluid className="min-vh-100 p-0 d-flex justify-content-center">
       <Container as="main" fluid className={`${styles.login}`}>
-        <Image src={logo} className={`${styles.login__logo}`} alt="logo" />
+        <Logo className={`${styles.login__logo}`} role="img" />
 
         <Form
           className={`${styles.login__form} container-fluid`}

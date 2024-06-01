@@ -4,7 +4,7 @@ import {
 } from "@/store/slices/menuSlice";
 import styles from "@/sass/pages/RecipesFavorite/components/RecipeFavoriteCard.module.scss";
 import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { heartFillIcon, shareIcon } from "@/assets/icons";
+import { HeartFillIcon, ShareIcon } from "@/assets/icons";
 import {
   useAppDispatch,
   useAppSelector,
@@ -103,7 +103,7 @@ export default function RecipeFavoriteCard({
               onClick={handleCopyRecipeLink}
               className={`${styles.card__buttons__share}`}
             >
-              <img src={shareIcon} alt="share" />
+              <ShareIcon role="img" aria-label="share" />
             </button>
           </OverlayTrigger>
 
@@ -115,12 +115,11 @@ export default function RecipeFavoriteCard({
             )}
             placement="top"
           >
-            <button className={`${styles.card__buttons__favorite}`}>
-              <img
-                onClick={handleToggleRecipeFavorite}
-                src={heartFillIcon}
-                alt="fill heart"
-              />
+            <button
+              onClick={handleToggleRecipeFavorite}
+              className={`${styles.card__buttons__favorite}`}
+            >
+              <HeartFillIcon role="img" aria-label="fill heart" />
             </button>
           </OverlayTrigger>
         </div>

@@ -29,9 +29,9 @@ import {
 import { toRecipeWithDetails } from "./utils/recipeMappers";
 import { CocktailIcon, MealIcon } from "./assets/icons";
 import { RecipeWithDetails } from "./store/slices/menuSlice";
-import { LoaderFunction, deferredLoader } from "./utils/reactRouterDom";
+import { LoaderCallback, deferredLoader } from "./utils/reactRouterDom";
 
-export type RecipeDetailsLoader = LoaderFunction<{
+export type RecipeDetailsLoader = LoaderCallback<{
   recipeWithRecommendations: Promise<[Drink | Meal, Drink[] | Meal[]]>;
 }>;
 

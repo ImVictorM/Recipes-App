@@ -96,7 +96,7 @@ export async function getMeals(config?: AxiosRequestConfig): Promise<Meal[]> {
 export async function getMealDetailsById(
   id: string,
   config?: AxiosRequestConfig
-): Promise<Meal | null> {
+): Promise<Meal> {
   const response: AxiosResponse<MealApiResponse> = await mealClient.get(
     `lookup.php?i=${id}`,
     config
@@ -106,7 +106,7 @@ export async function getMealDetailsById(
     return response.data.meals[0];
   }
 
-  return null;
+  throw new Error(`Meal with id ${id} not found`);
 }
 
 export async function getMealsByFilter(

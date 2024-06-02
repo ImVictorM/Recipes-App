@@ -87,7 +87,7 @@ export async function getCocktails(
 export async function getCocktailDetailsById(
   id: string,
   config?: AxiosRequestConfig
-): Promise<Drink | null> {
+): Promise<Drink> {
   const response: AxiosResponse<CocktailApiResponse> = await cocktailClient.get(
     `lookup.php?i=${id}`,
     config
@@ -97,7 +97,7 @@ export async function getCocktailDetailsById(
     return response.data.drinks[0];
   }
 
-  return null;
+  throw new Error(`Drink with id ${id} not found`);
 }
 
 export async function getCocktailsByFilter(

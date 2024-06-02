@@ -19,5 +19,15 @@
   &__search-button {
     background-color: map-get($map: $theme-colors, $key: "yellow");
   }
+
+  &__profile {
+    color: map-get($map: $theme-colors, $key: "purple");
+    position: relative;
+  }
+
+  &__profile,
+  &__search-button {
+    width: 35px;
+  }
 }
 

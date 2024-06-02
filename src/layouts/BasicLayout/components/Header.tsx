@@ -34,7 +34,11 @@ export default function Header({ containSearchBar }: HeaderProps) {
             </button>
           )}
 
-          <Link to="/profile" data-testid="profile-top-btn">
+          <Link
+            className={`${styles.header__profile}`}
+            to="/profile"
+            data-testid="profile-top-btn"
+          >
             <ProfileIcon role="img" aria-label="circular profile user" />
           </Link>
         </Stack>

@@ -1,21 +1,24 @@
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { useLoaderData } from "@/utils/reactRouterDom";
+import { RecipeInProgressLoader } from "@/router";
+import { useAppSelector, useAppDispatch } from "@/hooks";
 import { HeroLayout } from "@/layouts";
 import {
-  RecipeWithDetails,
-  removeRecipeInProgress,
-  selectIsRecipeInProgress,
   selectRecipeInProgressIngredients,
-  setRecipeDone,
+  selectIsRecipeInProgress,
   toggleRecipeIngredient,
+  setRecipeDone,
+  removeRecipeInProgress,
 } from "@/store/slices/menuSlice";
 import { selectUser } from "@/store/slices/userSlice";
-import { Form, Stack } from "react-bootstrap";
-import { useLoaderData, useNavigate } from "react-router-dom";
-import { useEffect, useMemo } from "react";
 import { formatDateToDDMMYYYY } from "@/utils/date";
+import { useMemo, useEffect } from "react";
+import { Form, Stack } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { toRecipeWithDetails } from "@/utils/recipeMappers";
 
 export default function RecipeInProgress() {
-  const recipe = useLoaderData() as RecipeWithDetails;
+  const data = useLoaderData<RecipeInProgressLoader>();
+  const recipe = toRecipeWithDetails(data.recipe);
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const ingredientsRemaining = useAppSelector((state) =>

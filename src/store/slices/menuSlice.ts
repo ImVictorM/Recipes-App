@@ -21,10 +21,6 @@ export type RecipeWithDetails = Recipe & {
   tags: string[];
 };
 
-export type RecipeWithDetailsAndRecommendation = RecipeWithDetails & {
-  recommendations: Recipe[];
-};
-
 export type RecipeWithDetailsAndDoneDate = RecipeWithDetails & {
   doneDate: string;
 };

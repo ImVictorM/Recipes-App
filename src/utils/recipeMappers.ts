@@ -1,10 +1,6 @@
 import { Drink } from "@/services/menu/cocktailService";
 import { Meal } from "@/services/menu/mealService";
-import {
-  Recipe,
-  RecipeWithDetails,
-  RecipeWithDetailsAndRecommendation,
-} from "@/store/slices/menuSlice";
+import { Recipe, RecipeWithDetails } from "@/store/slices/menuSlice";
 
 function isMeal(recipe: Meal | Drink): recipe is Meal {
   return (recipe as Meal).strMeal !== undefined;
@@ -90,43 +86,4 @@ export function toRecipeWithDetails(recipe: Meal | Drink): RecipeWithDetails {
   }
 
   throw new Error(getMappingErrorMessage("RecipeWithDetails"));
-}
-
-export function toRecipeWithDetailsAndRecommendations(
-  recipe: Meal | Drink,
-  recommendations: Meal[] | Drink[]
-): RecipeWithDetailsAndRecommendation {
-  if (isMeal(recipe) && isDrink(recommendations[0])) {
-    const drinkRecommendations = recommendations as Drink[];
-
-    return {
-      ...toRecipeWithDetails(recipe),
-      recommendations: drinkRecommendations.map(
-        ({ strDrink, strDrinkThumb, idDrink }) => ({
-          type: "drink",
-          img: strDrinkThumb,
-          name: strDrink,
-          id: idDrink,
-        })
-      ),
-    };
-  } else if (isDrink(recipe) && isMeal(recommendations[0])) {
-    const mealRecommendations = recommendations as Meal[];
-
-    return {
-      ...toRecipeWithDetails(recipe),
-      recommendations: mealRecommendations.map(
-        ({ strMeal, strMealThumb, idMeal }) => ({
-          type: "meal",
-          img: strMealThumb,
-          name: strMeal,
-          id: idMeal,
-        })
-      ),
-    };
-  }
-
-  throw new Error(
-    getMappingErrorMessage("RecipeWithDetailsAndRecommendations")
-  );
 }

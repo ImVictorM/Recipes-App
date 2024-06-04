@@ -1,9 +1,4 @@
 import {
-  LoaderFunctionArgs,
-  RouteObject,
-  createBrowserRouter,
-} from "react-router-dom";
-import {
   Login,
   Recipes,
   Profile,
@@ -26,55 +21,80 @@ import {
   getCocktails,
   getCocktailsByFilter,
 } from "./services/menu/cocktailService";
-import { toRecipeWithDetails } from "./utils/recipeMappers";
 import { CocktailIcon, MealIcon } from "./assets/icons";
-import { RecipeWithDetails } from "./store/slices/menuSlice";
-import { LoaderCallback, deferredLoader } from "./utils/reactRouterDom";
+import {
+  LoaderFunctionArgs,
+  RouteObject,
+  createBrowserRouter,
+} from "react-router-dom";
+import { MissingIdInRouteParametersError } from "./errors/http";
+import { LoaderCallback, defer } from "./utils/reactRouterDom";
 
 export type RecipeDetailsLoader = LoaderCallback<{
-  recipeWithRecommendations: Promise<[Drink | Meal, Drink[] | Meal[]]>;
+  recipe: Drink | Meal;
+  recommendations: Promise<Drink[] | Meal[]>;
 }>;
 
-export const mealRecipeDetailsLoader: RecipeDetailsLoader = deferredLoader(
-  (args) => {
-    const params = args.params as ArgsWithId;
+export type RecipeInProgressLoader = LoaderCallback<{
+  recipe: Drink | Meal;
+}>;
 
-    const mealAndRecommendationsPromise = Promise.all([
-      getMealDetailsById(params.id, {
-        signal: args.request.signal,
-      }),
-      getCocktails({
-        signal: args.request.signal,
-      }),
-    ]);
+const mealRecipeDetailsLoader: RecipeDetailsLoader = async (
+  args: LoaderFunctionArgs
+) => {
+  if (!args.params.id) throw new Error("Missing ID in route parameters");
 
-    return {
-      recipeWithRecommendations: mealAndRecommendationsPromise,
-    };
-  }
-);
+  const meal = await getMealDetailsById(args.params.id, {
+    signal: args.request.signal,
+  });
 
-export const drinkRecipeDetailsLoader: RecipeDetailsLoader = deferredLoader(
-  (args) => {
-    const params = args.params as ArgsWithId;
+  const recommendationsPromise = getCocktails({
+    signal: args.request.signal,
+  });
 
-    const drinkAndRecommendationsPromise = Promise.all([
-      getCocktailDetailsById(params.id, {
-        signal: args.request.signal,
-      }),
-      getMeals({
-        signal: args.request.signal,
-      }),
-    ]);
+  return defer({
+    recipe: meal,
+    recommendations: recommendationsPromise,
+  });
+};
 
-    return {
-      recipeWithRecommendations: drinkAndRecommendationsPromise,
-    };
-  }
-);
+const drinkRecipeDetailsLoader: RecipeDetailsLoader = async (args) => {
+  if (!args.params.id) throw new MissingIdInRouteParametersError();
+  const drink = await getCocktailDetailsById(args.params.id, {
+    signal: args.request.signal,
+  });
 
-type ArgsWithId = {
-  id: string;
+  const recommendationsPromise = getMeals({
+    signal: args.request.signal,
+  });
+
+  return defer({
+    recipe: drink,
+    recommendations: recommendationsPromise,
+  });
+};
+
+const mealRecipeInProgressLoader: RecipeInProgressLoader = async (args) => {
+  if (!args.params.id) throw new MissingIdInRouteParametersError();
+
+  const meal = await getMealDetailsById(args.params.id, {
+    signal: args.request.signal,
+  });
+
+  return {
+    recipe: meal,
+  };
+};
+
+const drinkRecipeInProgressLoader: RecipeInProgressLoader = async (args) => {
+  if (!args.params.id) throw new MissingIdInRouteParametersError();
+  const drink = await getCocktailDetailsById(args.params.id, {
+    signal: args.request.signal,
+  });
+
+  return {
+    recipe: drink,
+  };
 };
 
 const routes: RouteObject[] = [
@@ -112,24 +132,12 @@ const routes: RouteObject[] = [
       {
         path: ":id",
         element: <RecipeDetails />,
-        loader: mealRecipeDetailsLoader,
+        loader: drinkRecipeDetailsLoader,
       },
       {
         path: ":id/in-progress",
         element: <RecipeInProgress />,
-        loader: async (
-          args: LoaderFunctionArgs
-        ): Promise<RecipeWithDetails> => {
-          const params = args.params as ArgsWithId;
-          const drink = await getCocktailDetailsById(params.id, {
-            signal: args.request.signal,
-          });
-
-          if (drink) {
-            return toRecipeWithDetails(drink);
-          }
-          throw new Response("Drink not found", { status: 404 });
-        },
+        loader: drinkRecipeInProgressLoader,
       },
     ],
   },
@@ -159,24 +167,12 @@ const routes: RouteObject[] = [
       {
         path: ":id/in-progress",
         element: <RecipeInProgress />,
-        loader: async (
-          args: LoaderFunctionArgs
-        ): Promise<RecipeWithDetails> => {
-          const params = args.params as ArgsWithId;
-          const meal = await getMealDetailsById(params.id, {
-            signal: args.request.signal,
-          });
-
-          if (meal) {
-            return toRecipeWithDetails(meal);
-          }
-          throw new Response("Meal not found", { status: 404 });
-        },
+        loader: mealRecipeInProgressLoader,
       },
     ],
   },
 ];
 
-const router = createBrowserRouter(routes);
+export const router = createBrowserRouter(routes);
 
 export default router;

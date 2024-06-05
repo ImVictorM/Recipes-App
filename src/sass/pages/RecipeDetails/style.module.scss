@@ -2,5 +2,6 @@
 
 .recipe__recommendations {
   @include scroll-inline(minmax(200px, auto));
-  max-height: 450px;
+  overflow-y: hidden;
+  height: 300px;
 }

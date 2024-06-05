@@ -3,8 +3,8 @@ import { RecipeDetailsLoader } from "@/router";
 import React, { useRef } from "react";
 import { toRecipe, toRecipeWithDetails } from "@/utils/recipeMappers";
 import {
-  LoadingSpinner,
   RecipeBasicCard,
+  RecipeBasicCardSkeleton,
   ScrollLinearContainer,
 } from "@/components";
 import { useAppSelector, useAppDispatch } from "@/hooks";
@@ -33,7 +33,7 @@ export default function RecipeDetails() {
 
   /**
    * Needs to be static to not flicker the button text
-   * when leaving the page
+   * when leaving the page.
    */
   const isRecipeInProgressInitialStateRef = useRef(isRecipeInProgress);
 
@@ -92,28 +92,37 @@ export default function RecipeDetails() {
 
         <section>
           <h3>Recommended drinks</h3>
-
-          <React.Suspense fallback={<LoadingSpinner />}>
-            <Await resolve={data.recommendations} errorElement={<p>error</p>}>
-              {(recommendations) => {
-                return (
-                  <ScrollLinearContainer
-                    className={`${styles.recipe__recommendations}`}
-                  >
-                    {recommendations.map(toRecipe).map((recipe, index) => {
-                      return (
-                        <RecipeBasicCard
-                          recipe={recipe}
-                          index={index}
-                          key={recipe.id}
-                        />
-                      );
-                    })}
-                  </ScrollLinearContainer>
-                );
-              }}
-            </Await>
-          </React.Suspense>
+          <ScrollLinearContainer
+            className={`${styles.recipe__recommendations}`}
+          >
+            <React.Suspense
+              fallback={
+                <>
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <RecipeBasicCardSkeleton key={index} />
+                  ))}
+                </>
+              }
+            >
+              <Await resolve={data.recommendations} errorElement={<p>error</p>}>
+                {(recommendations) => {
+                  return (
+                    <>
+                      {recommendations.map(toRecipe).map((recipe, index) => {
+                        return (
+                          <RecipeBasicCard
+                            recipe={recipe}
+                            index={index}
+                            key={recipe.id}
+                          />
+                        );
+                      })}
+                    </>
+                  );
+                }}
+              </Await>
+            </React.Suspense>
+          </ScrollLinearContainer>
         </section>
       </Stack>
 

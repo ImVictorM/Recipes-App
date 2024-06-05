@@ -1,0 +1,10 @@
+@use "@/sass/abstracts/variables" as *;
+
+.card {
+  max-width: $max-card-basic-width;
+  flex-grow: 1;
+}
+
+.card__body {
+  min-height: 0;
+}

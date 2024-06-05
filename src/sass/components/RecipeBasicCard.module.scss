@@ -1,7 +1,8 @@
 @use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/variables" as *;
 
 .recipe-card {
-  max-width: 400px;
+  max-width: $max-card-basic-width;
   flex-grow: 1;
 }
 

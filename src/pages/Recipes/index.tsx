@@ -12,9 +12,9 @@ import { useNavigate } from "react-router-dom";
 import { AxiosRequestConfig, isAxiosError } from "axios";
 import {
   CenteredTitleWithIcon,
-  LoadingSpinner,
   RecipeBasicCard,
   ListWithPagination,
+  RecipeBasicCardSkeleton,
 } from "@/components";
 import RecipesFilterBySearch, {
   RecipesFilterBySearchFormState,
@@ -154,21 +154,19 @@ export default function Recipes<T extends Drink | Meal>({
         onFilterByAll={handleFetchRecipesWithoutFilter}
       />
 
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <ListWithPagination
-          onCreateItemCard={(recipe, index) => (
-            <RecipeBasicCard
-              data-testid={`${index}-recipe-card`}
-              recipe={recipe}
-              index={index}
-              scaleOnHover
-            />
-          )}
-          items={menu.recipes}
-        />
-      )}
+      <ListWithPagination
+        ItemCardSkeleton={<RecipeBasicCardSkeleton />}
+        loading={isLoading}
+        onCreateItemCard={(recipe, index) => (
+          <RecipeBasicCard
+            data-testid={`${index}-recipe-card`}
+            recipe={recipe}
+            index={index}
+            scaleOnHover
+          />
+        )}
+        items={menu.recipes}
+      />
     </BasicLayout>
   );
 }

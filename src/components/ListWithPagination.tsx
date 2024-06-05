@@ -50,7 +50,7 @@ export default function ListWithPagination<T extends DataWithId>({
     new Date().getTime()
   );
   const [showSkeleton, setShowSkeleton] = useState<boolean>(
-    loading && Boolean(ItemCardSkeleton)
+    loading && Boolean(ItemCardSkeleton) && items.length === 0
   );
 
   const uiItemsIndex = useMemo(
@@ -109,8 +109,13 @@ export default function ListWithPagination<T extends DataWithId>({
   useEffect(() => {
     const handleLoadingChange = async () => {
       if (!ItemCardSkeleton) return;
-
-      if (loading) {
+      /**
+       * For the item to show, the page must be loading
+       * and the items list must be empty.
+       * Sometimes, the loading state will update before
+       * to true before before the items are set.
+       */
+      if (loading || items.length === 0) {
         setLastLoadingTime(new Date().getTime());
         setShowSkeleton(true);
       } else {
@@ -129,7 +134,7 @@ export default function ListWithPagination<T extends DataWithId>({
     };
 
     handleLoadingChange();
-  }, [ItemCardSkeleton, lastLoadingTime, loading]);
+  }, [ItemCardSkeleton, items.length, lastLoadingTime, loading]);
 
   return (
     <section>

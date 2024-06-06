@@ -4,7 +4,7 @@ import { BasicLayout } from "@/layouts";
 import { Drink } from "@/services/menu/cocktailService";
 import { RecipeCategory, RecipeFilterOptions } from "@/services/menu/common";
 import { Meal } from "@/services/menu/mealService";
-import { selectMenu, setRecipes } from "@/store/slices/menuSlice";
+import { Recipe, selectMenu, setRecipes } from "@/store/slices/menuSlice";
 import { selectVisibility } from "@/store/slices/visibilitySlice";
 import { toRecipe } from "@/utils/recipeMappers";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -47,18 +47,24 @@ export default function Recipes<T extends Drink | Meal>({
   const menu = useAppSelector(selectMenu);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // All the API calls in this page updates the same state using setRecipes,
   // so using a single abort controller is a good approach
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const fetchWithControllers = useCallback(
-    async (fetch: () => Promise<void>, onCatch?: () => Promise<void>) => {
+    async (
+      fetch: () => Promise<void>,
+      onCatch?: (error: unknown) => Promise<void> | void
+    ) => {
       setIsLoading(true);
       resetAbortController();
 
       try {
         await fetch();
+
+        setErrorMessage(null);
       } catch (error) {
         if (abortControllerRef.current?.signal.aborted) {
           return;
@@ -67,7 +73,7 @@ export default function Recipes<T extends Drink | Meal>({
         }
 
         if (onCatch) {
-          await onCatch();
+          await onCatch(error);
         } else {
           console.error(error);
         }
@@ -83,19 +89,8 @@ export default function Recipes<T extends Drink | Meal>({
     abortControllerRef.current = new AbortController();
   };
 
-  const handleFetchRecipesBySearch = async (
-    formState: RecipesFilterBySearchFormState
-  ) => {
-    await fetchWithControllers(async () => {
-      const response = await onGetRecipesByFilter(
-        formState.searchQuery,
-        formState.searchFilter,
-        {
-          signal: abortControllerRef.current?.signal,
-        }
-      );
-      const recipes = response.map(toRecipe);
-
+  const handleSetRecipes = useCallback(
+    (recipes: Recipe[]) => {
       if (recipes.length === 0) {
         window.alert("Sorry, we haven't found any recipes for these filters.");
       } else if (recipes.length === 1) {
@@ -105,31 +100,69 @@ export default function Recipes<T extends Drink | Meal>({
       } else {
         dispatch(setRecipes(recipes));
       }
-    });
+    },
+    [dispatch, navigate]
+  );
+
+  const handleFetchRecipesBySearch = async ({
+    searchQuery,
+    searchFilter,
+  }: RecipesFilterBySearchFormState) => {
+    await fetchWithControllers(
+      async () => {
+        const response = await onGetRecipesByFilter(searchQuery, searchFilter, {
+          signal: abortControllerRef.current?.signal,
+        });
+        const recipes = response.map(toRecipe);
+
+        handleSetRecipes(recipes);
+      },
+      () => {
+        setErrorMessage(
+          `Sorry, there was an error when trying to filter recipes by ${searchFilter} ${searchQuery}. Please, Try again later.`
+        );
+      }
+    );
   };
 
   const handleFetchRecipesByCategory = async (category: string) => {
-    await fetchWithControllers(async () => {
-      const response = await onGetRecipesByFilter(
-        category,
-        RecipeFilterOptions.CATEGORY,
-        { signal: abortControllerRef.current?.signal }
-      );
-      const recipes = response.map(toRecipe);
-      dispatch(setRecipes(recipes));
-    });
+    await fetchWithControllers(
+      async () => {
+        const response = await onGetRecipesByFilter(
+          category,
+          RecipeFilterOptions.CATEGORY,
+          { signal: abortControllerRef.current?.signal }
+        );
+        const recipes = response.map(toRecipe);
+
+        handleSetRecipes(recipes);
+      },
+      () => {
+        setErrorMessage(
+          `Sorry, there was an error when trying to filter recipes by the category ${category}. Please, Try again later.`
+        );
+      }
+    );
   };
 
   const handleFetchRecipesWithoutFilter = useCallback(async () => {
-    await fetchWithControllers(async () => {
-      const response = await onGetRecipes({
-        signal: abortControllerRef.current?.signal,
-      });
-      const recipes = response.map(toRecipe);
+    await fetchWithControllers(
+      async () => {
+        const response = await onGetRecipes({
+          signal: abortControllerRef.current?.signal,
+        });
 
-      dispatch(setRecipes(recipes));
-    });
-  }, [dispatch, fetchWithControllers, onGetRecipes]);
+        const recipes = response.map(toRecipe);
+
+        handleSetRecipes(recipes);
+      },
+      () => {
+        setErrorMessage(
+          `Sorry, there was an error when trying to get you recipes. Please, try again later.`
+        );
+      }
+    );
+  }, [fetchWithControllers, handleSetRecipes, onGetRecipes]);
 
   useEffect(() => {
     handleFetchRecipesWithoutFilter();
@@ -154,19 +187,28 @@ export default function Recipes<T extends Drink | Meal>({
         onFilterByAll={handleFetchRecipesWithoutFilter}
       />
 
-      <ListWithPagination
-        ItemCardSkeleton={<RecipeBasicCardSkeleton />}
-        loading={isLoading}
-        onCreateItemCard={(recipe, index) => (
-          <RecipeBasicCard
-            data-testid={`${index}-recipe-card`}
-            recipe={recipe}
-            index={index}
-            scaleOnHover
-          />
-        )}
-        items={menu.recipes}
-      />
+      {errorMessage !== null && (
+        <section className="d-flex flex-column align-items-center justify-content-center mt-4">
+          <h3 className="text-center">Oops, something went wrong!</h3>
+          <p className="text-center">{errorMessage}</p>
+        </section>
+      )}
+
+      {!errorMessage && (
+        <ListWithPagination
+          ItemCardSkeleton={<RecipeBasicCardSkeleton />}
+          loading={isLoading}
+          onCreateItemCard={(recipe, index) => (
+            <RecipeBasicCard
+              data-testid={`${index}-recipe-card`}
+              recipe={recipe}
+              index={index}
+              scaleOnHover
+            />
+          )}
+          items={menu.recipes}
+        />
+      )}
     </BasicLayout>
   );
 }

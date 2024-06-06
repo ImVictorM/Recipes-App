@@ -44,7 +44,7 @@ const mealRecipeDetailsLoader: RecipeDetailsLoader = async (
 ) => {
   if (!args.params.id) throw new Error("Missing ID in route parameters");
 
-  const meal = await getMealDetailsById(args.params.id, {
+  const mealPromise = getMealDetailsById(args.params.id, {
     signal: args.request.signal,
   });
 
@@ -53,14 +53,14 @@ const mealRecipeDetailsLoader: RecipeDetailsLoader = async (
   });
 
   return defer({
-    recipe: meal,
+    recipe: await mealPromise,
     recommendations: recommendationsPromise,
   });
 };
 
 const drinkRecipeDetailsLoader: RecipeDetailsLoader = async (args) => {
   if (!args.params.id) throw new MissingIdInRouteParametersError();
-  const drink = await getCocktailDetailsById(args.params.id, {
+  const drinkPromise = getCocktailDetailsById(args.params.id, {
     signal: args.request.signal,
   });
 
@@ -69,7 +69,7 @@ const drinkRecipeDetailsLoader: RecipeDetailsLoader = async (args) => {
   });
 
   return defer({
-    recipe: drink,
+    recipe: await drinkPromise,
     recommendations: recommendationsPromise,
   });
 };

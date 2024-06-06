@@ -2,6 +2,7 @@ import { HeartCircularIcon } from "@/assets/icons";
 import {
   CenteredTitleWithIcon,
   ListWithPagination,
+  RecipeEmptyByType,
   RecipesFilterByType,
 } from "@/components";
 import { RecipeTypeOrAll } from "@/components/RecipesFilterByType";
@@ -12,7 +13,7 @@ import {
   selectRecipesFavoriteByType,
 } from "@/store/slices/menuSlice";
 import { selectUser } from "@/store/slices/userSlice";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { RecipeFavoriteCard } from "./components";
 
 export default function RecipesFavorite() {
@@ -29,6 +30,9 @@ export default function RecipesFavorite() {
       );
     }
   });
+  const isRecipesFavoriteEmpty = useMemo(() => {
+    return recipesFavorite.length === 0;
+  }, [recipesFavorite.length]);
 
   const handleFilterByType = (type: RecipeTypeOrAll) => {
     setRecipeType(type);
@@ -46,17 +50,23 @@ export default function RecipesFavorite() {
 
       <RecipesFilterByType onFilterByType={handleFilterByType} />
 
-      <ListWithPagination
-        items={recipesFavorite}
-        onCreateItemCard={(recipe) => <RecipeFavoriteCard recipe={recipe} />}
-        showBySize={{
-          xs: 1,
-          sm: 2,
-          md: 3,
-          lg: 4,
-        }}
-        maxItemsPerPage={16}
-      />
+      {isRecipesFavoriteEmpty && (
+        <RecipeEmptyByType type={recipesFavoriteType} action="favorite" />
+      )}
+
+      {!isRecipesFavoriteEmpty && (
+        <ListWithPagination
+          items={recipesFavorite}
+          onCreateItemCard={(recipe) => <RecipeFavoriteCard recipe={recipe} />}
+          showBySize={{
+            xs: 1,
+            sm: 2,
+            md: 3,
+            lg: 4,
+          }}
+          maxItemsPerPage={16}
+        />
+      )}
     </BasicLayout>
   );
 }

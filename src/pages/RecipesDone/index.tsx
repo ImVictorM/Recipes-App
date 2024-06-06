@@ -12,8 +12,9 @@ import {
 } from "@/store/slices/menuSlice";
 import { selectUser } from "@/store/slices/userSlice";
 import { RecipeDoneCard } from "./components";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { RecipeTypeOrAll } from "@/components/RecipesFilterByType";
+import RecipesEmptyByType from "@/components/RecipeEmptyByType";
 
 export default function RecipesDone() {
   const user = useAppSelector(selectUser);
@@ -26,6 +27,9 @@ export default function RecipesDone() {
       return selectRecipesDoneByType(state, user.email, recipesDoneType);
     }
   });
+  const isRecipesDoneEmpty = useMemo(() => {
+    return recipesDone.length === 0;
+  }, [recipesDone.length]);
 
   const handleFilterByType = (type: RecipeTypeOrAll) => {
     setRecipesType(type);
@@ -40,19 +44,25 @@ export default function RecipesDone() {
 
       <RecipesFilterByType onFilterByType={handleFilterByType} />
 
-      <ListWithPagination
-        items={recipesDone}
-        onCreateItemCard={(recipeDone) => (
-          <RecipeDoneCard recipe={recipeDone} />
-        )}
-        showBySize={{
-          xs: 1,
-          sm: 2,
-          md: 3,
-          lg: 4,
-        }}
-        maxItemsPerPage={16}
-      />
+      {isRecipesDoneEmpty && (
+        <RecipesEmptyByType type={recipesDoneType} action="made" />
+      )}
+
+      {!isRecipesDoneEmpty && (
+        <ListWithPagination
+          items={recipesDone}
+          onCreateItemCard={(recipeDone) => (
+            <RecipeDoneCard recipe={recipeDone} />
+          )}
+          showBySize={{
+            xs: 1,
+            sm: 2,
+            md: 3,
+            lg: 4,
+          }}
+          maxItemsPerPage={16}
+        />
+      )}
     </BasicLayout>
   );
 }

@@ -6,6 +6,7 @@ import {
   RecipeInProgress,
   RecipesDone,
   RecipesFavorite,
+  RecipeError,
 } from "./pages";
 import {
   Meal,
@@ -133,11 +134,13 @@ const routes: RouteObject[] = [
         path: ":id",
         element: <RecipeDetails />,
         loader: drinkRecipeDetailsLoader,
+        errorElement: <RecipeError />,
       },
       {
         path: ":id/in-progress",
         element: <RecipeInProgress />,
         loader: drinkRecipeInProgressLoader,
+        errorElement: <RecipeError />,
       },
     ],
   },
@@ -163,11 +166,13 @@ const routes: RouteObject[] = [
         path: ":id",
         element: <RecipeDetails />,
         loader: mealRecipeDetailsLoader,
+        errorElement: <RecipeError />,
       },
       {
         path: ":id/in-progress",
         element: <RecipeInProgress />,
         loader: mealRecipeInProgressLoader,
+        errorElement: <RecipeError />,
       },
     ],
   },

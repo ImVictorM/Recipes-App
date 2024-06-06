@@ -104,7 +104,16 @@ export default function RecipeDetails() {
                 </>
               }
             >
-              <Await resolve={data.recommendations} errorElement={<p>error</p>}>
+              <Await
+                resolve={data.recommendations}
+                errorElement={
+                  <div>
+                    <p className="text-muted">
+                      There was an error trying to load the recommendations.
+                    </p>
+                  </div>
+                }
+              >
                 {(recommendations) => {
                   return (
                     <>

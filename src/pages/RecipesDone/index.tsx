@@ -45,7 +45,7 @@ export default function RecipesDone() {
       <RecipesFilterByType onFilterByType={handleFilterByType} />
 
       {isRecipesDoneEmpty && (
-        <RecipesEmptyByType type={recipesDoneType} action="made" />
+        <RecipesEmptyByType type={recipesDoneType} action="completed" />
       )}
 
       {!isRecipesDoneEmpty && (

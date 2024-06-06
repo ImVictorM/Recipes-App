@@ -28,7 +28,7 @@ export default function RecipesEmptyByType({
       text: "Search for drinks",
     };
     const mealLink: EmptyStateLink = {
-      to: "/meal",
+      to: "/meals",
       text: "Search for meals",
     };
 

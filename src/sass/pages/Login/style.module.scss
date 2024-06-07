@@ -36,15 +36,17 @@
   }
 }
 
-.login__form__email {
-  &__input ~ label {
+.login__form__email__input {
+  $purple-focus: rgba(map-get($theme-colors, "purple"), 0.65);
+
+  & ~ label {
     color: map-get($theme-colors, "purple");
   }
   
-  &__input:focus,
-  &__input:not(:placeholder-shown) {
+  &:focus,
+  &:not(:placeholder-shown) {
     ~ label {
-      color: rgba(map-get($theme-colors, "purple"), 0.65)!important;
+      color:$purple-focus!important;
 
       &::after {
         background-color: transparent !important;
@@ -52,9 +54,9 @@
     }
   }
  
-  &__input:-webkit-autofill {
+  &:-webkit-autofill {
     ~ label {
-      color: rgba(map-get($theme-colors, "purple"), 0.65)!important;
+      color: $purple-focus!important;
     }
   }
 }

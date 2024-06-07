@@ -8,8 +8,8 @@
 }
 
 .profile__button {
-  --border: 1px solid #{map-get($map: $theme-colors, $key: "slate")};
-  --border-radius: 5px;
+  $border: 1px solid #{map-get($map: $theme-colors, $key: "slate")};
+  $border-radius: 5px;
 
   background-color: transparent;
   text-decoration: none;
@@ -25,13 +25,13 @@
   }
 
   &:first-child {
-    border-bottom: var(--border);
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    border-bottom: $border;
+    border-radius: $border-radius $border-radius 0 0;
   }
 
   &:last-child {
-    border-top: var(--border);
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    border-top: $border;
+    border-radius: 0 0 $border-radius $border-radius;
   }
 
   &:hover, &:focus {

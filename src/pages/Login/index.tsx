@@ -57,11 +57,7 @@ export default function Login() {
           </Container>
 
           <Stack gap={2}>
-            <FloatingLabel
-              className={`${styles.login__form__email}`}
-              controlId="email-input"
-              label="Enter your email"
-            >
+            <FloatingLabel controlId="email-input" label="Enter your email">
               <Form.Control
                 className={`${styles.login__form__email__input}`}
                 type="email"

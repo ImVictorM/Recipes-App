@@ -3,7 +3,7 @@ import { ProfileIcon, SearchIcon } from "@/assets/icons";
 import { HeaderLogo } from "@/assets/images";
 import { useAppDispatch } from "@/hooks";
 import { toggleSearchBarVisibility } from "@/store/slices/visibilitySlice";
-import { Container, Stack } from "react-bootstrap";
+import { Container, OverlayTrigger, Stack, Tooltip } from "react-bootstrap";
 import styles from "@/sass/layouts/BasicLayout/components/Header.module.scss";
 
 export type HeaderProps = {
@@ -24,23 +24,40 @@ export default function Header({ containSearchBar }: HeaderProps) {
 
         <Stack direction="horizontal" gap={3}>
           {containSearchBar && (
-            <button
-              data-testid="search-top-btn"
-              type="button"
-              onClick={handleSearchBarVisibility}
-              className={`${styles["header__search-button"]}`}
+            <OverlayTrigger
+              placement="bottom-end"
+              overlay={(props) => (
+                <Tooltip {...props} id="search-button">
+                  Search for recipes
+                </Tooltip>
+              )}
             >
-              <SearchIcon role="img" aria-label="search magnifying glass" />
-            </button>
+              <button
+                data-testid="search-top-btn"
+                type="button"
+                onClick={handleSearchBarVisibility}
+                className={`${styles["header__search-button"]}`}
+              >
+                <SearchIcon role="img" aria-label="search magnifying glass" />
+              </button>
+            </OverlayTrigger>
           )}
-
-          <Link
-            className={`${styles.header__profile}`}
-            to="/profile"
-            data-testid="profile-top-btn"
+          <OverlayTrigger
+            placement="bottom-end"
+            overlay={(props) => (
+              <Tooltip id="profile-link" {...props}>
+                Profile
+              </Tooltip>
+            )}
           >
-            <ProfileIcon role="img" aria-label="circular profile user" />
-          </Link>
+            <Link
+              className={`${styles.header__profile}`}
+              to="/profile"
+              data-testid="profile-top-btn"
+            >
+              <ProfileIcon role="img" aria-label="circular profile user" />
+            </Link>
+          </OverlayTrigger>
         </Stack>
       </Container>
     </header>

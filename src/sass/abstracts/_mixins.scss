@@ -29,3 +29,21 @@
   overscroll-behavior-inline: none;
   padding: 0.5em 0;
 }
+
+@mixin hover-circular($hover-size-increase: 12px, $hover-bg-color: rgba(0,0,0,0.09)) {
+  position: relative;
+
+  &:hover, &:focus {
+    &::before {
+      content: "";
+      display: block;
+      background-color: $hover-bg-color;
+      width: calc(100% + $hover-size-increase);
+      height: calc(100% + $hover-size-increase);
+      position: absolute;
+      border-radius: 50%;
+      top: calc(-#{$hover-size-increase} / 2);
+      left: calc(-#{$hover-size-increase} / 2);
+    }
+  }
+}

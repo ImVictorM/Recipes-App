@@ -1,5 +1,6 @@
 @use "@/sass/themes/theme" as *;
 @use "@/sass/abstracts/variables" as *;
+@use "@/sass/abstracts/mixins" as *;
 
 .header {
   display: flex;
@@ -17,7 +18,7 @@
   }
   
   &__search-button {
-    background-color: map-get($map: $theme-colors, $key: "yellow");
+    background-color: transparent;
   }
 
   &__profile {
@@ -27,7 +28,10 @@
 
   &__profile,
   &__search-button {
-    width: 35px;
+    @include hover-circular();
+    $icon-size: 30px;
+    width: $icon-size;
+    height: $icon-size;
   }
 }
 

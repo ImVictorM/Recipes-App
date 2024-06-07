@@ -17,10 +17,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 1em;
-    
-    @include respond-to("tabletS") {
-      padding: 0;
-    }
+  }
+
+  &__nav__link {
+    $link-size: calc($footer-height - 12px);
+    display: block;
+    width: $link-size;
+    height: $link-size;
+    @include hover-circular($hover-bg-color: rgba(255, 255, 255, 0.04));
   }
 }
 

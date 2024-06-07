@@ -1,6 +1,7 @@
 import { CocktailIcon, MealIcon } from "@/assets/icons";
-import { Container, Nav } from "react-bootstrap";
+import { Container, OverlayTrigger, Tooltip } from "react-bootstrap";
 import styles from "@/sass/layouts/BasicLayout/components/Footer.module.scss";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -10,22 +11,48 @@ export default function Footer() {
       data-testid="footer"
       className={`${styles.footer} fixed-bottom`}
     >
-      <Nav as="nav" className={`${styles.footer__nav}`}>
-        <Nav.Item>
-          <Nav.Link href="/meals" data-testid="meals-bottom-btn">
-            <MealIcon
-              role="img"
-              aria-label="meal plate in the middle with fork to the left and knife to the right"
-            />
-          </Nav.Link>
-        </Nav.Item>
+      <nav className={`${styles.footer__nav}`}>
+        <div>
+          <OverlayTrigger
+            overlay={(props) => (
+              <Tooltip id="link-meals" {...props}>
+                Search for foods
+              </Tooltip>
+            )}
+            placement="top"
+          >
+            <Link
+              className={`${styles.footer__nav__link}`}
+              to="/meals"
+              data-testid="meals-bottom-btn"
+            >
+              <MealIcon
+                role="img"
+                aria-label="meal plate in the middle with a fork to the left and a knife to the right"
+              />
+            </Link>
+          </OverlayTrigger>
+        </div>
 
-        <Nav.Item>
-          <Nav.Link href="/drinks" data-testid="drinks-bottom-btn">
-            <CocktailIcon role="img" aria-label="cocktail glass" />
-          </Nav.Link>
-        </Nav.Item>
-      </Nav>
+        <div>
+          <OverlayTrigger
+            overlay={(props) => (
+              <Tooltip id="link-drinks" {...props}>
+                Search for drinks
+              </Tooltip>
+            )}
+            placement="top"
+          >
+            <Link
+              className={`${styles.footer__nav__link}`}
+              to="/drinks"
+              data-testid="drinks-bottom-btn"
+            >
+              <CocktailIcon role="img" aria-label="cocktail glass" />
+            </Link>
+          </OverlayTrigger>
+        </div>
+      </nav>
     </Container>
   );
 }

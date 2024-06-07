@@ -4,25 +4,24 @@
 .form {
   max-width: 600px;
   margin: 0.5em 1em;
-  margin-top: 1em;
   position: relative;
   background: map-get($map: $theme-colors, $key: "purple");
-  padding: 2em 1em 1em;
-  border-radius: 0 0 10px 10px;
+  border-radius: 10px;
 
   @include respond-to("tabletS") {
     margin: 0.5em auto;
   }
+}
 
-  &__input {
-    position: absolute;
-    right: 0;
-    left: 0;
-    top: -1em;
-  }
+.form__bottom {
+  padding: 1em 1.5em;
 
-  &__checkbox {
-    color: map-get($map: $theme-colors, $key: "white");
-    white-space: nowrap;
+  @include respond-to("tabletS") {
+    padding: 1em 15%;
   }
+}
+
+.form__checkbox {
+  color: map-get($map: $theme-colors, $key: "white");
+  white-space: nowrap;
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RecipeFilterOptions } from "@/services/menu/common";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import styles from "@/sass/pages/Recipes/components/RecipesFilterBySearch.module.scss";
 
 export type RecipesFilterBySearchFormState = {
@@ -56,7 +56,6 @@ export default function RecipesFilterBySearch({
       <Form.Control
         data-testid="search-input"
         placeholder="Search for recipes"
-        className={`${styles.form__input}`}
         maxLength={
           formState.searchFilter === RecipeFilterOptions.FIRST_LETTER ? 1 : 60
         }
@@ -65,7 +64,7 @@ export default function RecipesFilterBySearch({
         onChange={handleSearchInputChange}
       />
 
-      <Container fluid>
+      <div className={`${styles.form__bottom}`}>
         <Row>
           <Col>
             <Form.Check
@@ -127,7 +126,7 @@ export default function RecipesFilterBySearch({
         >
           Search
         </Button>
-      </Container>
+      </div>
     </Form>
   );
 }

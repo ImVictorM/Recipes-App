@@ -19,6 +19,7 @@ import {
 import RecipesFilterBySearch, {
   RecipesFilterBySearchFormState,
 } from "./components/RecipesFilterBySearch";
+import { Collapse } from "react-bootstrap";
 
 type RecipesProps<T> = {
   icon: {
@@ -177,9 +178,11 @@ export default function Recipes<T extends Drink | Meal>({
     <BasicLayout containHeaderSearchBar>
       <CenteredTitleWithIcon icon={icon} title={title} />
 
-      {visibility.showSearchBar && (
-        <RecipesFilterBySearch onSearch={handleFetchRecipesBySearch} />
-      )}
+      <Collapse in={visibility.showSearchBar}>
+        <div>
+          <RecipesFilterBySearch onSearch={handleFetchRecipesBySearch} />
+        </div>
+      </Collapse>
 
       <RecipesFilterByCategory
         categories={categories}

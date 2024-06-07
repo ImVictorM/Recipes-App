@@ -45,12 +45,13 @@ export default function Login() {
 
   return (
     <Container fluid className="min-vh-100 p-0 d-flex justify-content-center">
-      <Container as="main" fluid className={`${styles.login}`}>
+      <main className={`${styles.login}`}>
         <Logo className={`${styles.login__logo}`} role="img" />
 
         <Form
           className={`${styles.login__form} container-fluid`}
           onSubmit={handleLogin}
+          id={`${styles["login-form"]}`}
         >
           <Container as="h1" fluid className={`${styles.login__title}`}>
             Login
@@ -81,7 +82,7 @@ export default function Login() {
             Enter
           </Button>
         </Form>
-      </Container>
+      </main>
     </Container>
   );
 }

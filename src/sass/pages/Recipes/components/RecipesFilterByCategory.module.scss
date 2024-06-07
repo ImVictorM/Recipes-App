@@ -1,5 +1,4 @@
 @use "@/sass/themes/theme" as *;
-@use "@/sass/vendors/bootstrap" as *;
 @use "@/sass/abstracts/variables" as *;
 @use "@/sass/abstracts/mixins" as *;
 
@@ -37,7 +36,7 @@
         }
       }
       
-      img {
+      img, svg {
         width: 25px;
         height: 25px;
       }
@@ -58,14 +57,4 @@
 
 .filters__scroller {
   @include scroll-inline(auto);
-}
-
-.filter__scroller__button {
-  @extend %default-primary-button;
-
-  border-radius: 12px;
-  padding: 0.2em 1.5em;
-  box-shadow: 0 1px 3px rgb(0,0,0,0.25);
-  white-space: nowrap;
-  margin: 0;
 }

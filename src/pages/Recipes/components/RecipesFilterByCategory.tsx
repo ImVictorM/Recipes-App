@@ -39,7 +39,7 @@ export default function RecipesFilterByCategory({
           type="button"
           data-testid="All-category-filter"
           name="all"
-          className={`${styles.filter__scroller__button}`}
+          className={`button-pill`}
           onClick={onFilterByAll}
         >
           All
@@ -47,7 +47,7 @@ export default function RecipesFilterByCategory({
         {categories.map(({ strCategory }, index) => {
           return (
             <button
-              className={`${styles.filter__scroller__button}`}
+              className={`button-pill`}
               key={index}
               data-testid={`${strCategory}-category-filter`}
               name={strCategory}

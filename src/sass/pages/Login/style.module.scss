@@ -9,7 +9,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 2em 0 !important;
+  padding: 2em 0;
+  width: 100%;
 
   @include respond-to("tabletS") {
     max-width: 600px;
@@ -17,7 +18,7 @@
     border-radius: 20px;
     gap: 2.5em;
     margin: auto;
-    padding: 1.5em 2em !important;
+    padding: 1.5em 2em;
     box-shadow:  0 2px 4px 2px rgba(0, 0, 0, 0.2);
   }
 }
@@ -36,7 +37,11 @@
   }
 }
 
-.login__form__email__input {
+/** 
+  Increase specificity by using id selector to override bootstrap
+  styles without having to use !important.
+*/
+#login-form .login__form__email__input {
   $purple-focus: rgba(map-get($theme-colors, "purple"), 0.65);
 
   & ~ label {
@@ -46,17 +51,17 @@
   &:focus,
   &:not(:placeholder-shown) {
     ~ label {
-      color:$purple-focus!important;
+      color:$purple-focus;
 
       &::after {
-        background-color: transparent !important;
+        background-color: transparent;
       }
     }
   }
  
   &:-webkit-autofill {
     ~ label {
-      color: $purple-focus!important;
+      color: $purple-focus;
     }
   }
 }

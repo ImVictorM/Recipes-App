@@ -36,6 +36,29 @@
   }
 }
 
+.login__form__email {
+  &__input ~ label {
+    color: map-get($theme-colors, "purple");
+  }
+  
+  &__input:focus,
+  &__input:not(:placeholder-shown) {
+    ~ label {
+      color: rgba(map-get($theme-colors, "purple"), 0.65)!important;
+
+      &::after {
+        background-color: transparent !important;
+      }
+    }
+  }
+ 
+  &__input:-webkit-autofill {
+    ~ label {
+      color: rgba(map-get($theme-colors, "purple"), 0.65)!important;
+    }
+  }
+}
+
 .login__logo {
   width: 250px;
 }

@@ -6,3 +6,4 @@ export { default as RecipeEmptyByType } from "./RecipeEmptyByType";
 export { default as CenteredTitleWithIcon } from "./CenteredTitleWithIcon";
 export { default as ListWithPagination } from "./ListWithPagination";
 export { default as ScrollLinearContainer } from "./ScrollLinearContainer";
+export { default as RouteAuthRequired } from "./RouteAuthRequired";

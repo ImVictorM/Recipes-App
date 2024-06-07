@@ -30,6 +30,7 @@ import {
 } from "react-router-dom";
 import { MissingIdInRouteParametersError } from "./errors/http";
 import { LoaderCallback, defer } from "./utils/reactRouterDom";
+import { RouteAuthRequired } from "./components";
 
 export type RecipeDetailsLoader = LoaderCallback<{
   recipe: Drink | Meal;
@@ -104,75 +105,81 @@ const routes: RouteObject[] = [
     element: <Login />,
   },
   {
-    path: "/favorite-recipes",
-    element: <RecipesFavorite />,
-  },
-  {
-    path: "/done-recipes",
-    element: <RecipesDone />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-  },
-  {
-    path: "/drinks",
+    path: "/",
+    element: <RouteAuthRequired />,
     children: [
       {
-        index: true,
-        element: (
-          <Recipes
-            categories={cocktailCategories}
-            onGetRecipes={getCocktails}
-            onGetRecipesByFilter={getCocktailsByFilter}
-            icon={{ element: CocktailIcon, alt: "cocktail" }}
-            title="Drinks"
-          />
-        ),
+        path: "/favorite-recipes",
+        element: <RecipesFavorite />,
       },
       {
-        path: ":id",
-        element: <RecipeDetails />,
-        loader: drinkRecipeDetailsLoader,
-        errorElement: <RecipeError />,
+        path: "/done-recipes",
+        element: <RecipesDone />,
       },
       {
-        path: ":id/in-progress",
-        element: <RecipeInProgress />,
-        loader: drinkRecipeInProgressLoader,
-        errorElement: <RecipeError />,
-      },
-    ],
-  },
-  {
-    path: "/meals",
-    children: [
-      {
-        index: true,
-        element: (
-          <Recipes
-            categories={mealCategories}
-            onGetRecipes={getMeals}
-            onGetRecipesByFilter={getMealsByFilter}
-            icon={{
-              element: MealIcon,
-              alt: "meal",
-            }}
-            title="Meals"
-          />
-        ),
+        path: "/profile",
+        element: <Profile />,
       },
       {
-        path: ":id",
-        element: <RecipeDetails />,
-        loader: mealRecipeDetailsLoader,
-        errorElement: <RecipeError />,
+        path: "/drinks",
+        children: [
+          {
+            index: true,
+            element: (
+              <Recipes
+                categories={cocktailCategories}
+                onGetRecipes={getCocktails}
+                onGetRecipesByFilter={getCocktailsByFilter}
+                icon={{ element: CocktailIcon, alt: "cocktail" }}
+                title="Drinks"
+              />
+            ),
+          },
+          {
+            path: ":id",
+            element: <RecipeDetails />,
+            loader: drinkRecipeDetailsLoader,
+            errorElement: <RecipeError />,
+          },
+          {
+            path: ":id/in-progress",
+            element: <RecipeInProgress />,
+            loader: drinkRecipeInProgressLoader,
+            errorElement: <RecipeError />,
+          },
+        ],
       },
       {
-        path: ":id/in-progress",
-        element: <RecipeInProgress />,
-        loader: mealRecipeInProgressLoader,
-        errorElement: <RecipeError />,
+        path: "/meals",
+        children: [
+          {
+            index: true,
+            element: (
+              <Recipes
+                categories={mealCategories}
+                onGetRecipes={getMeals}
+                onGetRecipesByFilter={getMealsByFilter}
+                icon={{
+                  element: MealIcon,
+                  alt: "meal",
+                }}
+                title="Meals"
+              />
+            ),
+          },
+          {
+            path: ":id",
+            element: <RecipeDetails />,
+            loader: mealRecipeDetailsLoader,
+            errorElement: <RecipeError />,
+          },
+          {
+            path: ":id/in-progress",
+            element: <RecipeInProgress />,
+            loader: mealRecipeInProgressLoader,
+            errorElement: <RecipeError />,
+          },
+        ],
       },
     ],
   },

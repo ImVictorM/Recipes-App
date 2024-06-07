@@ -1,48 +1,47 @@
-import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "@/assets/images";
-import { useAppDispatch } from "@/hooks";
-import { setUser } from "@/store/slices/userSlice";
-import { Button, Container, Form, Stack } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { selectUser, setUser } from "@/store/slices/userSlice";
+import { Button, Container, FloatingLabel, Form, Stack } from "react-bootstrap";
 import styles from "@/sass/pages/Login/style.module.scss";
 
 export default function Login() {
-  const [loginFormState, setLoginFormState] = useState({
-    email: "",
-    password: "",
-  });
+  const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setLoginFormState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+  const [userEmail, setUserEmail] = useState<string>("");
+
+  const handleUserEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setUserEmail(value);
   };
 
   const isFormValid = useMemo(() => {
-    const MIN_PASSWORD_LENGTH = 6;
     const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
-    return (
-      loginFormState.password.length > MIN_PASSWORD_LENGTH &&
-      emailRegex.test(loginFormState.email)
-    );
-  }, [loginFormState]);
+    return emailRegex.test(userEmail);
+  }, [userEmail]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     dispatch(
       setUser({
-        email: loginFormState.email,
-        password: loginFormState.password,
+        email: userEmail,
       })
     );
-    navigate("/meals");
   };
+
+  useEffect(() => {
+    if (user.email) {
+      const navigatePath = location.state?.from?.pathname || "/meals";
+
+      navigate(navigatePath);
+    }
+  }, [location.state?.from?.pathname, navigate, user.email]);
 
   return (
     <Container fluid className="min-vh-100 p-0 d-flex justify-content-center">
@@ -58,25 +57,22 @@ export default function Login() {
           </Container>
 
           <Stack gap={2}>
-            <Form.Control
-              type="email"
-              placeholder="Enter your email"
-              data-testid="email-input"
-              name="email"
-              value={loginFormState.email}
-              onChange={handleFormChange}
-              maxLength={60}
-            />
-
-            <Form.Control
-              type="password"
-              placeholder="Enter your password"
-              data-testid="password-input"
-              name="password"
-              value={loginFormState.password}
-              onChange={handleFormChange}
-              maxLength={60}
-            />
+            <FloatingLabel
+              className={`${styles.login__form__email}`}
+              controlId="email-input"
+              label="Enter your email"
+            >
+              <Form.Control
+                className={`${styles.login__form__email__input}`}
+                type="email"
+                placeholder="name@example.com"
+                data-testid="email-input"
+                name="email"
+                value={userEmail}
+                onChange={handleUserEmailChange}
+                maxLength={60}
+              />
+            </FloatingLabel>
           </Stack>
 
           <Button

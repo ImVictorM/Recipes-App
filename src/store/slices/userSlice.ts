@@ -4,7 +4,6 @@ import { getFromLocalStorage, setToLocalStorage } from "@/utils/localStorage";
 
 export type User = {
   email: string;
-  password: string;
 };
 
 const userKey = "user";
@@ -13,7 +12,6 @@ const getInitialState = () => {
   const userFromLocalStorage = getFromLocalStorage<User>(userKey);
   return {
     email: userFromLocalStorage?.email || "",
-    password: userFromLocalStorage?.password || "",
   };
 };
 
@@ -23,12 +21,12 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
       state.email = action.payload.email;
-      state.password = action.payload.password;
+
       setToLocalStorage(userKey, state);
     },
     removeUser: (state) => {
       state.email = "";
-      state.password = "";
+
       localStorage.removeItem(userKey);
     },
   },

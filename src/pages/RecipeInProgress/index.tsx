@@ -1,5 +1,4 @@
 import { useLoaderData } from "@/utils/reactRouterDom";
-import { RecipeInProgressLoader } from "@/router";
 import { useAppSelector, useAppDispatch } from "@/hooks";
 import { HeroLayout } from "@/layouts";
 import {
@@ -15,6 +14,7 @@ import { useMemo, useEffect } from "react";
 import { Form, Stack } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toRecipeWithDetails } from "@/utils/recipeMappers";
+import { RecipeInProgressLoader } from "@/routes/routesPrivate/loaders";
 
 export default function RecipeInProgress() {
   const data = useLoaderData<RecipeInProgressLoader>();

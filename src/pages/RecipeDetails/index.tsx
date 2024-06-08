@@ -1,5 +1,4 @@
 import { Await, useLoaderData } from "@/utils/reactRouterDom";
-import { RecipeDetailsLoader } from "@/router";
 import React, { useRef } from "react";
 import { toRecipe, toRecipeWithDetails } from "@/utils/recipeMappers";
 import {
@@ -18,6 +17,7 @@ import { selectUser } from "@/store/slices/userSlice";
 import { Stack } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import styles from "@/sass/pages/RecipeDetails/style.module.scss";
+import { RecipeDetailsLoader } from "@/routes/routesPrivate/loaders";
 
 export default function RecipeDetails() {
   const data = useLoaderData<RecipeDetailsLoader>();

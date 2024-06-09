@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { Provider } from "react-redux";
@@ -8,8 +8,10 @@ import "./sass/main.scss";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Provider store={setupStore()}>
-      <App />
-    </Provider>
+    <Suspense>
+      <Provider store={setupStore()}>
+        <App />
+      </Provider>
+    </Suspense>
   </React.StrictMode>
 );

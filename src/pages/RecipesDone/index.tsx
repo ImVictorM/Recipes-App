@@ -1,33 +1,40 @@
-import { CheckCircularIcon } from "@/assets/icons";
-import {
-  CenteredTitleWithIcon,
-  ListWithPagination,
-  RecipesFilterByType,
-} from "@/components";
-import { useAppSelector } from "@/hooks";
-import { BasicLayout } from "@/layouts";
-import {
-  selectRecipesDone,
-  selectRecipesDoneByType,
-} from "@/store/slices/menuSlice";
-import { selectUser } from "@/store/slices/userSlice";
-import { RecipeDoneCard } from "./components";
-import { useState, useMemo } from "react";
-import { RecipeTypeOrAll } from "@/components/RecipesFilterByType";
+import React from "react";
+
+import BasicLayout from "@/layouts/BasicLayout";
+
+import CenteredTitleWithIcon from "@/components/CenteredTitleWithIcon";
+import RecipesFilterByType from "@/components/RecipesFilterByType";
 import RecipesEmptyByType from "@/components/RecipeEmptyByType";
+import ListWithPagination from "@/components/ListWithPagination";
+
+import RecipeDoneCard from "./components/RecipeDoneCard";
+
+import useAppSelector from "@/hooks/useAppSelector";
+
+import { selectUser } from "@/store/slices/userSlice";
+
+import CheckCircularIcon from "@/assets/icons/checkCircularIcon.svg";
+
+import {
+  selectRecipesDoneByType,
+  selectUserRecipesDone,
+} from "@/store/slices/menuSlice";
+
+import { RecipeTypeOrAll } from "@/components/RecipesFilterByType.types";
 
 export default function RecipesDone() {
   const user = useAppSelector(selectUser);
-  const [recipesDoneType, setRecipesType] = useState<RecipeTypeOrAll>("all");
+  const [recipesDoneType, setRecipesType] =
+    React.useState<RecipeTypeOrAll>("all");
 
   const recipesDone = useAppSelector((state) => {
     if (recipesDoneType === "all") {
-      return selectRecipesDone(state, user.email);
+      return selectUserRecipesDone(state, user.email);
     } else {
       return selectRecipesDoneByType(state, user.email, recipesDoneType);
     }
   });
-  const isRecipesDoneEmpty = useMemo(() => {
+  const isRecipesDoneEmpty = React.useMemo(() => {
     return recipesDone.length === 0;
   }, [recipesDone.length]);
 

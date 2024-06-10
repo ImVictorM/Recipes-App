@@ -1,25 +1,26 @@
-import { ShareIcon, HeartFillIcon, HeartOutlineIcon } from "@/assets/icons";
-import {
-  useAppSelector,
-  useAppDispatch,
-  useCopyToClipboardWithTooltip,
-} from "@/hooks";
-import {
-  RecipeWithDetails,
-  selectIsRecipeFavorite,
-  toggleRecipeFavorite,
-} from "@/store/slices/menuSlice";
-import { selectUser } from "@/store/slices/userSlice";
 import { Container, OverlayTrigger, Tooltip } from "react-bootstrap";
+
+import ShareIcon from "@/assets/icons/shareIcon.svg";
+import HeartFillIcon from "@/assets/icons/heartFillIcon.svg";
+import HeartOutlineIcon from "@/assets/icons/heartOutlineIcon.svg";
+
+import useAppSelector from "@/hooks/useAppSelector";
+import useAppDispatch from "@/hooks/useAppDispatch";
+import useCopyToClipboardWithTooltip from "@/hooks/useCopyToClipboardWithTooltip";
+
 import styles from "@/sass/layouts/HeroLayout/components/RecipeHero.module.scss";
+
 import {
   SHARE_TOOLTIP_MESSAGE_INITIAL,
   SHARE_TOOLTIP_MESSAGE_ON_COPY,
 } from "@/utils/constants";
 
-export type RecipeHeroProps = {
-  recipe: RecipeWithDetails;
-};
+import { RecipeHeroProps } from "./RecipeHero.types";
+import { selectUser } from "@/store/slices/userSlice";
+import {
+  selectIsRecipeFavorite,
+  toggleRecipeFavorite,
+} from "@/store/slices/menuSlice";
 
 export default function RecipeHero({ recipe }: RecipeHeroProps) {
   const user = useAppSelector(selectUser);

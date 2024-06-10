@@ -1,7 +1,10 @@
-import { CocktailIcon, MealIcon } from "@/assets/icons";
 import { Container, OverlayTrigger, Tooltip } from "react-bootstrap";
-import styles from "@/sass/layouts/BasicLayout/components/Footer.module.scss";
 import { Link } from "react-router-dom";
+
+import MealIcon from "@/assets/icons/mealIcon.svg";
+import CocktailIcon from "@/assets/icons/cocktailIcon.svg";
+
+import styles from "@/sass/layouts/BasicLayout/components/Footer.module.scss";
 
 export default function Footer() {
   return (

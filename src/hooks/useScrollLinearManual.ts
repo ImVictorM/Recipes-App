@@ -1,13 +1,13 @@
-import { RefObject, useEffect, useState } from "react";
+import React from "react";
 
 export default function useScrollLinearManual(
-  ref: RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement>,
   scrollAmount = 200
 ) {
-  const [isAtStart, setIsAtStart] = useState(true);
-  const [isAtEnd, setIsAtEnd] = useState(false);
+  const [isAtStart, setIsAtStart] = React.useState(true);
+  const [isAtEnd, setIsAtEnd] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!ref.current) return;
     const element = ref.current;
 

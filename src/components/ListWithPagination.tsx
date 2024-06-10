@@ -1,23 +1,9 @@
-import { DataWithId } from "@/types/dataTypes";
-import { wait } from "@/utils/time";
-import { useEffect, useMemo, useState } from "react";
 import { Col, Container, Pagination, Row } from "react-bootstrap";
 
-export type ListWithPaginationProps<T extends DataWithId> = {
-  items: T[];
-  onCreateItemCard: (item: T, index: number) => React.ReactElement;
-  ItemCardSkeleton?: React.ReactElement;
-  showBySize?: {
-    xs?: number;
-    sm?: number;
-    md?: number;
-    lg?: number;
-    xl?: number;
-    xxl?: number;
-  };
-  maxItemsPerPage?: number;
-  loading?: boolean;
-};
+import { DataWithId } from "@/types/dataTypes";
+import waitForMs from "@/utils/waitForMs";
+import { ListWithPaginationProps } from "./ListWithPagination.types";
+import React from "react";
 
 /**
  * Avoid re-declaration of constants on every render
@@ -45,15 +31,15 @@ export default function ListWithPagination<T extends DataWithId>({
     1
   );
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [lastLoadingTime, setLastLoadingTime] = useState<number>(
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [lastLoadingTime, setLastLoadingTime] = React.useState<number>(
     new Date().getTime()
   );
-  const [showSkeleton, setShowSkeleton] = useState<boolean>(
+  const [showSkeleton, setShowSkeleton] = React.useState<boolean>(
     loading && Boolean(ItemCardSkeleton) && items.length === 0
   );
 
-  const uiItemsIndex = useMemo(
+  const uiItemsIndex = React.useMemo(
     () => ({
       firstItemIndex: (currentPage - 1) * maxItemsPerPage,
       lastItemIndex: currentPage * maxItemsPerPage,
@@ -61,11 +47,11 @@ export default function ListWithPagination<T extends DataWithId>({
     [currentPage, maxItemsPerPage]
   );
 
-  const showPagination: boolean = useMemo(() => {
+  const showPagination: boolean = React.useMemo(() => {
     return totalPages > 1 && items.length > 0 && !loading;
   }, [items.length, loading, totalPages]);
 
-  const paginationItemsToShow = useMemo(() => {
+  const paginationItemsToShow = React.useMemo(() => {
     const allPaginationItems = Array.from(
       { length: totalPages },
       (_v, i) => i + 1
@@ -106,7 +92,7 @@ export default function ListWithPagination<T extends DataWithId>({
     setCurrentPage(pageNumber);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleLoadingChange = async () => {
       if (!ItemCardSkeleton) return;
       /**
@@ -126,7 +112,7 @@ export default function ListWithPagination<T extends DataWithId>({
         const pastTime = now - lastLoadingTime;
 
         if (pastTime < LOADING_DELAY_THRESHOLD_MS) {
-          await wait(LOADING_DELAY_THRESHOLD_MS - pastTime);
+          await waitForMs(LOADING_DELAY_THRESHOLD_MS - pastTime);
         }
 
         setShowSkeleton(false);

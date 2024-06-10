@@ -1,28 +1,17 @@
-import { RecipeTypeOrAll } from "@/components/RecipesFilterByType";
-import { useMemo } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-
-type EmptyStateLink = {
-  to: string;
-  text: string;
-};
-
-type EmptyState = {
-  titleMessage: string;
-  links: EmptyStateLink[];
-};
-
-export type RecipesFavoriteEmptyProps = {
-  type: RecipeTypeOrAll;
-  action: string;
-};
+import {
+  RecipesFavoriteEmptyProps,
+  EmptyState,
+  EmptyStateLink,
+} from "./RecipeEmptyByType.types";
 
 export default function RecipesEmptyByType({
   type,
   action = "done",
 }: RecipesFavoriteEmptyProps) {
   /** Only one type verification */
-  const emptyState: EmptyState = useMemo(() => {
+  const emptyState: EmptyState = React.useMemo(() => {
     const drinkLink: EmptyStateLink = {
       to: "/drinks",
       text: "Search for drinks",

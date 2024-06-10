@@ -1,8 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-type Visibility = {
-  showSearchBar: boolean;
-};
+import { Visibility } from "./visibilitySlice.types";
 
 const initialState: Visibility = {
   showSearchBar: false,
@@ -20,5 +17,9 @@ const visibilitySlice = createSlice({
     selectVisibility: (state) => state,
   },
 });
+
+export const { toggleSearchBarVisibility } = visibilitySlice.actions;
+
+export const { selectVisibility } = visibilitySlice.selectors;
 
 export default visibilitySlice;

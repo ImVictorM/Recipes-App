@@ -1,12 +1,5 @@
 import styles from "@/sass/components/CenteredTitleWithIcon.module.scss";
-
-export type CenteredTitleWithIconProps = {
-  title: string;
-  icon: {
-    element: React.FC<React.SVGProps<SVGElement>>;
-    alt: string;
-  };
-};
+import { CenteredTitleWithIconProps } from "./CenteredTitleWithIcon.types";
 
 export default function CenteredTitleWithIcon({
   icon: { element: Icon, alt },

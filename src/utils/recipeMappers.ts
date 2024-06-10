@@ -1,6 +1,6 @@
-import { Drink } from "@/services/menu/cocktailService";
-import { Meal } from "@/services/menu/mealService";
-import { Recipe, RecipeWithDetails } from "@/store/slices/menuSlice";
+import { Drink } from "@/services/menu/cocktail/types";
+import { Meal } from "@/services/menu/meal/types";
+import { Recipe, RecipeWithDetails } from "@/store/slices/menuSlice.types";
 
 function isMeal(recipe: Meal | Drink): recipe is Meal {
   return (recipe as Meal).strMeal !== undefined;

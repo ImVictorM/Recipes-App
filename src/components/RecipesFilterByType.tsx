@@ -1,16 +1,10 @@
-import {
-  MealAndDrinkCircularIcon,
-  MealCircularIcon,
-  CocktailCircularIcon,
-} from "@/assets/icons";
-import { RecipeType } from "@/store/slices/menuSlice";
+import { RecipesFilterByTypeProps } from "./RecipesFilterByType.types";
+
+import MealAndDrinkCircularIcon from "@/assets/icons/mealAndDrinkCircularIcon.svg";
+import MealCircularIcon from "@/assets/icons/mealCircularIcon.svg";
+import CocktailCircularIcon from "@/assets/icons/cocktailCircularIcon.svg";
+
 import styles from "@/sass/components/RecipesFilterByType.module.scss";
-
-export type RecipeTypeOrAll = RecipeType | "all";
-
-export type RecipesFilterByTypeProps = {
-  onFilterByType: (type: RecipeTypeOrAll) => void;
-};
 
 export default function RecipesFilterByType({
   onFilterByType,

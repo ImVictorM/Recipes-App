@@ -1,6 +1,12 @@
-import { useLoaderData } from "@/utils/reactRouterDom";
-import { useAppSelector, useAppDispatch } from "@/hooks";
-import { HeroLayout } from "@/layouts";
+import React from "react";
+import { Form, Stack } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
+import HeroLayout from "@/layouts/HeroLayout";
+
+import useAppDispatch from "@/hooks/useAppDispatch";
+import useAppSelector from "@/hooks/useAppSelector";
+
 import {
   selectRecipeInProgressIngredients,
   selectIsRecipeInProgress,
@@ -9,12 +15,12 @@ import {
   removeRecipeInProgress,
 } from "@/store/slices/menuSlice";
 import { selectUser } from "@/store/slices/userSlice";
-import { formatDateToDDMMYYYY } from "@/utils/date";
-import { useMemo, useEffect } from "react";
-import { Form, Stack } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+
+import formatDateToDDMMYYYY from "@/utils/formatDateToDDMMYYYY";
+import { useLoaderData } from "@/utils/reactRouterDom";
 import { toRecipeWithDetails } from "@/utils/recipeMappers";
-import { RecipeInProgressLoader } from "@/routes/routesPrivate/loaders";
+
+import { RecipeInProgressLoader } from "@/routes/routesPrivate/loaders/common";
 
 export default function RecipeInProgress() {
   const data = useLoaderData<RecipeInProgressLoader>();
@@ -29,7 +35,7 @@ export default function RecipeInProgress() {
     selectIsRecipeInProgress(state, recipe, user.email)
   );
 
-  const isAllIngredientsChecked = useMemo(() => {
+  const isAllIngredientsChecked = React.useMemo(() => {
     return ingredientsRemaining && ingredientsRemaining.length === 0;
   }, [ingredientsRemaining]);
 
@@ -92,7 +98,7 @@ export default function RecipeInProgress() {
     Check if recipe is in progress in the global state,
     if not, navigate to its details page.
   **/
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isRecipeInProgress) {
       navigate(`/${recipe.type}s/${recipe.id}`);
     }

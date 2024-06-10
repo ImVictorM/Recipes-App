@@ -1,21 +1,10 @@
-import { useFallbackRef, useOverflow } from "@/hooks";
-import {
-  PolymorphicComponentPropWithRef,
-  PolymorphicRef,
-} from "@/types/polymorphicTypes";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 
-/* 
-  If necessary, pass additional props as second argument
-  of "PolymorphicComponentPropWithRef".
- **/
-export type ScrollLinearContainerProps<T extends React.ElementType> =
-  PolymorphicComponentPropWithRef<
-    T,
-    {
-      scrollWithMouseWheel?: boolean;
-    }
-  >;
+import { PolymorphicRef } from "@/types/polymorphicTypes";
+import { ScrollLinearContainerProps } from "./ScrollLinearContainer.types";
+
+import useOverflow from "@/hooks/useOverflow";
+import useFallbackRef from "@/hooks/useFallbackRef";
 
 const DEFAULT_COMPONENT = "div";
 
@@ -33,9 +22,9 @@ function ScrollLinearContainerComponent<
 ): React.ReactElement | null {
   const Component = as || DEFAULT_COMPONENT;
   const componentRef = useFallbackRef(ref);
-  const [isMouseDown, setIsMouseDown] = useState(false);
-  const startXRef = useRef<number>(0);
-  const scrollLeftRef = useRef<number>(0);
+  const [isMouseDown, setIsMouseDown] = React.useState(false);
+  const startXRef = React.useRef<number>(0);
+  const scrollLeftRef = React.useRef<number>(0);
   const { isOverflow } = useOverflow(componentRef);
 
   const handleOnMouseDown = (e: React.MouseEvent) => {
@@ -79,7 +68,7 @@ function ScrollLinearContainerComponent<
     of the event listener to false, although this may decrease scrolling
     responsiveness.
   **/
-  useEffect(() => {
+  React.useEffect(() => {
     if (!componentRef.current || !isOverflow || !scrollWithMouseWheel) return;
 
     const element = componentRef.current;

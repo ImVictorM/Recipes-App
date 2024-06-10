@@ -1,6 +1,8 @@
-import { PlaceholderImage } from "@/assets/images";
-import { getRandomBetweenInclusive } from "@/utils/random";
 import { Card, Placeholder } from "react-bootstrap";
+
+import PlaceholderImage from "@/assets/images/placeholderImage.svg";
+import getRandomBetweenInclusive from "@/utils/getRandomBetweenInclusive";
+
 import styles from "@/sass/components/RecipeBasicCardSkeleton.module.scss";
 
 export default function RecipeBasicCardSkeleton() {

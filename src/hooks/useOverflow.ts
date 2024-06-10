@@ -1,12 +1,12 @@
-import { RefObject, useLayoutEffect, useState } from "react";
+import React from "react";
 
 export default function useOverflow(
-  ref: RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement>,
   callback?: (hasOverflow: boolean) => void
 ) {
-  const [isOverflow, setIsOverflow] = useState(false);
+  const [isOverflow, setIsOverflow] = React.useState(false);
 
-  useLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     const { current } = ref;
 
     const trigger = () => {

@@ -1,10 +1,11 @@
-import { ErrorIcon } from "@/assets/icons";
 import { Button } from "react-bootstrap";
 import {
   isRouteErrorResponse,
   useRouteError,
   useNavigate,
 } from "react-router-dom";
+
+import ErrorIcon from "@/assets/icons/errorIcon.svg";
 
 export default function RecipeError() {
   const error = useRouteError();

@@ -1,27 +1,34 @@
-import { Await, useLoaderData } from "@/utils/reactRouterDom";
-import React, { useRef } from "react";
+import React from "react";
+import { Stack } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
+import HeroLayout from "@/layouts/HeroLayout";
+
+import RecipeBasicCard from "@/components/RecipeBasicCard";
+import RecipeBasicCardSkeleton from "@/components/RecipeBasicCardSkeleton";
+import ScrollLinearContainer from "@/components/ScrollLinearContainer";
+
+import useAppDispatch from "@/hooks/useAppDispatch";
+import useAppSelector from "@/hooks/useAppSelector";
+
 import { toRecipe, toRecipeWithDetails } from "@/utils/recipeMappers";
-import {
-  RecipeBasicCard,
-  RecipeBasicCardSkeleton,
-  ScrollLinearContainer,
-} from "@/components";
-import { useAppSelector, useAppDispatch } from "@/hooks";
-import { HeroLayout } from "@/layouts";
+import { Await, useLoaderData } from "@/utils/reactRouterDom";
+
 import {
   selectIsRecipeDone,
   selectIsRecipeInProgress,
   setRecipeInProgress,
 } from "@/store/slices/menuSlice";
+
 import { selectUser } from "@/store/slices/userSlice";
-import { Stack } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { RecipeDetailsLoader } from "@/routes/routesPrivate/loaders/common";
+
 import styles from "@/sass/pages/RecipeDetails/style.module.scss";
-import { RecipeDetailsLoader } from "@/routes/routesPrivate/loaders";
 
 export default function RecipeDetails() {
   const data = useLoaderData<RecipeDetailsLoader>();
   const recipe = toRecipeWithDetails(data.recipe);
+
   const user = useAppSelector(selectUser);
 
   const isRecipeDone = useAppSelector((state) =>
@@ -35,7 +42,7 @@ export default function RecipeDetails() {
    * Needs to be static to not flicker the button text
    * when leaving the page.
    */
-  const isRecipeInProgressInitialStateRef = useRef(isRecipeInProgress);
+  const isRecipeInProgressInitialStateRef = React.useRef(isRecipeInProgress);
 
   const handleStartRecipe = () => {
     dispatch(setRecipeInProgress({ userEmail: user.email, recipe: recipe }));

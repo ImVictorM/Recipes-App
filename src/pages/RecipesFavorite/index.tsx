@@ -1,27 +1,33 @@
-import { HeartCircularIcon } from "@/assets/icons";
-import {
-  CenteredTitleWithIcon,
-  ListWithPagination,
-  RecipeEmptyByType,
-  RecipesFilterByType,
-} from "@/components";
-import { RecipeTypeOrAll } from "@/components/RecipesFilterByType";
-import { useAppSelector } from "@/hooks";
-import { BasicLayout } from "@/layouts";
-import {
-  selectRecipesFavorite,
-  selectRecipesFavoriteByType,
-} from "@/store/slices/menuSlice";
+import React from "react";
+
+import BasicLayout from "@/layouts/BasicLayout";
+
+import CenteredTitleWithIcon from "@/components/CenteredTitleWithIcon";
+import RecipesFilterByType from "@/components/RecipesFilterByType";
+import RecipeEmptyByType from "@/components/RecipeEmptyByType";
+import ListWithPagination from "@/components/ListWithPagination";
+
+import RecipeFavoriteCard from "./components/RecipeFavoriteCard";
+
+import useAppSelector from "@/hooks/useAppSelector";
+
 import { selectUser } from "@/store/slices/userSlice";
-import { useMemo, useState } from "react";
-import { RecipeFavoriteCard } from "./components";
+import {
+  selectRecipesFavoriteByType,
+  selectUserRecipesFavorite,
+} from "@/store/slices/menuSlice";
+
+import HeartCircularIcon from "@/assets/icons/heartCircularIcon.svg";
+
+import { RecipeTypeOrAll } from "@/components/RecipesFilterByType.types";
 
 export default function RecipesFavorite() {
   const user = useAppSelector(selectUser);
-  const [recipesFavoriteType, setRecipeType] = useState<RecipeTypeOrAll>("all");
+  const [recipesFavoriteType, setRecipeType] =
+    React.useState<RecipeTypeOrAll>("all");
   const recipesFavorite = useAppSelector((state) => {
     if (recipesFavoriteType === "all") {
-      return selectRecipesFavorite(state, user.email);
+      return selectUserRecipesFavorite(state, user.email);
     } else {
       return selectRecipesFavoriteByType(
         state,
@@ -30,7 +36,7 @@ export default function RecipesFavorite() {
       );
     }
   });
-  const isRecipesFavoriteEmpty = useMemo(() => {
+  const isRecipesFavoriteEmpty = React.useMemo(() => {
     return recipesFavorite.length === 0;
   }, [recipesFavorite.length]);
 

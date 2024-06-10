@@ -1,5 +1,5 @@
 import { Outlet, RouteObject } from "react-router-dom";
-import { RouteAuthRequired } from "../components";
+import RouteAuthRequired from "@/components/RouteAuthRequired";
 
 import routesPrivate from "./routesPrivate";
 import routesPublic from "./routesPublic";

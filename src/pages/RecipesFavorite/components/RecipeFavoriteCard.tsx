@@ -1,24 +1,23 @@
-import {
-  RecipeWithDetails,
-  toggleRecipeFavorite,
-} from "@/store/slices/menuSlice";
-import styles from "@/sass/pages/RecipesFavorite/components/RecipeFavoriteCard.module.scss";
 import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { HeartFillIcon, ShareIcon } from "@/assets/icons";
-import {
-  useAppDispatch,
-  useAppSelector,
-  useCopyToClipboardWithTooltip,
-} from "@/hooks";
+
+import useAppSelector from "@/hooks/useAppSelector";
+import useAppDispatch from "@/hooks/useAppDispatch";
+import useCopyToClipboardWithTooltip from "@/hooks/useCopyToClipboardWithTooltip";
+
 import { selectUser } from "@/store/slices/userSlice";
+import { toggleRecipeFavorite } from "@/store/slices/menuSlice";
+
 import {
   SHARE_TOOLTIP_MESSAGE_INITIAL,
   SHARE_TOOLTIP_MESSAGE_ON_COPY,
 } from "@/utils/constants";
 
-export type RecipeFavoriteCardProps = {
-  recipe: RecipeWithDetails;
-};
+import ShareIcon from "@/assets/icons/shareIcon.svg";
+import HeartFillIcon from "@/assets/icons/heartFillIcon.svg";
+
+import { RecipeFavoriteCardProps } from "./RecipeFavoriteCard.types";
+
+import styles from "@/sass/pages/RecipesFavorite/components/RecipeFavoriteCard.module.scss";
 
 export default function RecipeFavoriteCard({
   recipe,

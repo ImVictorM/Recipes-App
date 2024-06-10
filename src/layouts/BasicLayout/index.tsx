@@ -1,15 +1,13 @@
-import { Footer, Header } from "./components";
-import { PropsWithChildren } from "react";
-import styles from "@/sass/layouts/BasicLayout/style.module.scss";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { BasicLayoutProps } from "./index.types";
 
-export type BasicLayoutProps = PropsWithChildren & {
-  containHeaderSearchBar?: boolean;
-};
+import styles from "@/sass/layouts/BasicLayout/style.module.scss";
 
 export default function BasicLayout({
   children,
   containHeaderSearchBar,
-}: BasicLayoutProps) {
+}: React.PropsWithChildren<BasicLayoutProps>) {
   return (
     <>
       <Header containSearchBar={containHeaderSearchBar} />

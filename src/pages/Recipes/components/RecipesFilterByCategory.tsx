@@ -1,22 +1,22 @@
-import { RecipeCategory } from "@/services/menu/common";
-import { ArrowLeftIcon, ArrowRightIcon } from "@/assets/icons";
-import { useRef } from "react";
-import { useScrollLinearManual } from "@/hooks";
-import styles from "@/sass/pages/Recipes/components/RecipesFilterByCategory.module.scss";
-import { ScrollLinearContainer } from "@/components";
+import React from "react";
 
-export type RecipesFilterByCategoryProps = {
-  categories: RecipeCategory[];
-  onFilterByCategory: (category: string) => void;
-  onFilterByAll: () => void;
-};
+import ScrollLinearContainer from "@/components/ScrollLinearContainer";
+
+import useScrollLinearManual from "@/hooks/useScrollLinearManual";
+
+import ArrowLeftIcon from "@/assets/icons/arrowLeftIcon.svg";
+import ArrowRightIcon from "@/assets/icons/arrowRightIcon.svg";
+
+import { RecipesFilterByCategoryProps } from "./RecipesFilterByCategory.types";
+
+import styles from "@/sass/pages/Recipes/components/RecipesFilterByCategory.module.scss";
 
 export default function RecipesFilterByCategory({
   onFilterByCategory,
   categories,
   onFilterByAll,
 }: RecipesFilterByCategoryProps) {
-  const scrollerRef = useRef<HTMLDivElement>(null);
+  const scrollerRef = React.useRef<HTMLDivElement>(null);
   const { isAtEnd, isAtStart, scrollTo } = useScrollLinearManual(scrollerRef);
 
   return (

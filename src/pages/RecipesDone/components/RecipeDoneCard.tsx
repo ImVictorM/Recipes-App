@@ -1,17 +1,19 @@
-import { RecipeWithDetailsAndDoneDate } from "@/store/slices/menuSlice";
 import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
-import styles from "@/sass/pages/RecipesDone/components/RecipeDoneCard.module.scss";
-import { ShareIcon } from "@/assets/icons";
-import { useCopyToClipboardWithTooltip } from "@/hooks";
+
+import ScrollLinearContainer from "@/components/ScrollLinearContainer";
+
+import useCopyToClipboardWithTooltip from "@/hooks/useCopyToClipboardWithTooltip";
+
 import {
   SHARE_TOOLTIP_MESSAGE_INITIAL,
   SHARE_TOOLTIP_MESSAGE_ON_COPY,
 } from "@/utils/constants";
-import { ScrollLinearContainer } from "@/components";
 
-export type RecipeDoneCardProps = {
-  recipe: RecipeWithDetailsAndDoneDate;
-};
+import ShareIcon from "@/assets/icons/shareIcon.svg";
+
+import { RecipeDoneCardProps } from "./RecipeDoneCard.types";
+
+import styles from "@/sass/pages/RecipesDone/components/RecipeDoneCard.module.scss";
 
 export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
   const recipeEndpoint = `/${recipe.type}s/${recipe.id}`;

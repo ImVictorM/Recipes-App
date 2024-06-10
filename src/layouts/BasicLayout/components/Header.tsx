@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
-import { ProfileIcon, SearchIcon } from "@/assets/icons";
-import { HeaderLogo } from "@/assets/images";
-import { useAppDispatch } from "@/hooks";
-import { toggleSearchBarVisibility } from "@/store/slices/visibilitySlice";
 import { Container, OverlayTrigger, Stack, Tooltip } from "react-bootstrap";
-import styles from "@/sass/layouts/BasicLayout/components/Header.module.scss";
 
-export type HeaderProps = {
-  containSearchBar?: boolean;
-};
+import ProfileIcon from "@/assets/icons/profileIcon.svg";
+import SearchIcon from "@/assets/icons/searchIcon.svg";
+import HeaderLogo from "@/assets/images/headerLogo.svg";
+
+import useAppDispatch from "@/hooks/useAppDispatch";
+import { toggleSearchBarVisibility } from "@/store/slices/visibilitySlice";
+
+import styles from "@/sass/layouts/BasicLayout/components/Header.module.scss";
+import { HeaderProps } from "./Header.types";
 
 export default function Header({ containSearchBar }: HeaderProps) {
   const dispatch = useAppDispatch();

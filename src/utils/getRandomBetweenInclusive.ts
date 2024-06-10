@@ -1,4 +1,4 @@
-export function getRandomBetweenInclusive(min: number, max: number) {
+export default function getRandomBetweenInclusive(min: number, max: number) {
   const minCeiled = Math.ceil(min);
   const maxFloored = Math.floor(max);
 

@@ -1,50 +1,51 @@
-import { CocktailIcon, MealIcon } from "@/assets/icons";
-import {
-  cocktailCategories,
-  getCocktails,
-  getCocktailsByFilter,
-} from "@/services/menu/cocktailService";
-import {
-  mealCategories,
-  getMeals,
-  getMealsByFilter,
-} from "@/services/menu/mealService";
+import React from "react";
+
 import { RouteObject } from "react-router-dom";
+
 import {
   drinkRecipeDetailsLoader,
   drinkRecipeInProgressLoader,
   mealRecipeDetailsLoader,
   mealRecipeInProgressLoader,
 } from "./loaders";
-import { createElement, lazy } from "react";
 
-const RecipesFavorite = lazy(() => import("@/pages/RecipesFavorite"));
-const RecipesDone = lazy(() => import("@/pages/RecipesDone"));
-const Profile = lazy(() => import("@/pages/Profile"));
-const Recipes = lazy(() => import("@/pages/Recipes"));
-const RecipeDetails = lazy(() => import("@/pages/RecipeDetails"));
-const RecipeError = lazy(() => import("@/pages/RecipeError"));
-const RecipeInProgress = lazy(() => import("@/pages/RecipeInProgress"));
+import CocktailIcon from "@/assets/icons/cocktailIcon.svg";
+import cocktailCategories from "@/services/menu/cocktail/categories";
+import getCocktails from "@/services/menu/cocktail/getCocktails";
+import getCocktailsByFilter from "@/services/menu/cocktail/getCocktailsByFilter";
+
+import MealIcon from "@/assets/icons/mealIcon.svg";
+import mealCategories from "@/services/menu/meal/categories";
+import getMealsByFilter from "@/services/menu/meal/getMealsByFilter";
+import getMeals from "@/services/menu/meal/getMeals";
+
+const RecipesFavorite = React.lazy(() => import("@/pages/RecipesFavorite"));
+const RecipesDone = React.lazy(() => import("@/pages/RecipesDone"));
+const Profile = React.lazy(() => import("@/pages/Profile"));
+const Recipes = React.lazy(() => import("@/pages/Recipes"));
+const RecipeDetails = React.lazy(() => import("@/pages/RecipeDetails"));
+const RecipeError = React.lazy(() => import("@/pages/RecipeError"));
+const RecipeInProgress = React.lazy(() => import("@/pages/RecipeInProgress"));
 
 export const routesPrivate: RouteObject[] = [
   {
     path: "/favorite-recipes",
-    element: createElement(RecipesFavorite),
+    element: React.createElement(RecipesFavorite),
   },
   {
     path: "/done-recipes",
-    element: createElement(RecipesDone),
+    element: React.createElement(RecipesDone),
   },
   {
     path: "/profile",
-    element: createElement(Profile),
+    element: React.createElement(Profile),
   },
   {
     path: "/drinks",
     children: [
       {
         index: true,
-        element: createElement(Recipes, {
+        element: React.createElement(Recipes, {
           categories: cocktailCategories,
           onGetRecipes: getCocktails,
           onGetRecipesByFilter: getCocktailsByFilter,
@@ -54,15 +55,15 @@ export const routesPrivate: RouteObject[] = [
       },
       {
         path: ":id",
-        element: createElement(RecipeDetails),
+        element: React.createElement(RecipeDetails),
         loader: drinkRecipeDetailsLoader,
-        errorElement: createElement(RecipeError),
+        errorElement: React.createElement(RecipeError),
       },
       {
         path: ":id/in-progress",
-        element: createElement(RecipeInProgress),
+        element: React.createElement(RecipeInProgress),
         loader: drinkRecipeInProgressLoader,
-        errorElement: createElement(RecipeError),
+        errorElement: React.createElement(RecipeError),
       },
     ],
   },
@@ -71,7 +72,7 @@ export const routesPrivate: RouteObject[] = [
     children: [
       {
         index: true,
-        element: createElement(Recipes, {
+        element: React.createElement(Recipes, {
           categories: mealCategories,
           onGetRecipes: getMeals,
           onGetRecipesByFilter: getMealsByFilter,
@@ -84,15 +85,15 @@ export const routesPrivate: RouteObject[] = [
       },
       {
         path: ":id",
-        element: createElement(RecipeDetails),
+        element: React.createElement(RecipeDetails),
         loader: mealRecipeDetailsLoader,
-        errorElement: createElement(RecipeError),
+        errorElement: React.createElement(RecipeError),
       },
       {
         path: ":id/in-progress",
-        element: createElement(RecipeInProgress),
+        element: React.createElement(RecipeInProgress),
         loader: mealRecipeInProgressLoader,
-        errorElement: createElement(RecipeError),
+        errorElement: React.createElement(RecipeError),
       },
     ],
   },

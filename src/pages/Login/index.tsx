@@ -1,10 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Logo } from "@/assets/images";
-import { useAppDispatch, useAppSelector } from "@/hooks";
+
 import { selectUser, setUser } from "@/store/slices/userSlice";
+import useAppSelector from "@/hooks/useAppSelector";
+import useAppDispatch from "@/hooks/useAppDispatch";
+
 import { Button, Container, FloatingLabel, Form, Stack } from "react-bootstrap";
+
 import styles from "@/sass/pages/Login/style.module.scss";
+import Logo from "@/assets/images/logo.svg";
 
 export default function Login() {
   const user = useAppSelector(selectUser);
@@ -12,14 +16,14 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [userEmail, setUserEmail] = useState<string>("");
+  const [userEmail, setUserEmail] = React.useState<string>("");
 
   const handleUserEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setUserEmail(value);
   };
 
-  const isFormValid = useMemo(() => {
+  const isFormValid = React.useMemo(() => {
     const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
     return emailRegex.test(userEmail);
@@ -35,7 +39,7 @@ export default function Login() {
     );
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (user.email) {
       const navigatePath = location.state?.from?.pathname || "/meals";
 

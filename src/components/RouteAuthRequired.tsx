@@ -1,6 +1,7 @@
-import { useAppSelector } from "@/hooks";
 import { selectUser } from "@/store/slices/userSlice";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+
+import useAppSelector from "@/hooks/useAppSelector";
 
 export default function RouteAuthRequired() {
   const user = useAppSelector(selectUser);

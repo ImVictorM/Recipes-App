@@ -1,14 +1,18 @@
-import {
-  CheckCircularIcon,
-  HeartCircularIcon,
-  LeaveCircularIcon,
-  ProfilePinIcon,
-} from "@/assets/icons";
-import { CenteredTitleWithIcon } from "@/components";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { BasicLayout } from "@/layouts";
-import { removeUser, selectUser } from "@/store/slices/userSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { removeUser, selectUser } from "@/store/slices/userSlice";
+
+import useAppDispatch from "@/hooks/useAppDispatch";
+import useAppSelector from "@/hooks/useAppSelector";
+
+import CheckCircularIcon from "@/assets/icons/checkCircularIcon.svg";
+import HeartCircularIcon from "@/assets/icons/heartCircularIcon.svg";
+import LeaveCircularIcon from "@/assets/icons/leaveCircularIcon.svg";
+import ProfilePinIcon from "@/assets/icons/profilePinIcon.svg";
+
+import CenteredTitleWithIcon from "@/components/CenteredTitleWithIcon";
+
+import BasicLayout from "@/layouts/BasicLayout";
+
 import styles from "@/sass/pages/Profile/style.module.scss";
 
 export default function Profile() {

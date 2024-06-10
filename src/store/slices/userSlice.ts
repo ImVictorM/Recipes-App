@@ -1,9 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getFromLocalStorage, setToLocalStorage } from "@/utils/localStorage";
-
-export type User = {
-  email: string;
-};
+import { User } from "./userSlice.types";
 
 const userKey = "user";
 
@@ -33,5 +30,9 @@ const userSlice = createSlice({
     selectUser: (state) => state,
   },
 });
+
+export const { removeUser, setUser } = userSlice.actions;
+
+export const { selectUser } = userSlice.selectors;
 
 export default userSlice;

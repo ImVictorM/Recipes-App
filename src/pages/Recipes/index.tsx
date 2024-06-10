@@ -1,40 +1,32 @@
-import { RecipesFilterByCategory } from "./components";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { BasicLayout } from "@/layouts";
-import { Drink } from "@/services/menu/cocktailService";
-import { RecipeCategory, RecipeFilterOptions } from "@/services/menu/common";
-import { Meal } from "@/services/menu/mealService";
-import { Recipe, selectMenu, setRecipes } from "@/store/slices/menuSlice";
-import { selectVisibility } from "@/store/slices/visibilitySlice";
-import { toRecipe } from "@/utils/recipeMappers";
-import { useCallback, useEffect, useRef, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { AxiosRequestConfig, isAxiosError } from "axios";
-import {
-  CenteredTitleWithIcon,
-  RecipeBasicCard,
-  ListWithPagination,
-  RecipeBasicCardSkeleton,
-} from "@/components";
-import RecipesFilterBySearch, {
-  RecipesFilterBySearchFormState,
-} from "./components/RecipesFilterBySearch";
 import { Collapse } from "react-bootstrap";
+import { isAxiosError } from "axios";
 
-type RecipesProps<T> = {
-  icon: {
-    element: React.FC<React.SVGProps<SVGElement>>;
-    alt: string;
-  };
-  title: string;
-  categories: RecipeCategory[];
-  onGetRecipes: (config?: AxiosRequestConfig) => Promise<T[]>;
-  onGetRecipesByFilter: (
-    query: string,
-    filter: RecipeFilterOptions,
-    config?: AxiosRequestConfig
-  ) => Promise<T[]>;
-};
+import BasicLayout from "@/layouts/BasicLayout";
+
+import CenteredTitleWithIcon from "@/components/CenteredTitleWithIcon";
+import ListWithPagination from "@/components/ListWithPagination";
+import RecipeBasicCardSkeleton from "@/components/RecipeBasicCardSkeleton";
+import RecipeBasicCard from "@/components/RecipeBasicCard";
+
+import RecipesFilterByCategory from "./components/RecipesFilterByCategory";
+import RecipesFilterBySearch from "./components/RecipesFilterBySearch";
+
+import useAppDispatch from "@/hooks/useAppDispatch";
+import useAppSelector from "@/hooks/useAppSelector";
+
+import { selectVisibility } from "@/store/slices/visibilitySlice";
+import { selectMenu, setRecipes } from "@/store/slices/menuSlice";
+
+import { toRecipe } from "@/utils/recipeMappers";
+
+import { RecipeFilterOptions } from "@/services/menu/common";
+import { Drink } from "@/services/menu/cocktail/types";
+import { Meal } from "@/services/menu/meal/types";
+import { RecipesProps } from "./index.types";
+import { Recipe } from "@/store/slices/menuSlice.types";
+import { RecipesFilterBySearchFormState } from "./components/RecipesFilterBySearch.types";
 
 export default function Recipes<T extends Drink | Meal>({
   categories,
@@ -47,14 +39,14 @@ export default function Recipes<T extends Drink | Meal>({
   const visibility = useAppSelector(selectVisibility);
   const menu = useAppSelector(selectMenu);
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   // All the API calls in this page updates the same state using setRecipes,
   // so using a single abort controller is a good approach
-  const abortControllerRef = useRef<AbortController | null>(null);
+  const abortControllerRef = React.useRef<AbortController | null>(null);
 
-  const fetchWithControllers = useCallback(
+  const fetchWithControllers = React.useCallback(
     async (
       fetch: () => Promise<void>,
       onCatch?: (error: unknown) => Promise<void> | void
@@ -90,7 +82,7 @@ export default function Recipes<T extends Drink | Meal>({
     abortControllerRef.current = new AbortController();
   };
 
-  const handleSetRecipes = useCallback(
+  const handleSetRecipes = React.useCallback(
     (recipes: Recipe[]) => {
       if (recipes.length === 0) {
         window.alert("Sorry, we haven't found any recipes for these filters.");
@@ -146,7 +138,7 @@ export default function Recipes<T extends Drink | Meal>({
     );
   };
 
-  const handleFetchRecipesWithoutFilter = useCallback(async () => {
+  const handleFetchRecipesWithoutFilter = React.useCallback(async () => {
     await fetchWithControllers(
       async () => {
         const response = await onGetRecipes({
@@ -165,7 +157,7 @@ export default function Recipes<T extends Drink | Meal>({
     );
   }, [fetchWithControllers, handleSetRecipes, onGetRecipes]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     handleFetchRecipesWithoutFilter();
 
     return () => {

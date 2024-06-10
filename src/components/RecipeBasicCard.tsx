@@ -1,12 +1,6 @@
 import { Card } from "react-bootstrap";
-import { Recipe } from "@/store/slices/menuSlice";
 import styles from "@/sass/components/RecipeBasicCard.module.scss";
-
-export type RecipeBasicCardProps = {
-  recipe: Recipe;
-  scaleOnHover?: boolean;
-  index: number;
-};
+import { RecipeBasicCardProps } from "./RecipeBasicCard.types";
 
 export default function RecipeBasicCard({
   recipe: { id, img, name, type },

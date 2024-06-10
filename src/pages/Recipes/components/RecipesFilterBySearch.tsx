@@ -1,24 +1,23 @@
-import React, { useState } from "react";
-import { RecipeFilterOptions } from "@/services/menu/common";
+import React from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+
+import { RecipeFilterOptions } from "@/services/menu/common";
+
+import {
+  RecipesFilterBySearchProps,
+  RecipesFilterBySearchFormState,
+} from "./RecipesFilterBySearch.types";
+
 import styles from "@/sass/pages/Recipes/components/RecipesFilterBySearch.module.scss";
-
-export type RecipesFilterBySearchFormState = {
-  searchQuery: string;
-  searchFilter: RecipeFilterOptions;
-};
-
-export type RecipesFilterBySearchProps = {
-  onSearch: (formState: RecipesFilterBySearchFormState) => void;
-};
 
 export default function RecipesFilterBySearch({
   onSearch,
 }: RecipesFilterBySearchProps) {
-  const [formState, setFormState] = useState<RecipesFilterBySearchFormState>({
-    searchQuery: "",
-    searchFilter: RecipeFilterOptions.NAME,
-  });
+  const [formState, setFormState] =
+    React.useState<RecipesFilterBySearchFormState>({
+      searchQuery: "",
+      searchFilter: RecipeFilterOptions.NAME,
+    });
 
   const handleCheckboxInputChange = (
     e: React.ChangeEvent<HTMLInputElement>

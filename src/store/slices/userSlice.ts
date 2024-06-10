@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "..";
 import { getFromLocalStorage, setToLocalStorage } from "@/utils/localStorage";
 
 export type User = {
@@ -30,9 +29,9 @@ const userSlice = createSlice({
       localStorage.removeItem(userKey);
     },
   },
+  selectors: {
+    selectUser: (state) => state,
+  },
 });
 
-export const selectUser = (state: RootState) => state.user;
-
-export const { setUser, removeUser } = userSlice.actions;
 export default userSlice;

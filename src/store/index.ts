@@ -1,5 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { menuSlice, visibilitySlice, userSlice } from "./slices";
+
+import menuSlice from "./slices/menuSlice";
+import visibilitySlice from "./slices/visibilitySlice";
+import userSlice from "./slices/userSlice";
 
 const rootReducer = combineReducers({
   user: userSlice.reducer,

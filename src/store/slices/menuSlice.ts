@@ -1,5 +1,4 @@
-import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "..";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getFromLocalStorage, setToLocalStorage } from "@/utils/localStorage";
 
 export type RecipeType = "drink" | "meal";
@@ -181,98 +180,102 @@ const menuSlice = createSlice({
       }
     },
   },
+  selectors: {
+    selectMenu: (state): Menu => state,
+    selectRecipesFavorite: (state): Menu["recipesFavorite"] =>
+      state.recipesFavorite,
+    selectRecipesDone: (state): Menu["recipesDone"] => state.recipesDone,
+    selectRecipesInProgress: (state): Menu["recipesInProgress"] =>
+      state.recipesInProgress,
+    selectUserRecipesDone: (
+      state,
+      emailUser
+    ): RecipeWithDetailsAndDoneDate[] => {
+      const recipesDone = menuSlice.getSelectors().selectRecipesDone(state);
+      return recipesDone[emailUser] || [];
+    },
+    selectUserRecipesFavorite: (
+      state,
+      emailUser: string
+    ): RecipeWithDetails[] => {
+      const recipesFavorite = menuSlice
+        .getSelectors()
+        .selectRecipesFavorite(state);
+      return recipesFavorite[emailUser] || [];
+    },
+    selectRecipesDoneByType: (
+      state,
+      emailUser: string,
+      typeRecipe: string
+    ): RecipeWithDetailsAndDoneDate[] => {
+      const userRecipesDone = menuSlice
+        .getSelectors()
+        .selectUserRecipesDone(state, emailUser);
+      return userRecipesDone.filter((recipe) => recipe.type === typeRecipe);
+    },
+    selectRecipesFavoriteByType: (
+      state,
+      emailUser: string,
+      typeRecipe: RecipeType
+    ): RecipeWithDetails[] => {
+      const userRecipesFavorite = menuSlice
+        .getSelectors()
+        .selectUserRecipesFavorite(state, emailUser);
+      return userRecipesFavorite.filter((recipe) => recipe.type === typeRecipe);
+    },
+    selectIsRecipeFavorite: (
+      state,
+      idRecipe: string,
+      emailUser: string
+    ): boolean => {
+      const recipesFavorite = menuSlice
+        .getSelectors()
+        .selectRecipesFavorite(state);
+      const userRecipesFavorite = recipesFavorite[emailUser] || [];
+      return userRecipesFavorite.some((recipe) => recipe.id === idRecipe);
+    },
+    selectIsRecipeDone: (
+      state,
+      idRecipe: string,
+      emailUser: string
+    ): boolean => {
+      const userRecipesDone = menuSlice
+        .getSelectors()
+        .selectUserRecipesDone(state, emailUser);
+      return userRecipesDone.some((recipe) => recipe.id === idRecipe);
+    },
+    selectIsRecipeInProgress: (
+      state,
+      recipe: Recipe,
+      emailUser: string
+    ): boolean => {
+      const recipesInProgress = menuSlice
+        .getSelectors()
+        .selectRecipesInProgress(state);
+      const userRecipesInProgress = recipesInProgress[emailUser];
+
+      if (!userRecipesInProgress) {
+        return false;
+      }
+
+      const key = `${recipe.type}s` as keyof RecipeInProgress;
+
+      return Boolean(userRecipesInProgress[key][recipe.id]);
+    },
+    selectRecipeInProgressIngredients: (
+      state,
+      recipe: Recipe,
+      emailUser: string
+    ): string[] | null => {
+      const recipesInProgress = menuSlice
+        .getSelectors()
+        .selectRecipesInProgress(state);
+
+      const recipeTypeKey = `${recipe.type}s` as keyof RecipeInProgress;
+
+      return recipesInProgress[emailUser][recipeTypeKey][recipe.id];
+    },
+  },
 });
-
-/* Selects **/
-export const selectMenu = (state: RootState) => state.menu;
-
-export const selectIsRecipeFavorite = createSelector(
-  (state: RootState) => state.menu.recipesFavorite,
-  (_state: RootState, recipeId: string) => recipeId,
-  (_state: RootState, _recipeId: string, userEmail: string) => userEmail,
-  (favoriteRecipes, recipeId: string, userEmail: string) => {
-    const userFavoriteRecipes = favoriteRecipes[userEmail] || [];
-    return userFavoriteRecipes.some((recipe) => recipe.id === recipeId);
-  }
-);
-
-export const selectIsRecipeDone = createSelector(
-  (state: RootState) => state.menu.recipesDone,
-  (_state: RootState, recipeId: string) => recipeId,
-  (_state: RootState, _recipeId: string, userEmail: string) => userEmail,
-  (doneRecipes, recipeId, userEmail) => {
-    const userDoneRecipes = doneRecipes[userEmail] || [];
-    return userDoneRecipes.some((recipe) => recipe.id === recipeId);
-  }
-);
-
-export const selectIsRecipeInProgress = createSelector(
-  (state: RootState) => state.menu.recipesInProgress,
-  (_state: RootState, recipe: Recipe) => recipe,
-  (_state: RootState, _recipe: Recipe, userEmail: string) => userEmail,
-  (inProgressRecipes, recipe, userEmail) => {
-    const userInProgressRecipes = inProgressRecipes[userEmail];
-
-    if (!userInProgressRecipes) {
-      return false;
-    }
-
-    const key = `${recipe.type}s` as keyof RecipeInProgress;
-
-    return Boolean(userInProgressRecipes[key][recipe.id]);
-  }
-);
-
-export const selectRecipeInProgressIngredients = createSelector(
-  (state: RootState) => state.menu.recipesInProgress,
-  (_state: RootState, recipe: Recipe) => recipe,
-  (_state: RootState, _recipe: Recipe, userEmail: string) => userEmail,
-  (inProgressRecipes, recipe, userEmail): string[] | null => {
-    const recipeTypeKey = `${recipe.type}s` as keyof RecipeInProgress;
-
-    return inProgressRecipes[userEmail][recipeTypeKey][recipe.id];
-  }
-);
-
-export const selectRecipesDone = createSelector(
-  (state: RootState) => state.menu.recipesDone,
-  (_state: RootState, userEmail: string) => userEmail,
-  (recipesDone, userEmail): RecipeWithDetailsAndDoneDate[] => {
-    return recipesDone[userEmail] || [];
-  }
-);
-
-export const selectRecipesDoneByType = createSelector(
-  selectRecipesDone,
-  (_state: RootState, _userEmail: string, recipeType: RecipeType) => recipeType,
-  (userRecipesDone, recipeType): RecipeWithDetailsAndDoneDate[] => {
-    return userRecipesDone.filter((recipe) => recipe.type === recipeType);
-  }
-);
-
-export const selectRecipesFavorite = createSelector(
-  (state: RootState) => state.menu.recipesFavorite,
-  (_state: RootState, userEmail: string) => userEmail,
-  (recipesFavorite, userEmail): RecipeWithDetails[] => {
-    return recipesFavorite[userEmail] || [];
-  }
-);
-
-export const selectRecipesFavoriteByType = createSelector(
-  selectRecipesFavorite,
-  (_state: RootState, _userEmail: string, recipeType: RecipeType) => recipeType,
-  (userRecipesFavorite, recipeType) => {
-    return userRecipesFavorite.filter((recipe) => recipe.type === recipeType);
-  }
-);
-
-export const {
-  setRecipes,
-  toggleRecipeFavorite,
-  setRecipeInProgress,
-  toggleRecipeIngredient,
-  setRecipeDone,
-  removeRecipeInProgress,
-} = menuSlice.actions;
 
 export default menuSlice;

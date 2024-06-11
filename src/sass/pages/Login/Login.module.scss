@@ -1,10 +1,15 @@
 @use "@/sass/themes/theme" as *;
 @use "@/sass/abstracts/mixins" as *;
 
+$purple: map-get($theme-colors, "purple");
+$white: map-get($theme-colors, "white");
+
 .login {
-  background-image: url("@/assets/images/loginBg.svg");
-  background-size: cover;
-  background-position: center center;
+  background: 
+    url("@/assets/images/salad.png") right center no-repeat,
+    linear-gradient(to bottom, $purple 50%, $white 50%); 
+  background-size: auto;
+  
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -13,6 +18,7 @@
   width: 100%;
 
   @include respond-to("tabletS") {
+    background-size: cover;
     max-width: 600px;
     justify-content: center;
     border-radius: 20px;
@@ -33,7 +39,7 @@
     box-shadow: 0 -4px 3px 0 rgba(0,0,0,0.25);
     padding: 1em;
     border-radius: 10px;
-    background-color: map-get($map: $theme-colors, $key: "white");
+    background-color: $white;
   }
 }
 
@@ -42,10 +48,10 @@
   styles without having to use !important.
 */
 #login-form .login__form__email__input {
-  $purple-focus: rgba(map-get($theme-colors, "purple"), 0.65);
+  $purple-focus: rgba($purple, 0.65);
 
   & ~ label {
-    color: map-get($theme-colors, "purple");
+    color: $purple;
   }
   
   &:focus,
@@ -72,6 +78,6 @@
 
 .login__title {
   text-align: center;
-  color: map-get($map: $theme-colors, $key: "purple");
+  color: $purple;
   font-style: italic;
 }

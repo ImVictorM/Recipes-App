@@ -1,5 +1,5 @@
 import MissingIdInRouteParametersError from "@/errors/http/MissingIdInRouteParametersError";
-import { RecipeInProgressLoader } from "./common";
+import { RecipeInProgressLoader } from "./common.types";
 
 import getCocktailDetailsById from "@/services/menu/cocktail/getCocktailDetailsById";
 

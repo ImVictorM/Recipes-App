@@ -1,4 +1,4 @@
-import { RecipeCategory } from "../common";
+import { RecipeCategory } from "../common.types";
 
 const cocktailCategories: RecipeCategory[] = [
   {

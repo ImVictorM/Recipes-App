@@ -1,6 +1,6 @@
 import MissingIdInRouteParametersError from "@/errors/http/MissingIdInRouteParametersError";
-import { RecipeDetailsLoader } from "./common";
-import { defer } from "@/utils/reactRouterDom";
+import { RecipeDetailsLoader } from "./common.types";
+import { defer } from "@/utils/reactRouterDom/reactRouterDom";
 
 import getCocktailDetailsById from "@/services/menu/cocktail/getCocktailDetailsById";
 import getMeals from "@/services/menu/meal/getMeals";

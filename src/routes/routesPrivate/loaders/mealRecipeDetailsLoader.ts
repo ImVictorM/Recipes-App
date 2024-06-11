@@ -1,5 +1,5 @@
-import { RecipeDetailsLoader } from "./common";
-import { defer } from "@/utils/reactRouterDom";
+import { RecipeDetailsLoader } from "./common.types";
+import { defer } from "@/utils/reactRouterDom/reactRouterDom";
 
 import getMealDetailsById from "@/services/menu/meal/getMealDetailsById";
 import getCocktails from "@/services/menu/cocktail/getCocktails";

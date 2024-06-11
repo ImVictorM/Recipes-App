@@ -1,6 +1,28 @@
+import { AxiosRequestConfig } from "axios";
+import { Drink } from "./cocktail/types";
+import { RecipeFilterOptions } from "./common";
+import { Meal } from "./meal/types";
+
 export type RecipeCategory = {
   strCategory: string;
 };
+
+export type MenuRecipeType = Drink | Meal;
+
+export type GetRecipes<T extends MenuRecipeType> = (
+  config?: AxiosRequestConfig
+) => Promise<T[]>;
+
+export type GetRecipesById<T extends MenuRecipeType> = (
+  id: string,
+  config?: AxiosRequestConfig
+) => Promise<T>;
+
+export type GetRecipesByFilter<T extends MenuRecipeType> = (
+  query: string,
+  option: RecipeFilterOptions,
+  config?: AxiosRequestConfig
+) => Promise<T[]>;
 
 export type MenuRecipe = {
   strTags: string | null | "";

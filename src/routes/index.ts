@@ -1,7 +1,9 @@
 import React from "react";
 import { Outlet, RouteObject } from "react-router-dom";
 
-import RouteAuthRequired from "@/components/RouteAuthRequired";
+const RouteAuthRequired = React.lazy(
+  () => import("@/components/RouteAuthRequired")
+);
 
 import routesPrivate from "./routesPrivate";
 import routesPublic from "./routesPublic";

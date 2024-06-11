@@ -1,10 +1,10 @@
 import MappingRecipeError from "@/errors/mappings/MappingRecipeError";
 
 import { isDrink, isMeal } from "./common";
-import { MenuRecipeType } from "./common.types";
 import { Drink } from "@/services/menu/cocktail/types";
 import { Meal } from "@/services/menu/meal/types";
 import { Recipe } from "@/store/slices/menu/menuSlice.types";
+import { MenuRecipeType } from "@/services/menu/common.types";
 
 export default function toRecipe(recipe: MenuRecipeType): Recipe {
   if (isMeal(recipe)) {

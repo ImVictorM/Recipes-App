@@ -1,17 +1,21 @@
+import MissingIdInRouteParametersError from "@/errors/http/MissingIdInRouteParametersError";
 import { RecipeDetailsLoader } from "./common.types";
 import { defer } from "@/utils/reactRouterDom/reactRouterDom";
 
-import getMealDetailsById from "@/services/menu/meal/getMealDetailsById";
-import getCocktails from "@/services/menu/cocktail/getCocktails";
-
 const mealRecipeDetailsLoader: RecipeDetailsLoader = async (args) => {
-  if (!args.params.id) throw new Error("Missing ID in route parameters");
+  if (!args.params.id) throw new MissingIdInRouteParametersError();
 
-  const mealPromise = getMealDetailsById(args.params.id, {
+  const getMealDetailsById = await import(
+    "@/services/menu/meal/getMealDetailsById"
+  );
+
+  const getCocktails = await import("@/services/menu/cocktail/getCocktails");
+
+  const mealPromise = getMealDetailsById.default(args.params.id, {
     signal: args.request.signal,
   });
 
-  const recommendationsPromise = getCocktails({
+  const recommendationsPromise = getCocktails.default({
     signal: args.request.signal,
   });
 

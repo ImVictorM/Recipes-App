@@ -1,11 +1,14 @@
 import MissingIdInRouteParametersError from "@/errors/http/MissingIdInRouteParametersError";
 import { RecipeInProgressLoader } from "./common.types";
 
-import getCocktailDetailsById from "@/services/menu/cocktail/getCocktailDetailsById";
-
 const drinkRecipeInProgressLoader: RecipeInProgressLoader = async (args) => {
   if (!args.params.id) throw new MissingIdInRouteParametersError();
-  const drink = await getCocktailDetailsById(args.params.id, {
+
+  const getCocktailDetailsById = await import(
+    "@/services/menu/cocktail/getCocktailDetailsById"
+  );
+
+  const drink = await getCocktailDetailsById.default(args.params.id, {
     signal: args.request.signal,
   });
 

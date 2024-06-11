@@ -1,18 +1,20 @@
-import { RecipeFilterOptions } from "@/services/menu/common";
-import { RecipeCategory } from "@/services/menu/common.types";
-import { AxiosRequestConfig } from "axios";
+import { CenteredTitleWithIconProps } from "@/components/CenteredTitleWithIcon/CenteredTitleWithIcon.types";
+import {
+  GetRecipes,
+  GetRecipesByFilter,
+  MenuRecipeType,
+  RecipeCategory,
+} from "@/services/menu/common.types";
+import { RecipeType } from "@/store/slices/menu/menuSlice.types";
 
-export type RecipesProps<T> = {
-  icon: {
-    element: React.FC<React.SVGProps<SVGElement>>;
-    alt: string;
-  };
-  title: string;
+export type RecipesProps = {
+  type: RecipeType;
+};
+
+export type RecipesUtils = {
+  onGetRecipesByFilter: GetRecipesByFilter<MenuRecipeType>;
+  onGetRecipes: GetRecipes<MenuRecipeType>;
   categories: RecipeCategory[];
-  onGetRecipes: (config?: AxiosRequestConfig) => Promise<T[]>;
-  onGetRecipesByFilter: (
-    query: string,
-    filter: RecipeFilterOptions,
-    config?: AxiosRequestConfig
-  ) => Promise<T[]>;
+  title: string;
+  icon: CenteredTitleWithIconProps["icon"];
 };

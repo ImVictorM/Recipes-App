@@ -3,10 +3,10 @@ import toRecipe from "./toRecipe";
 import MappingRecipeError from "@/errors/mappings/MappingRecipeError";
 
 import { isDrink, isMeal } from "./common";
-import { MenuRecipeType } from "./common.types";
 import { RecipeWithDetails } from "@/store/slices/menu/menuSlice.types";
 import { Meal } from "@/services/menu/meal/types";
 import { Drink } from "@/services/menu/cocktail/types";
+import { MenuRecipeType } from "@/services/menu/common.types";
 
 function combineIngredientWithMeasure(recipe: MenuRecipeType) {
   const entries = Object.entries(recipe);

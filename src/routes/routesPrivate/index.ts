@@ -9,16 +9,6 @@ import {
   mealRecipeInProgressLoader,
 } from "./loaders";
 
-import CocktailIcon from "@/assets/icons/cocktailIcon.svg";
-import cocktailCategories from "@/services/menu/cocktail/categories";
-import getCocktails from "@/services/menu/cocktail/getCocktails";
-import getCocktailsByFilter from "@/services/menu/cocktail/getCocktailsByFilter";
-
-import MealIcon from "@/assets/icons/mealIcon.svg";
-import mealCategories from "@/services/menu/meal/categories";
-import getMealsByFilter from "@/services/menu/meal/getMealsByFilter";
-import getMeals from "@/services/menu/meal/getMeals";
-
 const RecipesFavorite = React.lazy(() => import("@/pages/RecipesFavorite"));
 const RecipesDone = React.lazy(() => import("@/pages/RecipesDone"));
 const Profile = React.lazy(() => import("@/pages/Profile"));
@@ -46,11 +36,7 @@ export const routesPrivate: RouteObject[] = [
       {
         index: true,
         element: React.createElement(Recipes, {
-          categories: cocktailCategories,
-          onGetRecipes: getCocktails,
-          onGetRecipesByFilter: getCocktailsByFilter,
-          icon: { element: CocktailIcon, alt: "cocktail" },
-          title: "Drinks",
+          type: "drink",
         }),
       },
       {
@@ -73,14 +59,7 @@ export const routesPrivate: RouteObject[] = [
       {
         index: true,
         element: React.createElement(Recipes, {
-          categories: mealCategories,
-          onGetRecipes: getMeals,
-          onGetRecipesByFilter: getMealsByFilter,
-          icon: {
-            element: MealIcon,
-            alt: "meal",
-          },
-          title: "Meals",
+          type: "meal",
         }),
       },
       {

@@ -1,6 +1,6 @@
 import { Drink } from "@/services/menu/cocktail/types";
+import { MenuRecipeType } from "@/services/menu/common.types";
 import { Meal } from "@/services/menu/meal/types";
-import { MenuRecipeType } from "./common.types";
 
 export function isMeal(recipe: MenuRecipeType): recipe is Meal {
   return (recipe as Meal).strMeal !== undefined;

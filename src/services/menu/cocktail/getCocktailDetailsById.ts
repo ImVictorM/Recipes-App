@@ -1,11 +1,14 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { Drink, GenericCocktailApiResponse } from "./types";
 import cocktailClient from "./client";
+import { GetRecipesById } from "../common.types";
 
-export default async function getCocktailDetailsById(
+import NotFoundError from "@/errors/http/NotFoundError";
+
+const getCocktailDetailsById: GetRecipesById<Drink> = async (
   id: string,
   config?: AxiosRequestConfig
-): Promise<Drink> {
+): Promise<Drink> => {
   const response: AxiosResponse<GenericCocktailApiResponse> =
     await cocktailClient.get(`lookup.php?i=${id}`, config);
 
@@ -13,5 +16,7 @@ export default async function getCocktailDetailsById(
     return response.data.drinks[0];
   }
 
-  throw new Error(`Drink with id ${id} not found`);
-}
+  throw new NotFoundError(`Drink with id ${id} not found`);
+};
+
+export default getCocktailDetailsById;

@@ -1,11 +1,13 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { Meal, GenericMealApiResponse } from "./types";
 import mealClient from "./client";
+import { GetRecipesById } from "../common.types";
+import NotFoundError from "@/errors/http/NotFoundError";
 
-export default async function getMealDetailsById(
+const getMealDetailsById: GetRecipesById<Meal> = async (
   id: string,
   config?: AxiosRequestConfig
-): Promise<Meal> {
+): Promise<Meal> => {
   const response: AxiosResponse<GenericMealApiResponse> = await mealClient.get(
     `lookup.php?i=${id}`,
     config
@@ -15,5 +17,7 @@ export default async function getMealDetailsById(
     return response.data.meals[0];
   }
 
-  throw new Error(`Meal with id ${id} not found`);
-}
+  throw new NotFoundError(`Meal with id ${id} not found`);
+};
+
+export default getMealDetailsById;

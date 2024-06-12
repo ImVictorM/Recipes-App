@@ -99,8 +99,8 @@ export default function ListWithPagination<T extends DataWithId>({
       /**
        * For the item to show, the page must be loading
        * and the items list must be empty.
-       * Sometimes, the loading state will update before
-       * to true before before the items are set.
+       * Sometimes, the loading state will update
+       * to true before the items are set.
        */
       if (loading || items.length === 0) {
         setLastLoadingTime(new Date().getTime());

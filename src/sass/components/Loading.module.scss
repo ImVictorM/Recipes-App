@@ -1,0 +1,82 @@
+@use "@/sass/base/animations" as *;
+@use "@/sass/themes/theme" as *;
+
+$purple: map-get($map: $theme-colors, $key: "purple");
+$gold: map-get($map: $theme-colors, $key: "gold");
+$white: map-get($map: $theme-colors, $key: "white");
+
+$border-outer-width: 10px;
+$border-inner-width: 5px;
+
+.loading {
+  min-width: 150px;
+  min-height: 150px;
+
+  width: 150px;
+  height: 150px;
+
+  background-color: $white;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading--static {
+  &::before {
+    content: "";
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: $border-outer-width solid $gold;
+  }
+}
+
+.loading--animated {
+  &::before, &::after {
+    content: "";
+    display: block;
+    border-radius: 50%;
+  }
+
+  &::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: $border-outer-width solid $gold;
+    border-top-color: $white;
+    animation: $rotate;
+  }
+
+  &::after {
+    position: absolute;
+    top: $border-outer-width;
+    bottom: $border-outer-width;
+    left: $border-outer-width;
+    right: $border-outer-width;
+
+    border: $border-inner-width solid $purple;
+    border-bottom-color: $white;
+    animation: $rotate--reverse;
+  }
+}
+
+.loading__img {
+  animation: $shake-smooth--alternate;
+  width: calc(100% - (#{$border-inner-width * 4} + #{$border-outer-width * 4}));
+  height: calc(100% - (#{$border-inner-width * 4} + #{$border-outer-width * 4}));
+  padding: 0.5em;
+}
+
+.loading__text {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: $purple;
+}

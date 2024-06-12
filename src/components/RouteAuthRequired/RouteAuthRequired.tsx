@@ -1,5 +1,7 @@
 import { selectUser } from "@/store/slices/user";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+
+import SuspenseWithLoading from "../SuspenseWithLoading";
 
 import useAppSelector from "@/hooks/useAppSelector";
 
@@ -11,5 +13,5 @@ export default function RouteAuthRequired() {
     return <Navigate to="/" state={{ from: location }} />;
   }
 
-  return <Outlet />;
+  return <SuspenseWithLoading />;
 }

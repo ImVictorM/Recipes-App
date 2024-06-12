@@ -44,6 +44,11 @@
 
     .profile__button__text {
       color: map-get($map: $theme-colors, $key: "gold");
+
+      &::before {
+        transform: translate(-50%, 0.8rem);
+        opacity: 1;
+      }
     }
   }
 }
@@ -60,4 +65,19 @@
   transition: all 0.25s ease;
   font-weight: 500;
   font-size: 1.2rem;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    transition: transform 0.25s ease;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: map-get($map: $theme-colors, $key: "yellow");
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
 }

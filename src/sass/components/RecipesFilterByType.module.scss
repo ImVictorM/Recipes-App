@@ -17,13 +17,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  transition: all 0.2s ease;
+  
   &__img {
     width: 60px;
     height: 60px;
   }
 
-  &__text {
-    color: map-get($map: $theme-colors, $key: "gray")
+  &:hover, &:focus {
+    transform: scale(1.1);
+    color: map-get($map: $theme-colors, $key: "gold");
   }
 }

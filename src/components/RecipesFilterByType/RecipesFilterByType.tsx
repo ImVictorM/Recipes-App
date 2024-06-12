@@ -20,7 +20,7 @@ export default function RecipesFilterByType({
           className={`${styles.filters__button__img}`}
           aria-label="circular icon an hamburger and a soda"
         />
-        <span className={`${styles.filters__button__text}`}>All</span>
+        <span>All</span>
       </button>
 
       <button
@@ -32,7 +32,7 @@ export default function RecipesFilterByType({
           className={`${styles.filters__button__img}`}
           aria-label="circular icon with a plate and cutlery"
         />
-        <span className={`${styles.filters__button__text}`}>Food</span>
+        <span>Food</span>
       </button>
 
       <button
@@ -45,7 +45,7 @@ export default function RecipesFilterByType({
           aria-label="circular icon with a cocktail"
         />
 
-        <span className={`${styles.filters__button__text}`}>Drinks</span>
+        <span>Drinks</span>
       </button>
     </div>
   );

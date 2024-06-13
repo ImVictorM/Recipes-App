@@ -13,6 +13,7 @@ function ScrollLinearContainerComponent<
 >(
   {
     scrollWithMouseWheel = true,
+    scrollDragging = true,
     as,
     children,
     className,
@@ -48,7 +49,8 @@ function ScrollLinearContainerComponent<
   };
 
   const handleOnMouseMove = (e: React.MouseEvent) => {
-    if (!isMouseDown || !componentRef.current || !isOverflow) return;
+    if (!isMouseDown || !componentRef.current || !isOverflow || !scrollDragging)
+      return;
 
     e.preventDefault();
 

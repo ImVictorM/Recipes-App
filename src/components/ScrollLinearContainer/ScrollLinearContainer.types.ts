@@ -9,5 +9,6 @@ export type ScrollLinearContainerProps<T extends React.ElementType> =
     T,
     {
       scrollWithMouseWheel?: boolean;
+      scrollDragging?: boolean;
     }
   >;

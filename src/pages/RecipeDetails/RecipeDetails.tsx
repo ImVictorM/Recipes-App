@@ -102,6 +102,7 @@ export default function RecipeDetails() {
           <h3>Recommended drinks</h3>
           <ScrollLinearContainer
             className={`${styles.recipe__recommendations}`}
+            scrollDragging={false}
           >
             <React.Suspense
               fallback={

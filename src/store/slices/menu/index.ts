@@ -6,7 +6,6 @@ export const {
   removeRecipeInProgress,
   setRecipeDone,
   setRecipeInProgress,
-  setRecipes,
   toggleRecipeFavorite,
   toggleRecipeIngredient,
 } = menuSlice.actions;

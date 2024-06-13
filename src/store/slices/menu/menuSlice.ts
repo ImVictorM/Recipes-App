@@ -16,7 +16,6 @@ const recipesInProgressLocalStorageKey = "inProgressRecipes";
 const recipesDoneLocalStorageKey = "doneRecipes";
 
 const initialState: Menu = {
-  recipes: [],
   recipesFavorite: getFromLocalStorage(recipesFavoriteLocalStorageKey) || {},
   recipesDone: getFromLocalStorage(recipesDoneLocalStorageKey) || {},
   recipesInProgress:
@@ -27,9 +26,6 @@ const menuSlice = createSlice({
   name: "menu",
   initialState,
   reducers: {
-    setRecipes: (state, action: PayloadAction<Recipe[]>) => {
-      state.recipes = action.payload;
-    },
     setRecipeInProgress: (
       state,
       action: PayloadAction<{ userEmail: string; recipe: RecipeWithDetails }>

@@ -32,7 +32,6 @@ export type RecipeInProgress = {
 };
 
 export type Menu = {
-  recipes: Recipe[];
   recipesFavorite: Record<string, RecipeWithDetails[]>;
   recipesDone: Record<string, RecipeWithDetailsAndDoneDate[]>;
   recipesInProgress: Record<string, RecipeInProgress>;

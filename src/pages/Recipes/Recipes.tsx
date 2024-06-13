@@ -13,11 +13,9 @@ import RecipeBasicCard from "@/components/RecipeBasicCard";
 import RecipesFilterByCategory from "./components/RecipesFilterByCategory";
 import RecipesFilterBySearch from "./components/RecipesFilterBySearch";
 
-import useAppDispatch from "@/hooks/useAppDispatch";
 import useAppSelector from "@/hooks/useAppSelector";
 
 import { selectVisibility } from "@/store/slices/visibility";
-import { selectMenu, setRecipes } from "@/store/slices/menu";
 
 import toRecipe from "@/utils/mappings/recipe/toRecipe";
 
@@ -28,10 +26,9 @@ import { RecipesFilterBySearchFormState } from "./components/RecipesFilterBySear
 import { RecipesProps, RecipesUtils } from "./Recipes.types";
 
 export default function Recipes({ type }: RecipesProps) {
-  const dispatch = useAppDispatch();
   const visibility = useAppSelector(selectVisibility);
-  const menu = useAppSelector(selectMenu);
   const navigate = useNavigate();
+  const [recipes, setRecipes] = React.useState<Recipe[]>([]);
   const [recipeUtils, setRecipeUtils] = React.useState<RecipesUtils>();
   const [isLoading, setIsLoading] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
@@ -85,10 +82,10 @@ export default function Recipes({ type }: RecipesProps) {
         const recipe = recipes[0];
         navigate(recipe.id);
       } else {
-        dispatch(setRecipes(recipes));
+        setRecipes(recipes);
       }
     },
-    [dispatch, navigate]
+    [navigate]
   );
 
   const handleFetchRecipesBySearch = async ({
@@ -265,7 +262,7 @@ export default function Recipes({ type }: RecipesProps) {
               scaleOnHover
             />
           )}
-          items={menu.recipes}
+          items={recipes}
         />
       )}
     </BasicLayout>

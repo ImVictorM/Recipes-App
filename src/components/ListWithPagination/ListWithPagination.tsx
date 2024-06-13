@@ -40,13 +40,14 @@ export default function ListWithPagination<T extends DataWithId>({
     loading && Boolean(ItemCardSkeleton) && items.length === 0
   );
 
-  const uiItemsIndex = React.useMemo(
-    () => ({
+  const uiItemsIndex = React.useMemo(() => {
+    const lastItemIndexCalc = currentPage * maxItemsPerPage;
+    return {
       firstItemIndex: (currentPage - 1) * maxItemsPerPage,
-      lastItemIndex: currentPage * maxItemsPerPage,
-    }),
-    [currentPage, maxItemsPerPage]
-  );
+      lastItemIndex:
+        lastItemIndexCalc > items.length ? items.length : lastItemIndexCalc,
+    };
+  }, [currentPage, maxItemsPerPage, items.length]);
 
   const showPagination: boolean = React.useMemo(() => {
     return totalPages > 1 && items.length > 0 && !loading;
@@ -69,13 +70,13 @@ export default function ListWithPagination<T extends DataWithId>({
 
     if (currentPage < totalPages - 3) {
       const middlePortion = allPaginationItems.slice(
-        currentPage - 1,
+        currentPage - 2,
         currentPage + 1
       );
       return [1, "...", ...middlePortion, "...", totalPages];
     }
 
-    const rightPortion = allPaginationItems.slice(totalPages - 4, totalPages);
+    const rightPortion = allPaginationItems.slice(totalPages - 5);
     return [1, "...", ...rightPortion];
   }, [totalPages, currentPage]);
 
@@ -122,6 +123,10 @@ export default function ListWithPagination<T extends DataWithId>({
 
     handleLoadingChange();
   }, [ItemCardSkeleton, items.length, lastLoadingTime, loading]);
+
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [items]);
 
   return (
     <section>

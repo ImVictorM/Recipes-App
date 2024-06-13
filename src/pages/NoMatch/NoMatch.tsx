@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import brokenWineGlass from "@/assets/images/brokenWineGlass.png";
 import ArrowLeftIcon from "@/assets/icons/arrowLeftIcon.svg";
 import Blob from "@/assets/images/blob.svg";
@@ -6,6 +8,12 @@ import styles from "@/sass/pages/NoMatch/NoMatch.module.scss";
 import { Button } from "react-bootstrap";
 
 export default function NoMatch() {
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <main className={`${styles["no-match"]}`}>
       <div className={`${styles["no-match__inner"]}`}>
@@ -35,7 +43,10 @@ export default function NoMatch() {
             I think someone stole the page you are looking for.
           </p>
 
-          <Button className={`${styles["no-match__message__go-back"]}`}>
+          <Button
+            onClick={handleGoBack}
+            className={`${styles["no-match__message__go-back"]}`}
+          >
             <ArrowLeftIcon aria-label="arrow to the left" role="img" />
             <span>Go back to a safe place</span>
           </Button>

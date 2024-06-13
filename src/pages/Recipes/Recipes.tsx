@@ -46,6 +46,7 @@ export default function Recipes({ type }: RecipesProps) {
     ) => {
       setIsLoading(true);
       resetAbortController();
+      setRecipes([]);
 
       try {
         await fetch();

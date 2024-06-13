@@ -4,6 +4,7 @@ import BasicLayout from "@/layouts/BasicLayout";
 
 import useAppDispatch from "@/hooks/useAppDispatch";
 import useAppSelector from "@/hooks/useAppSelector";
+import useHeadTitle from "@/hooks/useHeadTitle";
 
 import { removeUser, selectUser } from "@/store/slices/user";
 
@@ -17,6 +18,7 @@ import CenteredTitleWithIcon from "@/components/CenteredTitleWithIcon/CenteredTi
 import styles from "@/sass/pages/Profile/Profile.module.scss";
 
 export default function Profile() {
+  useHeadTitle("Profile");
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

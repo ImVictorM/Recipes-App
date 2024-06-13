@@ -1,13 +1,17 @@
 import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
+
+import useHeadTitle from "@/hooks/useHeadTitle";
 
 import brokenWineGlass from "@/assets/images/brokenWineGlass.png";
 import ArrowLeftIcon from "@/assets/icons/arrowLeftIcon.svg";
 import Blob from "@/assets/images/blob.svg";
 
 import styles from "@/sass/pages/NoMatch/NoMatch.module.scss";
-import { Button } from "react-bootstrap";
 
 export default function NoMatch() {
+  useHeadTitle("Not Found");
+
   const navigate = useNavigate();
 
   const handleGoBack = () => {

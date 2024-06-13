@@ -6,6 +6,7 @@ import HeroLayout from "@/layouts/HeroLayout";
 
 import useAppDispatch from "@/hooks/useAppDispatch";
 import useAppSelector from "@/hooks/useAppSelector";
+import useHeadTitle from "@/hooks/useHeadTitle";
 
 import {
   selectRecipeInProgressIngredients,
@@ -25,6 +26,7 @@ import { RecipeInProgressLoader } from "@/routes/routesPrivate/loaders/common.ty
 export default function RecipeInProgress() {
   const data = useLoaderData<RecipeInProgressLoader>();
   const recipe = toRecipeWithDetails(data.recipe);
+  useHeadTitle(`${recipe.name} - In Progress`);
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const ingredientsRemaining = useAppSelector((state) =>

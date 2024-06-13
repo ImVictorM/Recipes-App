@@ -10,6 +10,7 @@ import ScrollLinearContainer from "@/components/ScrollLinearContainer";
 
 import useAppDispatch from "@/hooks/useAppDispatch";
 import useAppSelector from "@/hooks/useAppSelector";
+import useHeadTitle from "@/hooks/useHeadTitle";
 
 import toRecipe from "@/utils/mappings/recipe/toRecipe";
 import toRecipeWithDetails from "@/utils/mappings/recipe/toRecipeWithDetails";
@@ -29,6 +30,7 @@ import styles from "@/sass/pages/RecipeDetails/RecipeDetails.module.scss";
 export default function RecipeDetails() {
   const data = useLoaderData<RecipeDetailsLoader>();
   const recipe = toRecipeWithDetails(data.recipe);
+  useHeadTitle(recipe.name);
 
   const user = useAppSelector(selectUser);
 

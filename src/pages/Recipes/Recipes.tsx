@@ -14,6 +14,7 @@ import RecipesFilterByCategory from "./components/RecipesFilterByCategory";
 import RecipesFilterBySearch from "./components/RecipesFilterBySearch";
 
 import useAppSelector from "@/hooks/useAppSelector";
+import useHeadTitle from "@/hooks/useHeadTitle";
 
 import { selectVisibility } from "@/store/slices/visibility";
 
@@ -26,6 +27,7 @@ import { RecipesFilterBySearchFormState } from "./components/RecipesFilterBySear
 import { RecipesProps, RecipesUtils } from "./Recipes.types";
 
 export default function Recipes({ type }: RecipesProps) {
+  useHeadTitle(type === "drink" ? "Drinks" : "Meals");
   const visibility = useAppSelector(selectVisibility);
   const navigate = useNavigate();
   const [recipes, setRecipes] = React.useState<Recipe[]>([]);

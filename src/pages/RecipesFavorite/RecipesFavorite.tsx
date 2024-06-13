@@ -10,6 +10,7 @@ import ListWithPagination from "@/components/ListWithPagination";
 import RecipeFavoriteCard from "./components/RecipeFavoriteCard";
 
 import useAppSelector from "@/hooks/useAppSelector";
+import useHeadTitle from "@/hooks/useHeadTitle";
 
 import { selectUser } from "@/store/slices/user";
 import {
@@ -22,6 +23,7 @@ import HeartCircularIcon from "@/assets/icons/heartCircularIcon.svg";
 import { RecipeTypeOrAll } from "@/components/RecipesFilterByType/RecipesFilterByType.types";
 
 export default function RecipesFavorite() {
+  useHeadTitle("Recipes Favorite");
   const user = useAppSelector(selectUser);
   const [recipesFavoriteType, setRecipeType] =
     React.useState<RecipeTypeOrAll>("all");

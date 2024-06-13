@@ -10,6 +10,7 @@ import ListWithPagination from "@/components/ListWithPagination";
 import RecipeDoneCard from "./components/RecipeDoneCard";
 
 import useAppSelector from "@/hooks/useAppSelector";
+import useHeadTitle from "@/hooks/useHeadTitle";
 
 import { selectUser } from "@/store/slices/user";
 import {
@@ -22,6 +23,7 @@ import CheckCircularIcon from "@/assets/icons/checkCircularIcon.svg";
 import { RecipeTypeOrAll } from "@/components/RecipesFilterByType/RecipesFilterByType.types";
 
 export default function RecipesDone() {
+  useHeadTitle("Recipes Done");
   const user = useAppSelector(selectUser);
   const [recipesDoneType, setRecipesType] =
     React.useState<RecipeTypeOrAll>("all");

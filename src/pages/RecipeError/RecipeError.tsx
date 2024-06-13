@@ -5,9 +5,12 @@ import {
   useNavigate,
 } from "react-router-dom";
 
+import useHeadTitle from "@/hooks/useHeadTitle";
+
 import ErrorIcon from "@/assets/icons/errorIcon.svg";
 
 export default function RecipeError() {
+  useHeadTitle("Error");
   const error = useRouteError();
   const navigate = useNavigate();
 

@@ -28,7 +28,7 @@
 
   &__profile,
   &__search-button {
-    @include hover-circular();
+    @include hover-circular($hover-bg-color: rgba(0,0,0,0.05));
     $icon-size: 30px;
     width: $icon-size;
     height: $icon-size;

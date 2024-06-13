@@ -1,5 +1,6 @@
 @use "@/sass/themes/theme" as *;
 @use "@/sass/abstracts/variables" as *;
+@use "@/sass/abstracts/mixins" as *;
 
 .hero {
   height: 40vh;
@@ -16,6 +17,8 @@
 
   &__icon {
     width: 32px;
+
+    @include hover-circular();
   }
 }
 

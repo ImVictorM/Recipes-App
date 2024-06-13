@@ -67,7 +67,7 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
       >
         <div className="d-flex gap-3">
           <OverlayTrigger
-            placement="left-end"
+            placement="bottom-end"
             delay={{ show: 250, hide: 400 }}
             overlay={(props) => (
               <Tooltip id="copy-recipe-link-tooltip" {...props}>
@@ -79,18 +79,14 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
               type="button"
               onClick={handleCopyToClipboard}
               data-testid="share-btn"
-              className="bg-transparent"
+              className={`${styles.hero__header__icon} bg-transparent`}
             >
-              <ShareIcon
-                className={`${styles.hero__header__icon}`}
-                aria-label="share"
-                role="img"
-              />
+              <ShareIcon aria-label="share" role="img" />
             </button>
           </OverlayTrigger>
 
           <OverlayTrigger
-            placement="left-end"
+            placement="bottom-end"
             delay={{ show: 250, hide: 400 }}
             overlay={(props) => (
               <Tooltip id="favorite-tooltip" {...props}>
@@ -101,19 +97,14 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
             <button
               type="button"
               onClick={handleToggleFavorite}
-              className="bg-transparent"
               data-testid="favorite-btn"
+              className={`${styles.hero__header__icon} bg-transparent`}
             >
               {isFavorite ? (
-                <HeartFillIcon
-                  aria-label="fill heart"
-                  className={`${styles.hero__header__icon}`}
-                  role="img"
-                />
+                <HeartFillIcon aria-label="fill heart" role="img" />
               ) : (
                 <HeartOutlineIcon
                   aria-label="outline hollow heart"
-                  className={`${styles.hero__header__icon}`}
                   role="img"
                 />
               )}

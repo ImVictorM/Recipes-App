@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/dom";
+import { within } from "@testing-library/dom";
 import { act } from "@testing-library/react";
 
 import ListWithPagination from "@/components/ListWithPagination";
@@ -73,8 +73,8 @@ const checkItemsExistByPage = (
   });
 };
 
-describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`, () => {
-  it("Renders and changes the pages correctly when clicking the numeric buttons.", async () => {
+describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`, () => {
+  it("renders and changes the pages correctly when clicking the numeric buttons.", async () => {
     const { container, user } = renderElement(<ListWithPaginationDefault />);
 
     let currentPage = 1;
@@ -96,7 +96,7 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
     }
   });
 
-  it("Changes the page correctly when clicking the next and previous buttons", async () => {
+  it("changes the page correctly when clicking the next and previous buttons", async () => {
     const { container, user } = renderElement(<ListWithPaginationDefault />);
 
     within(container).getByTestId("Pagination.Item.1.Active");
@@ -117,8 +117,8 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
     checkItemsExistByPage(container, defaultItems, 1);
   });
 
-  describe("Testing rendering with skeleton", () => {
-    it("Renders the skeleton instead of the item when loading is true and skeleton is defined", () => {
+  describe("testing rendering with skeleton", () => {
+    it("renders the skeleton instead of the item when loading is true and skeleton is defined", () => {
       const { container } = renderElement(
         <ListWithPaginationDefault
           renderItemCardSkeleton={ItemSkeleton}
@@ -132,7 +132,7 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
     });
 
     /** Util when loading state changes before the items is set */
-    it("Renders the skeleton when the items is empty, loading is false and skeleton is defined", () => {
+    it("renders the skeleton when the items is empty, loading is false and skeleton is defined", () => {
       const { container } = renderElement(
         <ListWithPaginationDefault
           items={[]}
@@ -146,7 +146,7 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
       );
     });
 
-    it("Renders the card correctly when items is not empty, loading is false and skeleton is defined", () => {
+    it("renders the card correctly when items is not empty, loading is false and skeleton is defined", () => {
       const { container } = renderElement(
         <ListWithPaginationDefault
           loading={false}
@@ -158,8 +158,8 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
     });
   });
 
-  describe("Testing pagination blocks rendering", () => {
-    it("Does not render the pagination controllers if the items quantity is less than max items per page", () => {
+  describe("testing pagination blocks rendering", () => {
+    it("does not render the pagination controllers if the items quantity is less than max items per page", () => {
       const { container } = renderElement(
         <ListWithPaginationDefault
           items={createItems(MAX_ITEMS_PER_PAGE - 1)}
@@ -171,11 +171,10 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
       ).not.toBeInTheDocument();
     });
 
-    it("Renders only numeric pagination blocks when total blocks are less than 7", () => {
+    it("renders only numeric pagination blocks when total blocks are less than 7", () => {
       let itemsQuantity = MAX_ITEMS_PER_PAGE + 1;
       let currentPaginationBlock = 2;
-      const itemsQuantityToSevenBlocks = 3 * 7;
-      const expectedOrder = ["1", `${currentPaginationBlock}`];
+      const itemsQuantityToSevenBlocks = MAX_ITEMS_PER_PAGE * 7;
 
       while (itemsQuantity <= itemsQuantityToSevenBlocks) {
         const { container } = renderElement(
@@ -184,22 +183,19 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
 
         const paginationItems =
           within(container).getAllByTestId(/Pagination\.Item/);
-        console.log(itemsQuantity);
-        screen.debug(paginationItems);
 
-        expect(paginationItems.length).toBe(expectedOrder.length);
+        expect(paginationItems.length).toBe(currentPaginationBlock);
 
         paginationItems.forEach((item, index) => {
-          expect(item).toHaveTextContent(expectedOrder[index]);
+          expect(item).toHaveTextContent(`${index + 1}`);
         });
 
-        itemsQuantity += 3;
+        itemsQuantity += MAX_ITEMS_PER_PAGE;
         currentPaginationBlock += 1;
-        expectedOrder.push(`${currentPaginationBlock}`);
       }
     });
 
-    it("Renders 6 pagination blocks and 1 ellipsis before the last block when active block is between the first 4 blocks", async () => {
+    it("renders 6 pagination blocks and 1 ellipsis before the last block when active block is between the first 4 blocks", async () => {
       const { container, user } = renderElement(
         <ListWithPaginationDefault items={createItems(30)} />
       );
@@ -211,7 +207,7 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
         within(container).getByTestId(`Pagination.Item.${currentPage}.Active`);
 
         const paginationItems =
-          within(container).getAllByTestId(/Pagination.Item/);
+          within(container).getAllByTestId(/Pagination\.Item/);
 
         paginationItems.forEach((item, index) => {
           expect(item).toHaveTextContent(expectedOrder[index]);
@@ -228,7 +224,7 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
       }
     });
 
-    it("Renders 6 pagination blocks and 1 ellipsis after the first block when active block is between the last 4 blocks", async () => {
+    it("renders 6 pagination blocks and 1 ellipsis after the first block when active block is between the last 4 blocks", async () => {
       const { container, user } = renderElement(
         <ListWithPaginationDefault items={createItems(30)} />
       );
@@ -247,7 +243,7 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
         within(container).getByTestId(`Pagination.Item.${currentPage}.Active`);
 
         const paginationItems =
-          within(container).getAllByTestId(/Pagination.Item/);
+          within(container).getAllByTestId(/Pagination\.Item/);
 
         paginationItems.forEach((item, index) => {
           expect(item).toHaveTextContent(expectedOrder[index]);
@@ -264,7 +260,7 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
       }
     });
 
-    it("Renders 3 pagination blocks at the middle and 2 beside them ellipsis when active block is not between the first or last 4 blocks", async () => {
+    it("renders 3 pagination blocks at the middle and 2 beside them ellipsis when active block is not between the first or last 4 blocks", async () => {
       const { container, user } = renderElement(
         <ListWithPaginationDefault items={createItems(30)} />
       );
@@ -282,7 +278,7 @@ describe(`Component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
         });
 
         const paginationItems =
-          within(container).getAllByTestId(/Pagination.Item/);
+          within(container).getAllByTestId(/Pagination\.Item/);
 
         const expectedOrder = [
           "1",

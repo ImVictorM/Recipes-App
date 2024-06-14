@@ -18,7 +18,7 @@ const CenteredTitleWithIconDefault = (
 };
 
 describe("Component: CenteredTitleWithIcon", () => {
-  it("Renders correctly", () => {
+  it("renders correctly", () => {
     const { container } = renderElement(<CenteredTitleWithIconDefault />);
 
     within(container).getByRole("img", { name: /meal/i });

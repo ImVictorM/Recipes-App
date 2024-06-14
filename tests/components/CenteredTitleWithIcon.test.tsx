@@ -1,8 +1,9 @@
+import { within } from "@testing-library/dom";
+
 import CenteredTitleWithIcon from "@/components/CenteredTitleWithIcon";
 import MealIcon from "@/assets/icons/mealIcon.svg";
 
 import renderElement from "../utils/renderElement";
-import { within } from "@testing-library/dom";
 
 const CenteredTitleWithIconDefault = (
   props: Partial<React.ComponentProps<typeof CenteredTitleWithIcon>>

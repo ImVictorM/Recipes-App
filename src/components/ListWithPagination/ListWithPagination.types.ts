@@ -1,10 +1,9 @@
-import { DataWithId } from "@/types/dataTypes";
-
-export type ListWithPaginationProps<T extends DataWithId> = {
+export type ListWithPaginationProps<T> = {
   items: T[];
-  onCreateItemCard: (item: T, index: number) => React.ReactElement;
-  ItemCardSkeleton?: React.ReactElement;
-  showBySize?: {
+  renderItemCard: (item: T, index: number) => React.ReactElement;
+  getItemId: (item: T, index: number) => string | number;
+  renderItemCardSkeleton?: React.ReactElement;
+  itemsPerPageBySize?: {
     xs?: number;
     sm?: number;
     md?: number;

@@ -3,7 +3,6 @@ import { Col, Container, Pagination, Row } from "react-bootstrap";
 
 import waitForMs from "@/utils/waitForMs";
 
-import { DataWithId } from "@/types/dataTypes";
 import { ListWithPaginationProps } from "./ListWithPagination.types";
 
 /**
@@ -19,11 +18,12 @@ const DEFAULT_SIZES = {
 const MAX_PAGE_BLOCKS_UI = 7;
 const LOADING_DELAY_THRESHOLD_MS = 500;
 
-export default function ListWithPagination<T extends DataWithId>({
+export default function ListWithPagination<T>({
   items,
-  showBySize = DEFAULT_SIZES,
-  onCreateItemCard,
-  ItemCardSkeleton,
+  getItemId,
+  itemsPerPageBySize = DEFAULT_SIZES,
+  renderItemCard,
+  renderItemCardSkeleton,
   maxItemsPerPage = DEFAULT_ITEMS_PER_PAGE,
   loading = false,
 }: ListWithPaginationProps<T>) {
@@ -37,7 +37,7 @@ export default function ListWithPagination<T extends DataWithId>({
     new Date().getTime()
   );
   const [showSkeleton, setShowSkeleton] = React.useState<boolean>(
-    loading && Boolean(ItemCardSkeleton) && items.length === 0
+    loading && Boolean(renderItemCardSkeleton) && items.length === 0
   );
 
   const uiItemsIndex = React.useMemo(() => {
@@ -96,7 +96,7 @@ export default function ListWithPagination<T extends DataWithId>({
 
   React.useEffect(() => {
     const handleLoadingChange = async () => {
-      if (!ItemCardSkeleton) return;
+      if (!renderItemCardSkeleton) return;
       /**
        * For the item to show, the page must be loading
        * and the items list must be empty.
@@ -122,7 +122,7 @@ export default function ListWithPagination<T extends DataWithId>({
     };
 
     handleLoadingChange();
-  }, [ItemCardSkeleton, items.length, lastLoadingTime, loading]);
+  }, [renderItemCardSkeleton, items.length, lastLoadingTime, loading]);
 
   React.useEffect(() => {
     setCurrentPage(1);
@@ -130,11 +130,15 @@ export default function ListWithPagination<T extends DataWithId>({
 
   return (
     <section>
-      <Row {...showBySize} as="ul" className="list-unstyled p-0 g-4 m-0 mb-5">
+      <Row
+        {...itemsPerPageBySize}
+        as="ul"
+        className="list-unstyled p-0 g-4 m-0 mb-5"
+      >
         {showSkeleton &&
           Array.from({ length: maxItemsPerPage }).map((_, index: number) => (
             <Col as="li" key={index} className="d-flex px-1">
-              {ItemCardSkeleton}
+              {renderItemCardSkeleton}
             </Col>
           ))}
 
@@ -142,8 +146,8 @@ export default function ListWithPagination<T extends DataWithId>({
           items
             .slice(uiItemsIndex.firstItemIndex, uiItemsIndex.lastItemIndex)
             .map((item, index) => (
-              <Col as="li" key={item.id} className="d-flex px-1">
-                {onCreateItemCard(item, index)}
+              <Col as="li" key={getItemId(item, index)} className="d-flex px-1">
+                {renderItemCard(item, index)}
               </Col>
             ))}
       </Row>
@@ -153,26 +157,49 @@ export default function ListWithPagination<T extends DataWithId>({
           fluid
           className="d-flex justify-content-center align-items-center mb-4"
         >
-          <Pagination className="m-0">
-            <Pagination.Prev as="button" onClick={handleMoveToPreviousPage} />
+          <Pagination className="m-0" data-testid="Pagination">
+            <Pagination.Prev
+              as="button"
+              onClick={handleMoveToPreviousPage}
+              data-testid="Pagination.Prev"
+            />
 
-            {paginationItemsToShow.map((item, index) =>
+            {paginationItemsToShow.map((item, index) => {
               // if it is not a number, it is an ellipsis
-              typeof item === "number" ? (
-                <Pagination.Item
-                  as="button"
-                  key={index}
-                  active={currentPage === item}
-                  onClick={() => handleMoveToSpecificPage(item)}
-                >
-                  {item}
-                </Pagination.Item>
-              ) : (
-                <Pagination.Ellipsis key={index} as="button" />
-              )
-            )}
+              if (typeof item === "number") {
+                const isActive = currentPage === item;
 
-            <Pagination.Next as="button" onClick={handleMoveToNextPage} />
+                return (
+                  <Pagination.Item
+                    as="button"
+                    key={index}
+                    active={isActive}
+                    onClick={() => handleMoveToSpecificPage(item)}
+                    data-testid={
+                      isActive
+                        ? `Pagination.Item.${item}.Active`
+                        : `Pagination.Item.${item}`
+                    }
+                  >
+                    {item}
+                  </Pagination.Item>
+                );
+              }
+
+              return (
+                <Pagination.Ellipsis
+                  key={index}
+                  as="button"
+                  data-testid="Pagination.Items.Ellipsis"
+                />
+              );
+            })}
+
+            <Pagination.Next
+              as="button"
+              onClick={handleMoveToNextPage}
+              data-testid="Pagination.Next"
+            />
           </Pagination>
         </Container>
       )}

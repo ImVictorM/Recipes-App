@@ -59,16 +59,17 @@ export default function RecipesDone() {
       {!isRecipesDoneEmpty && (
         <ListWithPagination
           items={recipesDone}
-          onCreateItemCard={(recipeDone) => (
+          renderItemCard={(recipeDone) => (
             <RecipeDoneCard recipe={recipeDone} />
           )}
-          showBySize={{
+          itemsPerPageBySize={{
             xs: 1,
             sm: 2,
             md: 3,
             lg: 4,
           }}
           maxItemsPerPage={16}
+          getItemId={(item) => item.id}
         />
       )}
     </BasicLayout>

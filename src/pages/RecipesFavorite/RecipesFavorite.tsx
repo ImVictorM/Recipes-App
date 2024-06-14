@@ -65,14 +65,15 @@ export default function RecipesFavorite() {
       {!isRecipesFavoriteEmpty && (
         <ListWithPagination
           items={recipesFavorite}
-          onCreateItemCard={(recipe) => <RecipeFavoriteCard recipe={recipe} />}
-          showBySize={{
+          renderItemCard={(recipe) => <RecipeFavoriteCard recipe={recipe} />}
+          itemsPerPageBySize={{
             xs: 1,
             sm: 2,
             md: 3,
             lg: 4,
           }}
           maxItemsPerPage={16}
+          getItemId={(item) => item.id}
         />
       )}
     </BasicLayout>

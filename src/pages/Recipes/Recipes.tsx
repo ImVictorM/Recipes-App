@@ -255,9 +255,9 @@ export default function Recipes({ type }: RecipesProps) {
 
       {!errorMessage && (
         <ListWithPagination
-          ItemCardSkeleton={<RecipeBasicCardSkeleton />}
+          renderItemCardSkeleton={<RecipeBasicCardSkeleton />}
           loading={isLoading}
-          onCreateItemCard={(recipe, index) => (
+          renderItemCard={(recipe, index) => (
             <RecipeBasicCard
               data-testid={`${index}-recipe-card`}
               recipe={recipe}
@@ -266,6 +266,7 @@ export default function Recipes({ type }: RecipesProps) {
             />
           )}
           items={recipes}
+          getItemId={(item) => item.id}
         />
       )}
     </BasicLayout>

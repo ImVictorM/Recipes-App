@@ -99,10 +99,11 @@ function ScrollLinearContainerComponent<
       onMouseLeave={handleOnMouseLeave}
       onMouseUp={handleOnMouseUp}
       onMouseMove={handleOnMouseMove}
-      className={`${className} ${
+      className={`${className ? className : ""} ${
         isMouseDown ? "active-dragging" : "snaps-inline"
       }`}
       {...restProps}
+      data-testid="ScrollLinearContainer"
     >
       {children}
     </Component>

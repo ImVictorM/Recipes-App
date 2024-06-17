@@ -5,7 +5,7 @@ import {
   RecipesFavoriteEmptyProps,
   EmptyState,
   EmptyStateLink,
-} from "./RecipeEmptyByType.types";
+} from "./RecipesEmptyByType.types";
 
 export default function RecipesEmptyByType({
   type,

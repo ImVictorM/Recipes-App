@@ -4,7 +4,7 @@ import BasicLayout from "@/layouts/BasicLayout";
 
 import CenteredTitleWithIcon from "@/components/ui/CenteredTitleWithIcon";
 import RecipesFilterByType from "@/components/ui/RecipesFilterByType";
-import RecipeEmptyByType from "@/components/ui/RecipeEmptyByType";
+import RecipeEmptyByType from "@/components/ui/RecipesEmptyByType";
 import ListWithPagination from "@/components/ui/ListWithPagination";
 
 import RecipeFavoriteCard from "./components/RecipeFavoriteCard";

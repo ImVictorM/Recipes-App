@@ -1,7 +1,9 @@
 import { AxiosRequestConfig } from "axios";
-import { Drink } from "./cocktail/types";
-import { RecipeFilterOptions } from "./common";
-import { Meal } from "./meal/types";
+
+import { RecipeFilterOptions } from "./enums";
+
+import { Drink } from "../cocktail/types";
+import { Meal } from "../meal/types";
 
 export type RecipeCategory = {
   strCategory: string;

@@ -23,7 +23,7 @@ import {
 } from "@/store/slices/menu";
 import { selectUser } from "@/store/slices/user";
 
-import { RecipeDetailsLoader } from "@/routing/routesPrivate/loaders/common.types";
+import { RecipeDetailsLoader } from "@/routing/routesPrivate/loaders/common/types";
 
 import styles from "@/sass/pages/RecipeDetails/RecipeDetails.module.scss";
 

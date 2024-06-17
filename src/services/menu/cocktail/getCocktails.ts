@@ -1,7 +1,9 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { GenericCocktailApiResponse, Drink } from "./types";
+
 import cocktailClient from "./client";
-import { GetRecipes } from "../common.types";
+
+import { GenericCocktailApiResponse, Drink } from "./types";
+import { GetRecipes } from "../common/types";
 
 const getCocktails: GetRecipes<Drink> = async (
   config?: AxiosRequestConfig

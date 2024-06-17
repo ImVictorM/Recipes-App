@@ -1,5 +1,5 @@
 import MissingIdInRouteParametersError from "@/errors/http/MissingIdInRouteParametersError";
-import { RecipeInProgressLoader } from "./common.types";
+import { RecipeInProgressLoader } from "./common/types";
 
 const mealRecipeInProgressLoader: RecipeInProgressLoader = async (args) => {
   if (!args.params.id) throw new MissingIdInRouteParametersError();

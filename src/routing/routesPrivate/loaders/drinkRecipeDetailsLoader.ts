@@ -1,5 +1,5 @@
 import MissingIdInRouteParametersError from "@/errors/http/MissingIdInRouteParametersError";
-import { RecipeDetailsLoader } from "./common.types";
+import { RecipeDetailsLoader } from "./common/types";
 import { defer } from "@/utils/reactRouterDom/reactRouterDom";
 
 const drinkRecipeDetailsLoader: RecipeDetailsLoader = async (args) => {

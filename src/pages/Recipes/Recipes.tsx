@@ -20,7 +20,7 @@ import { selectVisibility } from "@/store/slices/visibility";
 
 import toRecipe from "@/utils/mappings/recipe/toRecipe";
 
-import { RecipeFilterOptions } from "@/services/menu/common";
+import { RecipeFilterOptions } from "@/services/menu/common/enums";
 
 import { Recipe } from "@/store/slices/menu/menuSlice.types";
 import { RecipesFilterBySearchFormState } from "./components/RecipesFilterBySearch/RecipesFilterBySearch.types";

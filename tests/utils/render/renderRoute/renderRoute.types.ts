@@ -1,4 +1,4 @@
-import { ExtendedRenderOptions } from "../common/common.types";
+import { ExtendedRenderOptions } from "../common/types";
 
 export type RenderRouteOptions = {
   initialRouteIndex?: number;

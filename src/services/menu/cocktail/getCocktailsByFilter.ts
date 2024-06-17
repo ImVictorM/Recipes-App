@@ -1,8 +1,12 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { RecipeFilterOptions, getFilterEndpointByOption } from "../common";
-import { Drink, GenericCocktailApiResponse } from "./types";
+
 import cocktailClient from "./client";
-import { GetRecipesByFilter } from "../common.types";
+
+import { RecipeFilterOptions } from "../common/enums";
+import getFilterEndpointByOption from "../common/getFilterEndpointByOption";
+
+import { Drink, GenericCocktailApiResponse } from "./types";
+import { GetRecipesByFilter } from "../common/types";
 
 const getCocktailsByFilter: GetRecipesByFilter<Drink> = async (
   query: string,

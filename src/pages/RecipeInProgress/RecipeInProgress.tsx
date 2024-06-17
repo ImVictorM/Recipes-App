@@ -21,7 +21,7 @@ import formatDateToDDMMYYYY from "@/utils/formatDateToDDMMYYYY";
 import { useLoaderData } from "@/utils/reactRouterDom/reactRouterDom";
 import toRecipeWithDetails from "@/utils/mappings/recipe/toRecipeWithDetails";
 
-import { RecipeInProgressLoader } from "@/routing/routesPrivate/loaders/common.types";
+import { RecipeInProgressLoader } from "@/routing/routesPrivate/loaders/common/types";
 
 export default function RecipeInProgress() {
   const data = useLoaderData<RecipeInProgressLoader>();

@@ -1,8 +1,12 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { RecipeFilterOptions, getFilterEndpointByOption } from "../common";
-import { GenericMealApiResponse, Meal } from "./types";
+
 import mealClient from "./client";
-import { GetRecipesByFilter } from "../common.types";
+
+import { RecipeFilterOptions } from "../common/enums";
+import getFilterEndpointByOption from "../common/getFilterEndpointByOption";
+
+import { GetRecipesByFilter } from "../common/types";
+import { GenericMealApiResponse, Meal } from "./types";
 
 const getMealsByFilter: GetRecipesByFilter<Meal> = async (
   query: string,

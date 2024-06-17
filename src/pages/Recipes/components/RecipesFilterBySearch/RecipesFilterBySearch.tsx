@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
-import { RecipeFilterOptions } from "@/services/menu/common";
+import { RecipeFilterOptions } from "@/services/menu/common/enums";
 
 import {
   RecipesFilterBySearchProps,

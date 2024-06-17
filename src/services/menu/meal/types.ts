@@ -1,4 +1,4 @@
-import { MenuRecipe, RecipeCategory } from "../common.types";
+import { MenuRecipe, RecipeCategory } from "../common/types";
 
 export type MealCategory = RecipeCategory;
 

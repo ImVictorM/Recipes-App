@@ -4,7 +4,7 @@ import {
   GetRecipesByFilter,
   MenuRecipeType,
   RecipeCategory,
-} from "@/services/menu/common.types";
+} from "@/services/menu/common/types";
 import { RecipeType } from "@/store/slices/menu/menuSlice.types";
 
 export type RecipesProps = {

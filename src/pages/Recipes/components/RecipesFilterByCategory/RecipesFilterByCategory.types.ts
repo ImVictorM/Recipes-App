@@ -1,4 +1,4 @@
-import { RecipeCategory } from "@/services/menu/common.types";
+import { RecipeCategory } from "@/services/menu/common/types";
 
 export type RecipesFilterByCategoryProps = {
   categories: RecipeCategory[];

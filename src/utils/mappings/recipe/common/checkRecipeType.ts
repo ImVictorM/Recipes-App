@@ -1,5 +1,5 @@
 import { Drink } from "@/services/menu/cocktail/types";
-import { MenuRecipeType } from "@/services/menu/common.types";
+import { MenuRecipeType } from "@/services/menu/common/types";
 import { Meal } from "@/services/menu/meal/types";
 
 export function isMeal(recipe: MenuRecipeType): recipe is Meal {

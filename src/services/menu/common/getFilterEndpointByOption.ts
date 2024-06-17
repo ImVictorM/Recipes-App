@@ -1,11 +1,6 @@
-export enum RecipeFilterOptions {
-  FIRST_LETTER = "firstLetter",
-  NAME = "name",
-  INGREDIENT = "ingredient",
-  CATEGORY = "category",
-}
+import { RecipeFilterOptions } from "./enums";
 
-export const getFilterEndpointByOption = (
+const getFilterEndpointByOption = (
   query: string,
   option: RecipeFilterOptions
 ): string => {
@@ -21,3 +16,5 @@ export const getFilterEndpointByOption = (
       return `filter.php?c=${query}`;
   }
 };
+
+export default getFilterEndpointByOption;

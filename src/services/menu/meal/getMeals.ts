@@ -1,7 +1,9 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { GenericMealApiResponse, Meal } from "./types";
+
 import mealClient from "./client";
-import { GetRecipes } from "../common.types";
+
+import { GenericMealApiResponse, Meal } from "./types";
+import { GetRecipes } from "../common/types";
 
 const getMeals: GetRecipes<Meal> = async (
   config?: AxiosRequestConfig

@@ -1,4 +1,4 @@
-import { RecipeFilterOptions } from "@/services/menu/common";
+import { RecipeFilterOptions } from "@/services/menu/common/enums";
 
 export type RecipesFilterBySearchFormState = {
   searchQuery: string;

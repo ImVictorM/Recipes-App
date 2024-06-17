@@ -6,11 +6,7 @@ import userEvent from "@testing-library/user-event";
 import routes from "@/routing/routes";
 import { setupStore } from "@/store";
 
-import { ExtendedRenderOptions } from "./common.types";
-
-type RenderRouteOptions = {
-  initialRouteIndex?: number;
-} & ExtendedRenderOptions;
+import { RenderRouteOptions } from "./renderRoute.types";
 
 export default function renderRoute(
   initialRoutes: string[],

@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 
 import { setupStore } from "@/store";
-import { ExtendedRenderOptions } from "./common.types";
+import { ExtendedRenderOptions } from "../common/common.types";
 
 export default function renderElement(
   element: React.ReactElement,

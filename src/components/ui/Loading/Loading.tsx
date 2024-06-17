@@ -14,17 +14,19 @@ export default function Loading() {
             ? `${styles["loading--static"]}`
             : `${styles["loading--animated"]}`
         }`}
+        data-testid="Loading"
       >
         <CocktailIcon
           role="img"
           aria-label="loading"
           className={`${styles.loading__img}`}
+          data-testid="Loading.Img"
         />
       </div>
 
       {prefersReducedMotion && (
         <div className={`${styles.loading__text}`}>
-          <span>Loading...</span>
+          <p data-testid="Loading.Text">Loading...</p>
         </div>
       )}
     </section>

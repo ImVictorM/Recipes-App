@@ -1,6 +1,6 @@
 import React from "react";
 
-import ScrollLinearContainer from "@/components/ScrollLinearContainer";
+import ScrollLinearContainer from "@/components/ui/ScrollLinearContainer";
 
 import useScrollLinearManual from "@/hooks/useScrollLinearManual";
 

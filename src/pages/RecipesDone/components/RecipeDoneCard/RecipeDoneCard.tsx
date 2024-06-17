@@ -1,6 +1,6 @@
 import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 
-import ScrollLinearContainer from "@/components/ScrollLinearContainer";
+import ScrollLinearContainer from "@/components/ui/ScrollLinearContainer";
 
 import useCopyToClipboardWithTooltip from "@/hooks/useCopyToClipboardWithTooltip";
 

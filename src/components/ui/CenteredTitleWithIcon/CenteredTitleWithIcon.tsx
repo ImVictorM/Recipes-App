@@ -1,4 +1,4 @@
-import styles from "@/sass/components/CenteredTitleWithIcon.module.scss";
+import styles from "@/sass/components/ui/CenteredTitleWithIcon.module.scss";
 
 import { CenteredTitleWithIconProps } from "./CenteredTitleWithIcon.types";
 

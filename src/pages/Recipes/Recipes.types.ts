@@ -1,4 +1,4 @@
-import { CenteredTitleWithIconProps } from "@/components/CenteredTitleWithIcon/CenteredTitleWithIcon.types";
+import { CenteredTitleWithIconProps } from "@/components/ui/CenteredTitleWithIcon/CenteredTitleWithIcon.types";
 import {
   GetRecipes,
   GetRecipesByFilter,

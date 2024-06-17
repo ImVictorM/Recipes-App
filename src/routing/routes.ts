@@ -2,10 +2,10 @@ import React from "react";
 import { RouteObject } from "react-router-dom";
 
 const RouteAuthRequired = React.lazy(
-  () => import("@/components/RouteAuthRequired")
+  () => import("@/components/routing/RouteAuthRequired")
 );
 const SuspenseWithLoading = React.lazy(
-  () => import("@/components/SuspenseWithLoading")
+  () => import("@/components/routing/SuspenseWithLoading")
 );
 const NoMatch = React.lazy(() => import("@/pages/NoMatch"));
 

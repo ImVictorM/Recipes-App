@@ -2,7 +2,7 @@ import MealAndDrinkCircularIcon from "@/assets/icons/mealAndDrinkCircularIcon.sv
 import MealCircularIcon from "@/assets/icons/mealCircularIcon.svg";
 import CocktailCircularIcon from "@/assets/icons/cocktailCircularIcon.svg";
 
-import styles from "@/sass/components/RecipesFilterByType.module.scss";
+import styles from "@/sass/components/ui/RecipesFilterByType.module.scss";
 
 import { RecipesFilterByTypeProps } from "./RecipesFilterByType.types";
 

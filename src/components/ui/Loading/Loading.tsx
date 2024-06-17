@@ -1,7 +1,7 @@
 import CocktailIcon from "@/assets/icons/cocktailIcon.svg";
 import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 
-import styles from "@/sass/components/Loading.module.scss";
+import styles from "@/sass/components/ui/Loading.module.scss";
 
 export default function Loading() {
   const prefersReducedMotion = usePrefersReducedMotion();

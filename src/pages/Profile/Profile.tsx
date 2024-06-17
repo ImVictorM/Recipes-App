@@ -13,7 +13,7 @@ import HeartCircularIcon from "@/assets/icons/heartCircularIcon.svg";
 import LeaveCircularIcon from "@/assets/icons/leaveCircularIcon.svg";
 import ProfilePinIcon from "@/assets/icons/profilePinIcon.svg";
 
-import CenteredTitleWithIcon from "@/components/CenteredTitleWithIcon/CenteredTitleWithIcon";
+import CenteredTitleWithIcon from "@/components/ui/CenteredTitleWithIcon/CenteredTitleWithIcon";
 
 import styles from "@/sass/pages/Profile/Profile.module.scss";
 

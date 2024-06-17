@@ -3,7 +3,7 @@ import { Card, Placeholder } from "react-bootstrap";
 import PlaceholderImage from "@/assets/images/placeholderImage.svg";
 import getRandomBetweenInclusive from "@/utils/getRandomBetweenInclusive";
 
-import styles from "@/sass/components/RecipeBasicCardSkeleton.module.scss";
+import styles from "@/sass/components/ui/RecipeBasicCardSkeleton.module.scss";
 
 export default function RecipeBasicCardSkeleton() {
   return (

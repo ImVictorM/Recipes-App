@@ -1,9 +1,9 @@
 import { within } from "@testing-library/dom";
 import { act } from "@testing-library/react";
 
-import ListWithPagination from "@/components/ListWithPagination";
+import ListWithPagination from "@/components/ui/ListWithPagination";
 
-import renderElement from "../utils/renderElement";
+import renderElement from "../../utils/renderElement";
 
 type Item = {
   id: string;
@@ -131,7 +131,7 @@ describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
       );
     });
 
-    /** Util when loading state changes before the items is set */
+    /** Useful when loading state changes before the items is set */
     it("renders the skeleton when the items is empty, loading is false and skeleton is defined", () => {
       const { container } = renderElement(
         <ListWithPaginationDefault

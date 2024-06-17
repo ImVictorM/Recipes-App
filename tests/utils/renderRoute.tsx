@@ -3,7 +3,7 @@ import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import userEvent from "@testing-library/user-event";
 
-import routes from "@/routes";
+import routes from "@/routing/routes";
 import { setupStore } from "@/store";
 
 import { ExtendedRenderOptions } from "./common.types";

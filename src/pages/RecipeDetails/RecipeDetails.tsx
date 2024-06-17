@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import HeroLayout from "@/layouts/HeroLayout";
 
-import RecipeBasicCard from "@/components/RecipeBasicCard";
-import RecipeBasicCardSkeleton from "@/components/RecipeBasicCardSkeleton";
-import ScrollLinearContainer from "@/components/ScrollLinearContainer";
+import RecipeBasicCard from "@/components/ui/RecipeBasicCard";
+import RecipeBasicCardSkeleton from "@/components/ui/RecipeBasicCardSkeleton";
+import ScrollLinearContainer from "@/components/ui/ScrollLinearContainer";
 
 import useAppDispatch from "@/hooks/useAppDispatch";
 import useAppSelector from "@/hooks/useAppSelector";
@@ -23,7 +23,7 @@ import {
 } from "@/store/slices/menu";
 import { selectUser } from "@/store/slices/user";
 
-import { RecipeDetailsLoader } from "@/routes/routesPrivate/loaders/common.types";
+import { RecipeDetailsLoader } from "@/routing/routesPrivate/loaders/common.types";
 
 import styles from "@/sass/pages/RecipeDetails/RecipeDetails.module.scss";
 

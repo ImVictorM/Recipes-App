@@ -2,10 +2,10 @@ import React from "react";
 
 import BasicLayout from "@/layouts/BasicLayout";
 
-import CenteredTitleWithIcon from "@/components/CenteredTitleWithIcon";
-import RecipesFilterByType from "@/components/RecipesFilterByType";
-import RecipeEmptyByType from "@/components/RecipeEmptyByType";
-import ListWithPagination from "@/components/ListWithPagination";
+import CenteredTitleWithIcon from "@/components/ui/CenteredTitleWithIcon";
+import RecipesFilterByType from "@/components/ui/RecipesFilterByType";
+import RecipeEmptyByType from "@/components/ui/RecipeEmptyByType";
+import ListWithPagination from "@/components/ui/ListWithPagination";
 
 import RecipeFavoriteCard from "./components/RecipeFavoriteCard";
 
@@ -20,7 +20,7 @@ import {
 
 import HeartCircularIcon from "@/assets/icons/heartCircularIcon.svg";
 
-import { RecipeTypeOrAll } from "@/components/RecipesFilterByType/RecipesFilterByType.types";
+import { RecipeTypeOrAll } from "@/components/ui/RecipesFilterByType/RecipesFilterByType.types";
 
 export default function RecipesFavorite() {
   useHeadTitle("Recipes Favorite");

@@ -1,6 +1,6 @@
 import { Card } from "react-bootstrap";
 
-import styles from "@/sass/components/RecipeBasicCard.module.scss";
+import styles from "@/sass/components/ui/RecipeBasicCard.module.scss";
 
 import { RecipeBasicCardProps } from "./RecipeBasicCard.types";
 

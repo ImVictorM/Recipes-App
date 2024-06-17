@@ -5,10 +5,10 @@ import { isAxiosError } from "axios";
 
 import BasicLayout from "@/layouts/BasicLayout";
 
-import CenteredTitleWithIcon from "@/components/CenteredTitleWithIcon";
-import ListWithPagination from "@/components/ListWithPagination";
-import RecipeBasicCardSkeleton from "@/components/RecipeBasicCardSkeleton";
-import RecipeBasicCard from "@/components/RecipeBasicCard";
+import CenteredTitleWithIcon from "@/components/ui/CenteredTitleWithIcon";
+import ListWithPagination from "@/components/ui/ListWithPagination";
+import RecipeBasicCardSkeleton from "@/components/ui/RecipeBasicCardSkeleton";
+import RecipeBasicCard from "@/components/ui/RecipeBasicCard";
 
 import RecipesFilterByCategory from "./components/RecipesFilterByCategory";
 import RecipesFilterBySearch from "./components/RecipesFilterBySearch";

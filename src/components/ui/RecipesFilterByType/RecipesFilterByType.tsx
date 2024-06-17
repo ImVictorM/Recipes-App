@@ -10,42 +10,48 @@ export default function RecipesFilterByType({
   onFilterByType,
 }: RecipesFilterByTypeProps) {
   return (
-    <div className={`${styles.filters}`}>
+    <div className={`${styles.filters}`} data-testid="RecipeFiltersByType">
       <button
         onClick={() => onFilterByType("all")}
         className={`${styles.filters__button}`}
+        data-testid="RecipeFiltersByType.ButtonAll"
       >
         <MealAndDrinkCircularIcon
           role="img"
           className={`${styles.filters__button__img}`}
           aria-label="circular icon an hamburger and a soda"
+          data-testid="RecipeFiltersByType.ButtonAll.Img"
         />
-        <span>All</span>
+        <span data-testid="RecipeFiltersByType.ButtonAll.Text">All</span>
       </button>
 
       <button
         onClick={() => onFilterByType("meal")}
         className={`${styles.filters__button}`}
+        data-testid="RecipeFiltersByType.ButtonMeal"
       >
         <MealCircularIcon
           role="img"
           className={`${styles.filters__button__img}`}
           aria-label="circular icon with a plate and cutlery"
+          data-testid="RecipeFiltersByType.ButtonMeal.Img"
         />
-        <span>Food</span>
+        <span data-testid="RecipeFiltersByType.ButtonMeal.Text">Food</span>
       </button>
 
       <button
         onClick={() => onFilterByType("drink")}
         className={`${styles.filters__button}`}
+        data-testid="RecipeFiltersByType.ButtonDrink"
       >
         <CocktailCircularIcon
           role="img"
           className={`${styles.filters__button__img}`}
           aria-label="circular icon with a cocktail"
+          data-testid="RecipeFiltersByType.ButtonDrink.Img"
         />
 
-        <span>Drinks</span>
+        <span data-testid="RecipeFiltersByType.ButtonDrink.Text">Drinks</span>
       </button>
     </div>
   );

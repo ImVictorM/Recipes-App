@@ -1,4 +1,11 @@
-import { render } from "@testing-library/react";
+import {
+  render,
+  screen,
+  within,
+  act,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import userEvent from "@testing-library/user-event";
@@ -29,6 +36,11 @@ export default function renderRoute(
   return {
     user: userEvent.setup(),
     store: store,
+    screen,
+    within,
+    waitFor,
+    waitForElementToBeRemoved,
+    act,
     ...render(<RouterProvider router={routerTest} />, {
       wrapper: Wrapper,
       ...renderOptions,

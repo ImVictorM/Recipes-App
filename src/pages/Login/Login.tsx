@@ -50,13 +50,14 @@ export default function Login() {
 
   return (
     <Container fluid className="min-vh-100 p-0 d-flex justify-content-center">
-      <main className={`${styles.login}`}>
+      <main className={`${styles.login}`} data-testid="Login">
         <Logo className={`${styles.login__logo}`} role="img" />
 
         <Form
           className={`${styles.login__form} container-fluid`}
           onSubmit={handleLogin}
           id={`${styles["login-form"]}`}
+          data-testid="Login.Form"
         >
           <Container as="h1" fluid className={`${styles.login__title}`}>
             Login
@@ -68,7 +69,6 @@ export default function Login() {
                 className={`${styles.login__form__email__input}`}
                 type="email"
                 placeholder="name@example.com"
-                data-testid="email-input"
                 name="email"
                 value={userEmail}
                 onChange={handleUserEmailChange}
@@ -80,7 +80,6 @@ export default function Login() {
           <Button
             variant="primary"
             type="submit"
-            data-testid="login-submit-btn"
             disabled={!isFormValid}
             className="m-0"
           >

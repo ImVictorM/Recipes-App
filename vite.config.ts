@@ -23,7 +23,7 @@ export default defineConfig({
     globals: true,
     setupFiles: "tests/setup.ts",
     coverage: {
-      exclude: [...coverageConfigDefaults.exclude, "**/.scss/**"],
+      exclude: [...coverageConfigDefaults.exclude, "**/.scss/**", "__mocks__"],
     },
   },
 });

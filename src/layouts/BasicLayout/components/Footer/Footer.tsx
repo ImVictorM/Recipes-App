@@ -11,15 +11,17 @@ export default function Footer() {
     <Container
       as="footer"
       fluid
-      data-testid="footer"
       className={`${styles.footer} fixed-bottom`}
+      data-testid="BasicLayout.Footer"
     >
       <nav className={`${styles.footer__nav}`}>
         <div>
           <OverlayTrigger
             overlay={(props) => (
               <Tooltip id="link-meals" {...props}>
-                Search for foods
+                <span data-testid="BasicLayout.Footer.LinkMeals.Tooltip">
+                  Search for foods
+                </span>
               </Tooltip>
             )}
             placement="top"
@@ -27,7 +29,7 @@ export default function Footer() {
             <Link
               className={`${styles.footer__nav__link}`}
               to="/meals"
-              data-testid="meals-bottom-btn"
+              data-testid="BasicLayout.Footer.LinkMeals"
             >
               <MealIcon
                 role="img"
@@ -41,7 +43,9 @@ export default function Footer() {
           <OverlayTrigger
             overlay={(props) => (
               <Tooltip id="link-drinks" {...props}>
-                Search for drinks
+                <span data-testid="BasicLayout.Footer.LinkDrinks.Tooltip">
+                  Search for drinks
+                </span>
               </Tooltip>
             )}
             placement="top"
@@ -49,7 +53,7 @@ export default function Footer() {
             <Link
               className={`${styles.footer__nav__link}`}
               to="/drinks"
-              data-testid="drinks-bottom-btn"
+              data-testid="BasicLayout.Footer.LinkDrinks"
             >
               <CocktailIcon role="img" aria-label="cocktail glass" />
             </Link>

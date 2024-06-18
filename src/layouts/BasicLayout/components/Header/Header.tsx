@@ -21,9 +21,9 @@ export default function Header({ containSearchBar }: HeaderProps) {
   };
 
   return (
-    <header className={`${styles.header}`}>
+    <header className={`${styles.header}`} data-testid="BasicLayout.Header">
       <Container fluid className={`${styles.header__inner}`}>
-        <HeaderLogo aria-label="recipes app logo" />
+        <HeaderLogo role="banner" aria-label="recipes app logo" />
 
         <Stack direction="horizontal" gap={3}>
           {containSearchBar && (
@@ -31,32 +31,39 @@ export default function Header({ containSearchBar }: HeaderProps) {
               placement="bottom-end"
               overlay={(props) => (
                 <Tooltip {...props} id="search-button">
-                  Search for recipes
+                  <span data-testid="BasicLayout.Header.ButtonSearch.Tooltip">
+                    Search for recipes
+                  </span>
                 </Tooltip>
               )}
             >
               <button
-                data-testid="search-top-btn"
+                data-testid="BasicLayout.Header.ButtonSearch"
                 type="button"
                 onClick={handleSearchBarVisibility}
                 className={`${styles["header__search-button"]}`}
               >
-                <SearchIcon role="img" aria-label="search magnifying glass" />
+                <SearchIcon
+                  role="search"
+                  aria-label="search magnifying glass"
+                />
               </button>
             </OverlayTrigger>
           )}
           <OverlayTrigger
             placement="bottom-end"
             overlay={(props) => (
-              <Tooltip id="profile-link" {...props}>
-                Profile
+              <Tooltip {...props} id="profile-link">
+                <span data-testid="BasicLayout.Header.LinkProfile.Tooltip">
+                  Profile
+                </span>
               </Tooltip>
             )}
           >
             <Link
               className={`${styles.header__profile}`}
               to="/profile"
-              data-testid="profile-top-btn"
+              data-testid="BasicLayout.Header.LinkProfile"
             >
               <ProfileIcon role="img" aria-label="circular profile user" />
             </Link>

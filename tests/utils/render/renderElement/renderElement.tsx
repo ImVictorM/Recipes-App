@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
@@ -24,6 +24,9 @@ export default function renderElement(
 
   return {
     user: userEvent.setup(),
+    act,
+    screen,
+    within,
     store,
     ...render(element, {
       wrapper: Wrapper,

@@ -13,7 +13,9 @@ export default function BasicLayout({
     <>
       <Header containSearchBar={containHeaderSearchBar} />
 
-      <main className={`${styles.content}`}>{children}</main>
+      <main data-testid="BasicLayout.Content" className={`${styles.content}`}>
+        {children}
+      </main>
 
       <Footer />
     </>

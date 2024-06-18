@@ -6,7 +6,6 @@ import { createMatchMedia } from "./utils/matchMedia";
 vi.mock("axios");
 
 /** Defines window properties */
-vi.stubGlobal;
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: createMatchMedia(true),

@@ -12,7 +12,9 @@ export default function HeroLayout({
     <>
       <RecipeHero recipe={recipe} />
 
-      <main className={`${styles.content}`}>{children}</main>
+      <main data-testid="HeroLayout.Content" className={`${styles.content}`}>
+        {children}
+      </main>
     </>
   );
 }

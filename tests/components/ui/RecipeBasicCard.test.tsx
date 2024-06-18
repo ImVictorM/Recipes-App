@@ -5,7 +5,7 @@ import RecipeBasicCard from "@/components/ui/RecipeBasicCard";
 import renderElement from "../../utils/render/renderElement";
 
 import { sushi } from "../../mocks/recipes/meals/sushi";
-import { melya } from "../../mocks/recipes/drinks/melya";
+import { gilligan } from "../../mocks/recipes/drinks/alcoholic/gilligan";
 
 import { Recipe } from "@/store/slices/menu/menuSlice.types";
 
@@ -40,10 +40,10 @@ describe("component: RecipeBasicCard", () => {
 
   it("renders a drink correctly", () => {
     const { container } = renderElement(
-      <RecipeBasicCardDefault recipe={melya} />
+      <RecipeBasicCardDefault recipe={gilligan} />
     );
 
-    checkElementsByRecipeType(container, melya);
+    checkElementsByRecipeType(container, gilligan);
   });
 
   it("applies additional style when scaleOnHover is true", () => {

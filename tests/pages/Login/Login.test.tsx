@@ -1,3 +1,4 @@
+import { waitFor, waitForElementToBeRemoved } from "@testing-library/dom";
 import renderRoute from "../../utils/render/renderRoute";
 
 import { RenderRouteOptions } from "../../utils/render/renderRoute/renderRoute.types";
@@ -18,13 +19,22 @@ const lazyRenderLoading = async (
   options?: RenderRouteOptions
 ) => {
   const render = renderRoute(initialRoutes, options);
-  const { screen, waitForElementToBeRemoved } = render;
-
+  const { screen } = render;
+  /**
+   * If component is already available, return.
+   * If not, wait for the loading to disappear and
+   * check if the component is available.
+   */
   if (screen.queryByTestId("Login")) return render;
 
-  const loading = await screen.findByTestId("Loading");
+  await waitForElementToBeRemoved(
+    await screen.findByTestId("Loading", undefined, { timeout: 3000 }),
+    {
+      timeout: 3000,
+    }
+  );
 
-  await waitForElementToBeRemoved(loading);
+  await waitFor(() => screen.getByTestId("Login"), { timeout: 3000 });
 
   return render;
 };

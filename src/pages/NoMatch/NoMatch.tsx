@@ -19,7 +19,7 @@ export default function NoMatch() {
   };
 
   return (
-    <main className={`${styles["no-match"]}`}>
+    <main className={`${styles["no-match"]}`} data-testid="NoMatch">
       <div className={`${styles["no-match__inner"]}`}>
         <section className={`${styles["no-match__broken-glass"]}`}>
           <Blob
@@ -35,21 +35,31 @@ export default function NoMatch() {
         </section>
 
         <section className={`${styles["no-match__message"]}`}>
-          <span className={`${styles["no-match__message__not-found"]}`}>
+          <span
+            data-testid="NoMatch.404"
+            className={`${styles["no-match__message__not-found"]}`}
+          >
             404
           </span>
 
-          <h1 className={`${styles["no-match__message__title"]}`}>
+          <h1
+            data-testid="NoMatch.Title"
+            className={`${styles["no-match__message__title"]}`}
+          >
             Something's missing here...
           </h1>
 
-          <p className={`${styles["no-match__message__paragraph"]}`}>
+          <p
+            data-testid="NoMatch.Text"
+            className={`${styles["no-match__message__paragraph"]}`}
+          >
             I think someone stole the page you are looking for.
           </p>
 
           <Button
             onClick={handleGoBack}
             className={`${styles["no-match__message__go-back"]}`}
+            data-testid="NoMatch.ButtonBack"
           >
             <ArrowLeftIcon aria-label="arrow to the left" role="img" />
             <span>Go back to a safe place</span>

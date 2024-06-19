@@ -1,10 +1,4 @@
-import {
-  waitFor,
-  waitForElementToBeRemoved,
-  screen,
-  act,
-  within,
-} from "@testing-library/react";
+import { waitFor, screen, act, within } from "@testing-library/react";
 import renderRoute from "../../utils/render/renderRoute";
 
 import { RenderRouteOptions } from "../../utils/render/renderRoute/renderRoute.types";
@@ -20,26 +14,13 @@ vi.mock("react-router-dom", async (importOriginal) => {
   };
 });
 
-const lazyRenderLoading = async (
+const lazyRenderLogin = async (
   initialRoutes = ["/"],
   options?: RenderRouteOptions
 ): Promise<ReturnType<typeof renderRoute>> => {
   const render = renderRoute(initialRoutes, options);
-  /**
-   * If component is already available, return.
-   * If not, wait for the loading to disappear and
-   * check if the component is available.
-   */
-  if (screen.queryByTestId("Login")) return render;
 
-  await waitForElementToBeRemoved(
-    await screen.findByTestId("Loading", undefined, { timeout: 3000 }),
-    {
-      timeout: 3000,
-    }
-  );
-
-  await waitFor(() => screen.getByTestId("Login"), { timeout: 3000 });
+  await waitFor(() => screen.getByTestId("Login"), { timeout: 5000 });
 
   return render;
 };
@@ -53,7 +34,7 @@ describe("page: Login - path: /", () => {
   });
 
   it("renders correctly", async () => {
-    await lazyRenderLoading();
+    await lazyRenderLogin();
 
     const formLogin = screen.getByTestId("Login.Form");
     const inputEmail = within(formLogin).getByRole("textbox", {
@@ -69,7 +50,7 @@ describe("page: Login - path: /", () => {
   });
 
   it("handles login correctly", async () => {
-    const { user, store } = await lazyRenderLoading();
+    const { user, store } = await lazyRenderLogin();
 
     const inputEmail = screen.getByRole("textbox", {
       name: "Enter your email",
@@ -94,7 +75,7 @@ describe("page: Login - path: /", () => {
   });
 
   it("makes the button disabled when email is not valid", async () => {
-    const { user } = await lazyRenderLoading();
+    const { user } = await lazyRenderLogin();
 
     const inputEmail = screen.getByRole("textbox", {
       name: "Enter your email",

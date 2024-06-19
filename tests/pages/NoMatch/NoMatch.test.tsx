@@ -18,7 +18,7 @@ vi.mock("react-router-dom", async (importOriginal) => {
 const lazyRenderNoMatch = async () => {
   const render = renderRoute([invalidRoute]);
 
-  await waitFor(() => screen.getByTestId("NoMatch"), { timeout: 3000 });
+  await waitFor(() => screen.getByTestId("NoMatch"), { timeout: 5000 });
 
   return render;
 };

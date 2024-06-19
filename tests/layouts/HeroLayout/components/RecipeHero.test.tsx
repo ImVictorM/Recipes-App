@@ -1,3 +1,5 @@
+import { screen, act } from "@testing-library/react";
+
 import RecipeHero from "@/layouts/HeroLayout/components/RecipeHero";
 
 import renderElement from "../../../utils/render/renderElement";
@@ -11,7 +13,7 @@ const RecipeHeroDefault = (
 
 describe("layout: HeroLayout - component: RecipeHero", () => {
   it("renders correctly", () => {
-    const { screen } = renderElement(<RecipeHeroDefault />);
+    renderElement(<RecipeHeroDefault />);
 
     const title = screen.getByTestId("HeroLayout.Hero.Presentation.Title");
     const subtitle = screen.getByTestId(
@@ -30,7 +32,7 @@ describe("layout: HeroLayout - component: RecipeHero", () => {
   });
 
   it("handles copy the recipe url to clipboard when clicking the share button", async () => {
-    const { screen, act, user } = renderElement(<RecipeHeroDefault />);
+    const { user } = renderElement(<RecipeHeroDefault />);
 
     const buttonShare = screen.getByTestId(
       "HeroLayout.Hero.Header.ButtonShare"
@@ -61,7 +63,7 @@ describe("layout: HeroLayout - component: RecipeHero", () => {
   it("handles toggle recipe favorite correctly", async () => {
     const testEmail = "test@test.com";
 
-    const { screen, act, user, store } = renderElement(<RecipeHeroDefault />, {
+    const { user, store } = renderElement(<RecipeHeroDefault />, {
       preloadedState: {
         user: { email: testEmail },
       },
@@ -110,9 +112,7 @@ describe("layout: HeroLayout - component: RecipeHero", () => {
   });
 
   it('renders "alcoholic" before the category when the recipe is an alcoholic drink', () => {
-    const { screen } = renderElement(
-      <RecipeHeroDefault recipe={gilliganWithDetails} />
-    );
+    renderElement(<RecipeHeroDefault recipe={gilliganWithDetails} />);
 
     const subtitle = screen.getByTestId(
       "HeroLayout.Hero.Presentation.Subtitle"

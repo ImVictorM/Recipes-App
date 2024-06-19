@@ -1,4 +1,4 @@
-import { within } from "@testing-library/dom";
+import { within } from "@testing-library/react";
 
 import Loading from "@/components/ui/Loading";
 
@@ -8,7 +8,9 @@ import { createMatchMedia } from "../../utils/matchMedia";
 const LoadingDefault = () => <Loading />;
 
 describe("component: Loading", () => {
-  afterEach(() => {});
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
 
   it("renders correctly", () => {
     const { container } = renderElement(<LoadingDefault />);

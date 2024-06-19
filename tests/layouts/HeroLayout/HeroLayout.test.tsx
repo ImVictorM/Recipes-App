@@ -1,3 +1,5 @@
+import { screen, within } from "@testing-library/react";
+
 import HeroLayout from "@/layouts/HeroLayout";
 
 import renderElement from "../../utils/render/renderElement";
@@ -14,7 +16,7 @@ const HeroLayoutDefault = (
 
 describe("layout: HeroLayout", () => {
   it("renders correctly", () => {
-    const { screen, within } = renderElement(<HeroLayoutDefault />);
+    renderElement(<HeroLayoutDefault />);
 
     screen.getByTestId("HeroLayout.Hero");
     within(screen.getByTestId("HeroLayout.Content")).getByRole("heading", {

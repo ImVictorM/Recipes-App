@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/dom";
+import { screen, within } from "@testing-library/react";
 
 import RecipesFilterByType from "@/components/ui/RecipesFilterByType";
 

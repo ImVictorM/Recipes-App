@@ -1,4 +1,4 @@
-import { within } from "@testing-library/dom";
+import { within } from "@testing-library/react";
 
 import RecipeBasicCardSkeleton from "@/components/ui/RecipeBasicCardSkeleton";
 

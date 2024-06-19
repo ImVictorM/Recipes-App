@@ -1,4 +1,10 @@
-import { waitFor, waitForElementToBeRemoved } from "@testing-library/dom";
+import {
+  waitFor,
+  waitForElementToBeRemoved,
+  screen,
+  act,
+  within,
+} from "@testing-library/react";
 import renderRoute from "../../utils/render/renderRoute";
 
 import { RenderRouteOptions } from "../../utils/render/renderRoute/renderRoute.types";
@@ -17,9 +23,8 @@ vi.mock("react-router-dom", async (importOriginal) => {
 const lazyRenderLoading = async (
   initialRoutes = ["/"],
   options?: RenderRouteOptions
-) => {
+): Promise<ReturnType<typeof renderRoute>> => {
   const render = renderRoute(initialRoutes, options);
-  const { screen } = render;
   /**
    * If component is already available, return.
    * If not, wait for the loading to disappear and
@@ -48,7 +53,7 @@ describe("page: Login - path: /", () => {
   });
 
   it("renders correctly", async () => {
-    const { screen, within } = await lazyRenderLoading();
+    await lazyRenderLoading();
 
     const formLogin = screen.getByTestId("Login.Form");
     const inputEmail = within(formLogin).getByRole("textbox", {
@@ -64,7 +69,7 @@ describe("page: Login - path: /", () => {
   });
 
   it("handles login correctly", async () => {
-    const { screen, user, act, store } = await lazyRenderLoading();
+    const { user, store } = await lazyRenderLoading();
 
     const inputEmail = screen.getByRole("textbox", {
       name: "Enter your email",
@@ -89,7 +94,7 @@ describe("page: Login - path: /", () => {
   });
 
   it("makes the button disabled when email is not valid", async () => {
-    const { screen, user, act } = await lazyRenderLoading();
+    const { user } = await lazyRenderLoading();
 
     const inputEmail = screen.getByRole("textbox", {
       name: "Enter your email",

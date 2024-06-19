@@ -1,5 +1,4 @@
-import { within } from "@testing-library/dom";
-import { act } from "@testing-library/react";
+import { within, act } from "@testing-library/react";
 
 import ScrollLinearContainer from "@/components/ui/ScrollLinearContainer";
 

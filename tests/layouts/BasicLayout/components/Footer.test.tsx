@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/dom";
+import { screen, act } from "@testing-library/react";
 
 import Footer from "@/layouts/BasicLayout/components/Footer";
 import renderElement from "../../../utils/render/renderElement";
@@ -23,7 +23,7 @@ describe("layout: BasicLayout - component: Footer", () => {
   });
 
   it("shows a tooltip when hovering through the links", async () => {
-    const { user, act } = renderElement(<FooterDefault />);
+    const { user } = renderElement(<FooterDefault />);
 
     await act(async () => {
       await user.hover(links.meals);

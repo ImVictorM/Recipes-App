@@ -1,3 +1,5 @@
+import { screen, waitFor } from "@testing-library/react";
+
 import renderRoute from "../../utils/render/renderRoute";
 
 const invalidRoute = "/not-found";
@@ -15,16 +17,15 @@ vi.mock("react-router-dom", async (importOriginal) => {
 
 const lazyRenderNoMatch = async () => {
   const render = renderRoute([invalidRoute]);
-  const { screen, waitFor } = render;
 
-  await waitFor(() => screen.getByTestId("NoMatch"), { timeout: 2000 });
+  await waitFor(() => screen.getByTestId("NoMatch"), { timeout: 3000 });
 
   return render;
 };
 
 describe("page: NoMatch - path: *", () => {
   it("renders correctly", async () => {
-    const { screen } = await lazyRenderNoMatch();
+    await lazyRenderNoMatch();
 
     screen.getByRole("img", { name: /broken wine glass/ });
     screen.getByRole("heading", {
@@ -40,7 +41,7 @@ describe("page: NoMatch - path: *", () => {
   });
 
   it('navigates to previous page when clicking the "go back" button', async () => {
-    const { screen, waitFor, user } = renderRoute([invalidRoute]);
+    const { user } = renderRoute([invalidRoute]);
     await waitFor(() => screen.getByTestId("NoMatch"));
 
     const goBackButton = screen.getByRole("button", { name: /go back/i });

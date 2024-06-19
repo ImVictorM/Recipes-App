@@ -1,3 +1,5 @@
+import { screen, within } from "@testing-library/react";
+
 import BasicLayout from "@/layouts/BasicLayout";
 
 import renderElement from "../../utils/render/renderElement";
@@ -10,10 +12,7 @@ const BasicLayoutDefault = (
   </BasicLayout>
 );
 
-const checkLayoutRendersBaseElements = ({
-  screen,
-  within,
-}: ReturnType<typeof renderElement>) => {
+const checkLayoutRendersBaseElements = () => {
   const layoutContent = screen.getByTestId("BasicLayout.Content");
   const layoutHeader = screen.getByTestId("BasicLayout.Header");
   const layoutFooter = screen.getByTestId("BasicLayout.Footer");
@@ -25,19 +24,17 @@ const checkLayoutRendersBaseElements = ({
 
 describe("layout: BasicLayout", () => {
   it("renders correctly with search bar", () => {
-    const render = renderElement(<BasicLayoutDefault containHeaderSearchBar />);
-    const { within } = render;
+    renderElement(<BasicLayoutDefault containHeaderSearchBar />);
 
-    const { layoutHeader } = checkLayoutRendersBaseElements(render);
+    const { layoutHeader } = checkLayoutRendersBaseElements();
 
     within(layoutHeader).getByTestId("BasicLayout.Header.ButtonSearch");
   });
 
   it("renders correctly without search bar", () => {
-    const render = renderElement(<BasicLayoutDefault />);
-    const { within } = render;
+    renderElement(<BasicLayoutDefault />);
 
-    const { layoutHeader } = checkLayoutRendersBaseElements(render);
+    const { layoutHeader } = checkLayoutRendersBaseElements();
 
     expect(
       within(layoutHeader).queryByTestId("BasicLayout.Header.ButtonSearch")

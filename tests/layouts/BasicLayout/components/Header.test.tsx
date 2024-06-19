@@ -1,3 +1,5 @@
+import { screen, act } from "@testing-library/react";
+
 import Header from "@/layouts/BasicLayout/components/Header";
 
 import renderElement from "../../../utils/render/renderElement";
@@ -8,7 +10,7 @@ const HeaderDefault = (props: Partial<React.ComponentProps<typeof Header>>) => (
 
 describe("layout: BasicLayout - component: Header", () => {
   it("renders with search bar correctly", () => {
-    const { screen } = renderElement(<HeaderDefault containSearchBar={true} />);
+    renderElement(<HeaderDefault containSearchBar={true} />);
 
     expect(
       screen.getByTestId("BasicLayout.Header.LinkProfile")
@@ -17,7 +19,7 @@ describe("layout: BasicLayout - component: Header", () => {
   });
 
   it("renders without search bar correctly", () => {
-    const { screen } = renderElement(<HeaderDefault />);
+    renderElement(<HeaderDefault />);
 
     screen.getByTestId("BasicLayout.Header.LinkProfile");
     expect(
@@ -26,9 +28,7 @@ describe("layout: BasicLayout - component: Header", () => {
   });
 
   it("shows a tooltip when hovering through the buttons/links", async () => {
-    const { act, user, screen } = renderElement(
-      <HeaderDefault containSearchBar />
-    );
+    const { user } = renderElement(<HeaderDefault containSearchBar />);
 
     const linkProfile = screen.getByTestId("BasicLayout.Header.LinkProfile");
     const buttonSearch = screen.getByTestId("BasicLayout.Header.ButtonSearch");
@@ -51,9 +51,7 @@ describe("layout: BasicLayout - component: Header", () => {
   });
 
   it("changes the global visibility state when clicking the search button", async () => {
-    const { store, user, act, screen } = renderElement(
-      <HeaderDefault containSearchBar />
-    );
+    const { store, user } = renderElement(<HeaderDefault containSearchBar />);
 
     const buttonSearch = screen.getByTestId("BasicLayout.Header.ButtonSearch");
 

@@ -1,4 +1,4 @@
-import { within } from "@testing-library/dom";
+import { within } from "@testing-library/react";
 
 import RecipesEmptyByType from "@/components/ui/RecipesEmptyByType";
 import renderElement from "../../utils/render/renderElement";

@@ -1,5 +1,4 @@
-import { within } from "@testing-library/dom";
-import { act } from "@testing-library/react";
+import { act, within } from "@testing-library/react";
 
 import ListWithPagination from "@/components/ui/ListWithPagination";
 

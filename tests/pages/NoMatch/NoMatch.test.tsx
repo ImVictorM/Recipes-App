@@ -24,6 +24,10 @@ const lazyRenderNoMatch = async () => {
 };
 
 describe("page: NoMatch - path: *", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it("renders correctly", async () => {
     await lazyRenderNoMatch();
 

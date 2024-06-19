@@ -1,5 +1,8 @@
 import { waitFor, screen, act, within } from "@testing-library/react";
+
 import renderRoute from "../../utils/render/renderRoute";
+
+import { emailValid, emailInvalid } from "../../mocks/user/email";
 
 import { RenderRouteOptions } from "../../utils/render/renderRoute/renderRoute.types";
 
@@ -24,9 +27,6 @@ const lazyRenderLogin = async (
 
   return render;
 };
-
-const emailValid = "email@email.com";
-const emailInvalid = "email";
 
 describe("page: Login - path: /", () => {
   afterEach(() => {

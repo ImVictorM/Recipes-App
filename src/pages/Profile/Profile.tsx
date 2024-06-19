@@ -30,13 +30,13 @@ export default function Profile() {
 
   return (
     <BasicLayout>
-      <div className={styles.profile}>
+      <div className={styles.profile} data-testid="Profile">
         <CenteredTitleWithIcon
           title="Profile"
           icon={{ element: ProfilePinIcon, alt: "pin user profile" }}
         />
 
-        <p className="h4 text-center mt-5" data-testid="profile-email">
+        <p className="h4 text-center mt-5" data-testid="Profile.Email">
           {user.email}
         </p>
 
@@ -44,7 +44,7 @@ export default function Profile() {
           <Link
             to="/done-recipes"
             className={`${styles.profile__button}`}
-            data-testid="profile-done-btn"
+            data-testid="Profile.LinkDone"
           >
             <CheckCircularIcon
               className={`${styles.profile__button__img}`}
@@ -58,7 +58,7 @@ export default function Profile() {
 
           <Link
             className={`${styles.profile__button}`}
-            data-testid="profile-favorite-btn"
+            data-testid="Profile.LinkFavorite"
             to="/favorite-recipes"
           >
             <HeartCircularIcon
@@ -74,7 +74,7 @@ export default function Profile() {
           <button
             className={`${styles.profile__button}`}
             type="button"
-            data-testid="profile-logout-btn"
+            data-testid="Profile.ButtonLogout"
             onClick={handleLogout}
           >
             <LeaveCircularIcon

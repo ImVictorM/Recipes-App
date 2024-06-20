@@ -84,12 +84,13 @@ export default function RecipeDetails({
 
           <section>
             <h2>Instructions</h2>
-            <p
+            <pre
               data-testid={`${prefixDataTestId}.Instructions`}
               className="border-box"
+              style={{ whiteSpace: "pre-wrap" }}
             >
               {recipe.instructions}
-            </p>
+            </pre>
           </section>
         </Stack>
 
@@ -136,10 +137,14 @@ export default function RecipeDetails({
                   <ScrollLinearContainer
                     className={`${styles.recipe__recommendations}`}
                     scrollDragging={false}
-                    prefixDataTestId="RecipeDetails.Recommendations"
+                    prefixDataTestId={`${prefixDataTestId}.Recommendations`}
                   >
-                    {recommendations.map(toRecipe).map((recipe) => (
-                      <RecipeBasicCard recipe={recipe} key={recipe.id} />
+                    {recommendations.map(toRecipe).map((recipe, index) => (
+                      <RecipeBasicCard
+                        prefixDataTestId={`${prefixDataTestId}.Recommendations.Item${index}`}
+                        recipe={recipe}
+                        key={recipe.id}
+                      />
                     ))}
                   </ScrollLinearContainer>
                 );

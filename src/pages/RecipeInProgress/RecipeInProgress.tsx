@@ -140,12 +140,13 @@ export default function RecipeInProgress({
 
           <section>
             <h2>Instructions</h2>
-            <p
+            <pre
               data-testid={`${prefixDataTestId}.Instructions`}
               className="border-box"
+              style={{ whiteSpace: "pre-wrap" }}
             >
               {recipe.instructions}
-            </p>
+            </pre>
           </section>
         </Stack>
 

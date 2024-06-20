@@ -7,14 +7,21 @@ import styles from "@/sass/layouts/HeroLayout/HeroLayout.module.scss";
 export default function HeroLayout({
   recipe,
   children,
+  prefixDataTestId: thisPrefixDataTestId = "HeroLayout",
 }: React.PropsWithChildren<HeroLayoutProps>) {
   return (
-    <>
-      <RecipeHero recipe={recipe} />
+    <div data-testid={thisPrefixDataTestId}>
+      <RecipeHero
+        prefixDataTestId={`${thisPrefixDataTestId}.Hero`}
+        recipe={recipe}
+      />
 
-      <main data-testid="HeroLayout.Content" className={`${styles.content}`}>
+      <main
+        data-testid={`${thisPrefixDataTestId}.Content`}
+        className={`${styles.content}`}
+      >
         {children}
       </main>
-    </>
+    </div>
   );
 }

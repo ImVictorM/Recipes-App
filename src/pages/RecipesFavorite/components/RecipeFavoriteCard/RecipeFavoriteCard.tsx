@@ -21,6 +21,7 @@ import styles from "@/sass/pages/RecipesFavorite/components/RecipeFavoriteCard.m
 
 export default function RecipeFavoriteCard({
   recipe,
+  prefixDataTestId = "RecipeFavoriteCard",
 }: RecipeFavoriteCardProps) {
   const { img, name } = recipe;
   const recipeSubtitle = recipe.nationality
@@ -45,25 +46,29 @@ export default function RecipeFavoriteCard({
   };
 
   return (
-    <Card className="shadow">
+    <Card className="shadow" data-testid={prefixDataTestId}>
       <Card.Link
         href={recipeEndpoint}
         className="text-decoration-none overflow-hidden rounded-top"
+        data-testid={`${prefixDataTestId}.LinkImg`}
       >
         <Card.Img
           className={`${styles.card__img}`}
           src={img}
           alt={name}
           variant="top"
+          data-testid={`${prefixDataTestId}.LinkImg.Img`}
         />
       </Card.Link>
 
-      <Card.Body>
+      <Card.Body data-testid={`${prefixDataTestId}.Body`}>
         <Card.Link
+          data-testid={`${prefixDataTestId}.Body.LinkTitle`}
           href={recipeEndpoint}
           className="d-flex text-decoration-none overflow-hidden mb-1"
         >
           <Card.Title
+            data-testid={`${prefixDataTestId}.Body.LinkTitle.Title`}
             className={`${styles.card__title} text-truncate m-0`}
             title={name}
           >
@@ -76,6 +81,7 @@ export default function RecipeFavoriteCard({
             as="h6"
             bsPrefix={`${styles.card__subtitle} text-truncate m-0`}
             title={recipeSubtitle}
+            data-testid={`${prefixDataTestId}.Body.Subtitle`}
           >
             {recipeSubtitle}
           </Card.Subtitle>
@@ -83,6 +89,7 @@ export default function RecipeFavoriteCard({
           {recipe.alcoholic && (
             <Card.Text
               as="span"
+              data-testid={`${prefixDataTestId}.Body.Alcoholic`}
               className={`${styles.card__alcoholic} flex-shrink-0`}
             >
               {recipe.alcoholic}
@@ -94,13 +101,18 @@ export default function RecipeFavoriteCard({
           <OverlayTrigger
             overlay={(props) => (
               <Tooltip id="share-button" {...props}>
-                {tooltipMessage}
+                <span
+                  data-testid={`${prefixDataTestId}.Body.ButtonShare.Tooltip`}
+                >
+                  {tooltipMessage}
+                </span>
               </Tooltip>
             )}
           >
             <button
               onClick={handleCopyRecipeLink}
               className={`${styles.card__buttons__share}`}
+              data-testid={`${prefixDataTestId}.Body.ButtonShare`}
             >
               <ShareIcon role="img" aria-label="share" />
             </button>
@@ -109,7 +121,9 @@ export default function RecipeFavoriteCard({
           <OverlayTrigger
             overlay={(props) => (
               <Tooltip id="unfavorite-button" {...props}>
-                Unfavorite recipe
+                <span data-testid={`${prefixDataTestId}.Body.ButtonUnfavorite`}>
+                  Unfavorite recipe
+                </span>
               </Tooltip>
             )}
             placement="top"
@@ -117,6 +131,7 @@ export default function RecipeFavoriteCard({
             <button
               onClick={handleToggleRecipeFavorite}
               className={`${styles.card__buttons__favorite}`}
+              data-testid={`${prefixDataTestId}.Body.ButtonUnfavorite`}
             >
               <HeartFillIcon role="img" aria-label="fill heart" />
             </button>

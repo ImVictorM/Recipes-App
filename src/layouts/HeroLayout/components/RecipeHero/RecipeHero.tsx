@@ -23,7 +23,10 @@ import styles from "@/sass/layouts/HeroLayout/components/RecipeHero.module.scss"
 
 import { RecipeHeroProps } from "./RecipeHero.types";
 
-export default function RecipeHero({ recipe }: RecipeHeroProps) {
+export default function RecipeHero({
+  recipe,
+  prefixDataTestId = "RecipeHero",
+}: RecipeHeroProps) {
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const isFavorite = useAppSelector((state) =>
@@ -59,7 +62,7 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
       as="section"
       className={`${styles.hero}`}
       style={heroBackgroundStyle}
-      data-testid="HeroLayout.Hero"
+      data-testid={prefixDataTestId}
     >
       <Container
         as="header"
@@ -71,7 +74,9 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
             placement="bottom-end"
             overlay={(props) => (
               <Tooltip {...props} id="copy-recipe-link-tooltip">
-                <span data-testid="HeroLayout.Hero.Header.ButtonShare.Tooltip">
+                <span
+                  data-testid={`${prefixDataTestId}.Header.ButtonShare.Tooltip`}
+                >
                   {shareTooltipMessage}
                 </span>
               </Tooltip>
@@ -80,7 +85,7 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
             <button
               type="button"
               onClick={handleCopyToClipboard}
-              data-testid="HeroLayout.Hero.Header.ButtonShare"
+              data-testid={`${prefixDataTestId}.Header.ButtonShare`}
               className={`${styles.hero__header__icon} bg-transparent`}
             >
               <ShareIcon aria-label="share" role="img" />
@@ -91,7 +96,9 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
             placement="bottom-end"
             overlay={(props) => (
               <Tooltip {...props} id="favorite-tooltip">
-                <span data-testid="HeroLayout.Hero.Header.ButtonFavorite.Tooltip">
+                <span
+                  data-testid={`${prefixDataTestId}.Header.ButtonFavorite.Tooltip`}
+                >
                   {isFavorite ? "Unfavorite recipe" : "Favorite recipe"}
                 </span>
               </Tooltip>
@@ -100,7 +107,7 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
             <button
               type="button"
               onClick={handleToggleFavorite}
-              data-testid="HeroLayout.Hero.Header.ButtonFavorite"
+              data-testid={`${prefixDataTestId}.Header.ButtonFavorite`}
               className={`${styles.hero__header__icon} bg-transparent`}
             >
               {isFavorite ? (
@@ -118,18 +125,20 @@ export default function RecipeHero({ recipe }: RecipeHeroProps) {
 
       <div className={`${styles.hero__presentation}`}>
         <h1
-          data-testid="HeroLayout.Hero.Presentation.Title"
+          data-testid={`${prefixDataTestId}.Presentation.Title`}
           className={`${styles.hero__presentation__title}`}
         >
           {recipe.name}
         </h1>
         <h4
-          data-testid="HeroLayout.Hero.Presentation.Subtitle"
+          data-testid={`${prefixDataTestId}.Presentation.Subtitle`}
           className={`${styles.hero__presentation__category}`}
         >
           {recipe.alcoholic?.toLowerCase() === "alcoholic" ? (
             <>
-              <span data-testid="HeroLayout.Hero.Presentation.Subtitle.Alcoholic">
+              <span
+                data-testid={`${prefixDataTestId}.Presentation.Subtitle.Alcoholic`}
+              >
                 {recipe.alcoholic}
               </span>{" "}
               {recipe.category}

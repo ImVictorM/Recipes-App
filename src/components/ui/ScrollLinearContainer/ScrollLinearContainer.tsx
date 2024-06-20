@@ -17,6 +17,7 @@ function ScrollLinearContainerComponent<
     as,
     children,
     className,
+    prefixDataTestId = "ScrollLinearContainer",
     ...restProps
   }: ScrollLinearContainerProps<T>,
   ref?: PolymorphicRef<T>
@@ -103,7 +104,7 @@ function ScrollLinearContainerComponent<
         isMouseDown ? "active-dragging" : "snaps-inline"
       }`}
       {...restProps}
-      data-testid="ScrollLinearContainer"
+      data-testid={prefixDataTestId}
     >
       {children}
     </Component>

@@ -2,8 +2,11 @@ import CocktailIcon from "@/assets/icons/cocktailIcon.svg";
 import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 
 import styles from "@/sass/components/ui/Loading.module.scss";
+import { TestableComponent } from "@/types/testableComponent";
 
-export default function Loading() {
+export default function Loading({
+  prefixDataTestId = "Loading",
+}: TestableComponent) {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
@@ -14,19 +17,19 @@ export default function Loading() {
             ? `${styles["loading--static"]}`
             : `${styles["loading--animated"]}`
         }`}
-        data-testid="Loading"
+        data-testid={prefixDataTestId}
       >
         <CocktailIcon
           role="img"
           aria-label="loading"
           className={`${styles.loading__img}`}
-          data-testid="Loading.Img"
+          data-testid={`${prefixDataTestId}.Img`}
         />
       </div>
 
       {prefersReducedMotion && (
         <div className={`${styles.loading__text}`}>
-          <p data-testid="Loading.Text">Loading...</p>
+          <p data-testid={`${prefixDataTestId}.Text`}>Loading...</p>
         </div>
       )}
     </section>

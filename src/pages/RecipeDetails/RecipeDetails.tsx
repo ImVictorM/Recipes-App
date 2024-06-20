@@ -26,8 +26,11 @@ import { selectUser } from "@/store/slices/user";
 import { RecipeDetailsLoader } from "@/routing/routesPrivate/loaders/common/types";
 
 import styles from "@/sass/pages/RecipeDetails/RecipeDetails.module.scss";
+import { TestableComponent } from "@/types/testableComponent";
 
-export default function RecipeDetails() {
+export default function RecipeDetails({
+  prefixDataTestId = "RecipeDetails",
+}: TestableComponent) {
   const data = useLoaderData<RecipeDetailsLoader>();
   const recipe = toRecipeWithDetails(data.recipe);
   useHeadTitle(recipe.name);
@@ -60,7 +63,7 @@ export default function RecipeDetails() {
   const navigate = useNavigate();
 
   return (
-    <HeroLayout recipe={recipe}>
+    <HeroLayout prefixDataTestId={prefixDataTestId} recipe={recipe}>
       <Stack gap={4}>
         <Stack>
           <section>
@@ -69,7 +72,7 @@ export default function RecipeDetails() {
               {recipe.ingredientsMeasures.map(
                 ([ingredient, measure], index) => (
                   <li
-                    data-testid={`${index}-ingredient-name-and-measure`}
+                    data-testid={`${prefixDataTestId}.Ingredient${index}`}
                     key={index}
                   >
                     {`${ingredient} ${measure}`}
@@ -81,7 +84,10 @@ export default function RecipeDetails() {
 
           <section>
             <h2>Instructions</h2>
-            <p data-testid="instructions" className="border-box">
+            <p
+              data-testid={`${prefixDataTestId}.Instructions`}
+              className="border-box"
+            >
               {recipe.instructions}
             </p>
           </section>
@@ -91,8 +97,8 @@ export default function RecipeDetails() {
           <section className="m-0" style={{ maxWidth: 800 }}>
             <div className="ratio ratio-16x9">
               <iframe
-                data-testid="video"
-                title="youtube video"
+                data-testid={`${prefixDataTestId}.Video`}
+                title={`how to make ${recipe.name}`}
                 src={recipe.video.replace("watch?v=", "embed/")}
                 allowFullScreen
               />
@@ -102,47 +108,44 @@ export default function RecipeDetails() {
 
         <section>
           <h3>Recommended drinks</h3>
-          <ScrollLinearContainer
-            className={`${styles.recipe__recommendations}`}
-            scrollDragging={false}
+
+          <React.Suspense
+            fallback={
+              <ScrollLinearContainer
+                className={`${styles.recipe__recommendations}`}
+                scrollDragging={false}
+              >
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <RecipeBasicCardSkeleton key={index} />
+                ))}
+              </ScrollLinearContainer>
+            }
           >
-            <React.Suspense
-              fallback={
-                <>
-                  {Array.from({ length: 6 }).map((_, index) => (
-                    <RecipeBasicCardSkeleton key={index} />
-                  ))}
-                </>
+            <Await
+              resolve={data.recommendations}
+              errorElement={
+                <div>
+                  <p className="text-muted">
+                    There was an error trying to load the recommendations.
+                  </p>
+                </div>
               }
             >
-              <Await
-                resolve={data.recommendations}
-                errorElement={
-                  <div>
-                    <p className="text-muted">
-                      There was an error trying to load the recommendations.
-                    </p>
-                  </div>
-                }
-              >
-                {(recommendations) => {
-                  return (
-                    <>
-                      {recommendations.map(toRecipe).map((recipe, index) => {
-                        return (
-                          <RecipeBasicCard
-                            recipe={recipe}
-                            index={index}
-                            key={recipe.id}
-                          />
-                        );
-                      })}
-                    </>
-                  );
-                }}
-              </Await>
-            </React.Suspense>
-          </ScrollLinearContainer>
+              {(recommendations) => {
+                return (
+                  <ScrollLinearContainer
+                    className={`${styles.recipe__recommendations}`}
+                    scrollDragging={false}
+                    prefixDataTestId="RecipeDetails.Recommendations"
+                  >
+                    {recommendations.map(toRecipe).map((recipe) => (
+                      <RecipeBasicCard recipe={recipe} key={recipe.id} />
+                    ))}
+                  </ScrollLinearContainer>
+                );
+              }}
+            </Await>
+          </React.Suspense>
         </section>
       </Stack>
 
@@ -151,7 +154,7 @@ export default function RecipeDetails() {
           <button
             type="button"
             className="button-fixed-bottom"
-            data-testid="continue-recipe-btn"
+            data-testid={`${prefixDataTestId}.ButtonContinue`}
             onClick={handleContinueRecipe}
           >
             Continue recipe
@@ -160,7 +163,7 @@ export default function RecipeDetails() {
           <button
             type="button"
             className="button-fixed-bottom"
-            data-testid="start-recipe-btn"
+            data-testid={`${prefixDataTestId}.ButtonStart`}
             onClick={handleStartRecipe}
           >
             Start recipe

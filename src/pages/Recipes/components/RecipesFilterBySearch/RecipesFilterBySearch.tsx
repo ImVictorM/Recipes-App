@@ -12,6 +12,7 @@ import styles from "@/sass/pages/Recipes/components/RecipesFilterBySearch.module
 
 export default function RecipesFilterBySearch({
   onSearch,
+  prefixDataTestId = "RecipesFilterBySearch",
 }: RecipesFilterBySearchProps) {
   const [formState, setFormState] =
     React.useState<RecipesFilterBySearchFormState>({
@@ -51,9 +52,13 @@ export default function RecipesFilterBySearch({
   };
 
   return (
-    <Form className={`${styles.form}`} onSubmit={handleSearchSubmit}>
+    <Form
+      className={`${styles.form}`}
+      onSubmit={handleSearchSubmit}
+      data-testid={prefixDataTestId}
+    >
       <Form.Control
-        data-testid="search-input"
+        data-testid={`${prefixDataTestId}.InputSearch`}
         placeholder="Search for recipes"
         maxLength={
           formState.searchFilter === RecipeFilterOptions.FIRST_LETTER ? 1 : 60
@@ -64,14 +69,14 @@ export default function RecipesFilterBySearch({
       />
 
       <div className={`${styles.form__bottom}`}>
-        <Row>
+        <Row data-testid={`${prefixDataTestId}.RadioFilters`}>
           <Col>
             <Form.Check
               id="name"
               inline
               required
               type="radio"
-              data-testid="name-search-radio"
+              data-testid={`${prefixDataTestId}.RadioFilters.Name`}
               label="Name"
               defaultChecked={
                 formState.searchFilter === RecipeFilterOptions.NAME
@@ -87,7 +92,7 @@ export default function RecipesFilterBySearch({
               inline
               type="radio"
               label="Ingredient"
-              data-testid="ingredient-search-radio"
+              data-testid={`${prefixDataTestId}.RadioFilters.Ingredient`}
               id="ingredient"
               name="searchFilter"
               defaultChecked={
@@ -106,7 +111,7 @@ export default function RecipesFilterBySearch({
               }
               label="First letter"
               type="radio"
-              data-testid="first-letter-search-radio"
+              data-testid={`${prefixDataTestId}.RadioFilters.FirstLetter`}
               id="firstLetter"
               name="searchFilter"
               onChange={handleCheckboxInputChange}
@@ -118,7 +123,7 @@ export default function RecipesFilterBySearch({
 
         <Button
           variant="primary"
-          data-testid="exec-search-btn"
+          data-testid={`${prefixDataTestId}.ButtonSearch`}
           type="submit"
           className="w-100 mx-0 mt-2"
           disabled={formState.searchQuery === ""}

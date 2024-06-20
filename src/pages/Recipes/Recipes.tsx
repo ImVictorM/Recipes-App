@@ -26,7 +26,10 @@ import { Recipe } from "@/store/slices/menu/menuSlice.types";
 import { RecipesFilterBySearchFormState } from "./components/RecipesFilterBySearch/RecipesFilterBySearch.types";
 import { RecipesProps, RecipesUtils } from "./Recipes.types";
 
-export default function Recipes({ type }: RecipesProps) {
+export default function Recipes({
+  type,
+  prefixDataTestId = "Recipes",
+}: RecipesProps) {
   useHeadTitle(type === "drink" ? "Drinks" : "Meals");
   const visibility = useAppSelector(selectVisibility);
   const navigate = useNavigate();
@@ -224,17 +227,21 @@ export default function Recipes({ type }: RecipesProps) {
   }, [type]);
 
   return (
-    <BasicLayout containHeaderSearchBar>
+    <BasicLayout containHeaderSearchBar prefixDataTestId={prefixDataTestId}>
       {recipeUtils && (
         <CenteredTitleWithIcon
           icon={recipeUtils.icon}
           title={recipeUtils.title}
+          prefixDataTestId={`${prefixDataTestId}.ComponentTitle`}
         />
       )}
 
       <Collapse in={visibility.showSearchBar}>
         <div>
-          <RecipesFilterBySearch onSearch={handleFetchRecipesBySearch} />
+          <RecipesFilterBySearch
+            onSearch={handleFetchRecipesBySearch}
+            prefixDataTestId={`${prefixDataTestId}.ComponentRecipesFilterBySearch`}
+          />
         </div>
       </Collapse>
 
@@ -243,11 +250,15 @@ export default function Recipes({ type }: RecipesProps) {
           categories={recipeUtils.categories}
           onFilterByCategory={handleFetchRecipesByCategory}
           onFilterByAll={handleFetchRecipesWithoutFilter}
+          prefixDataTestId={`${prefixDataTestId}.ComponentRecipesFilterByCategory`}
         />
       )}
 
       {errorMessage !== null && (
-        <section className="d-flex flex-column align-items-center justify-content-center mt-4">
+        <section
+          data-testid={`${prefixDataTestId}.Error`}
+          className="d-flex flex-column align-items-center justify-content-center mt-4"
+        >
           <h3 className="text-center">Oops, something went wrong!</h3>
           <p className="text-center">{errorMessage}</p>
         </section>
@@ -257,11 +268,11 @@ export default function Recipes({ type }: RecipesProps) {
         <ListWithPagination
           renderItemCardSkeleton={<RecipeBasicCardSkeleton />}
           loading={isLoading}
+          prefixDataTestId={`${prefixDataTestId}.List`}
           renderItemCard={(recipe, index) => (
             <RecipeBasicCard
-              data-testid={`${index}-recipe-card`}
+              prefixDataTestId={`${prefixDataTestId}.List.Item${index}`}
               recipe={recipe}
-              index={index}
               scaleOnHover
             />
           )}

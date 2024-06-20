@@ -10,8 +10,11 @@ import { selectUser, setUser } from "@/store/slices/user";
 import Logo from "@/assets/images/logo.svg";
 
 import styles from "@/sass/pages/Login/Login.module.scss";
+import { TestableComponent } from "@/types/testableComponent";
 
-export default function Login() {
+export default function Login({
+  prefixDataTestId = "Login",
+}: TestableComponent) {
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -50,14 +53,14 @@ export default function Login() {
 
   return (
     <Container fluid className="min-vh-100 p-0 d-flex justify-content-center">
-      <main className={`${styles.login}`} data-testid="Login">
+      <main className={`${styles.login}`} data-testid={prefixDataTestId}>
         <Logo className={`${styles.login__logo}`} role="img" />
 
         <Form
           className={`${styles.login__form} container-fluid`}
           onSubmit={handleLogin}
           id={`${styles["login-form"]}`}
-          data-testid="Login.Form"
+          data-testid={`${prefixDataTestId}.Form`}
         >
           <Container as="h1" fluid className={`${styles.login__title}`}>
             Login

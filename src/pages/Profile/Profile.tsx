@@ -16,8 +16,11 @@ import ProfilePinIcon from "@/assets/icons/profilePinIcon.svg";
 import CenteredTitleWithIcon from "@/components/ui/CenteredTitleWithIcon/CenteredTitleWithIcon";
 
 import styles from "@/sass/pages/Profile/Profile.module.scss";
+import { TestableComponent } from "@/types/testableComponent";
 
-export default function Profile() {
+export default function Profile({
+  prefixDataTestId = "Profile",
+}: TestableComponent) {
   useHeadTitle("Profile");
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
@@ -30,13 +33,17 @@ export default function Profile() {
 
   return (
     <BasicLayout>
-      <div className={styles.profile} data-testid="Profile">
+      <div className={styles.profile} data-testid={prefixDataTestId}>
         <CenteredTitleWithIcon
           title="Profile"
           icon={{ element: ProfilePinIcon, alt: "pin user profile" }}
+          prefixDataTestId={`${prefixDataTestId}.ComponentTitle`}
         />
 
-        <p className="h4 text-center mt-5" data-testid="Profile.Email">
+        <p
+          className="h4 text-center mt-5"
+          data-testid={`${prefixDataTestId}.Email`}
+        >
           {user.email}
         </p>
 
@@ -44,7 +51,7 @@ export default function Profile() {
           <Link
             to="/done-recipes"
             className={`${styles.profile__button}`}
-            data-testid="Profile.LinkDone"
+            data-testid={`${prefixDataTestId}.LinkDone`}
           >
             <CheckCircularIcon
               className={`${styles.profile__button__img}`}
@@ -58,7 +65,7 @@ export default function Profile() {
 
           <Link
             className={`${styles.profile__button}`}
-            data-testid="Profile.LinkFavorite"
+            data-testid={`${prefixDataTestId}.LinkFavorite`}
             to="/favorite-recipes"
           >
             <HeartCircularIcon
@@ -74,7 +81,7 @@ export default function Profile() {
           <button
             className={`${styles.profile__button}`}
             type="button"
-            data-testid="Profile.ButtonLogout"
+            data-testid={`${prefixDataTestId}.ButtonLogout`}
             onClick={handleLogout}
           >
             <LeaveCircularIcon

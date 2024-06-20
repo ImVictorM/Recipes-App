@@ -8,50 +8,51 @@ import { RecipesFilterByTypeProps } from "./RecipesFilterByType.types";
 
 export default function RecipesFilterByType({
   onFilterByType,
+  prefixDataTestId = "RecipeFiltersByType",
 }: RecipesFilterByTypeProps) {
   return (
-    <div className={`${styles.filters}`} data-testid="RecipeFiltersByType">
+    <div className={`${styles.filters}`} data-testid={prefixDataTestId}>
       <button
         onClick={() => onFilterByType("all")}
         className={`${styles.filters__button}`}
-        data-testid="RecipeFiltersByType.ButtonAll"
+        data-testid={`${prefixDataTestId}.ButtonAll`}
       >
         <MealAndDrinkCircularIcon
           role="img"
           className={`${styles.filters__button__img}`}
           aria-label="circular icon an hamburger and a soda"
-          data-testid="RecipeFiltersByType.ButtonAll.Img"
+          data-testid={`${prefixDataTestId}.ButtonAll.Img`}
         />
-        <span data-testid="RecipeFiltersByType.ButtonAll.Text">All</span>
+        <span data-testid={`${prefixDataTestId}.ButtonAll.Text`}>All</span>
       </button>
 
       <button
         onClick={() => onFilterByType("meal")}
         className={`${styles.filters__button}`}
-        data-testid="RecipeFiltersByType.ButtonMeal"
+        data-testid={`${prefixDataTestId}.ButtonMeal`}
       >
         <MealCircularIcon
           role="img"
           className={`${styles.filters__button__img}`}
           aria-label="circular icon with a plate and cutlery"
-          data-testid="RecipeFiltersByType.ButtonMeal.Img"
+          data-testid={`${prefixDataTestId}.ButtonMeal.Img`}
         />
-        <span data-testid="RecipeFiltersByType.ButtonMeal.Text">Food</span>
+        <span data-testid={`${prefixDataTestId}.ButtonMeal.Text`}>Food</span>
       </button>
 
       <button
         onClick={() => onFilterByType("drink")}
         className={`${styles.filters__button}`}
-        data-testid="RecipeFiltersByType.ButtonDrink"
+        data-testid={`${prefixDataTestId}.ButtonDrink`}
       >
         <CocktailCircularIcon
           role="img"
           className={`${styles.filters__button__img}`}
           aria-label="circular icon with a cocktail"
-          data-testid="RecipeFiltersByType.ButtonDrink.Img"
+          data-testid={`${prefixDataTestId}.ButtonDrink.Img`}
         />
 
-        <span data-testid="RecipeFiltersByType.ButtonDrink.Text">Drinks</span>
+        <span data-testid={`${prefixDataTestId}.ButtonDrink.Text`}>Drinks</span>
       </button>
     </div>
   );

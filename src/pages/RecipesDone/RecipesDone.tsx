@@ -21,8 +21,11 @@ import {
 import CheckCircularIcon from "@/assets/icons/checkCircularIcon.svg";
 
 import { RecipeTypeOrAll } from "@/components/ui/RecipesFilterByType/RecipesFilterByType.types";
+import { TestableComponent } from "@/types/testableComponent";
 
-export default function RecipesDone() {
+export default function RecipesDone({
+  prefixDataTestId = "RecipesDone",
+}: TestableComponent) {
   useHeadTitle("Recipes Done");
   const user = useAppSelector(selectUser);
   const [recipesDoneType, setRecipesType] =
@@ -44,23 +47,32 @@ export default function RecipesDone() {
   };
 
   return (
-    <BasicLayout>
+    <BasicLayout prefixDataTestId={prefixDataTestId}>
       <CenteredTitleWithIcon
         title="Done Recipes"
         icon={{ element: CheckCircularIcon, alt: "circular check" }}
+        prefixDataTestId={`${prefixDataTestId}.ComponentTitle`}
       />
 
       <RecipesFilterByType onFilterByType={handleFilterByType} />
 
       {isRecipesDoneEmpty && (
-        <RecipesEmptyByType type={recipesDoneType} action="completed" />
+        <RecipesEmptyByType
+          type={recipesDoneType}
+          action="completed"
+          prefixDataTestId={`${prefixDataTestId}.ComponentEmpty`}
+        />
       )}
 
       {!isRecipesDoneEmpty && (
         <ListWithPagination
           items={recipesDone}
-          renderItemCard={(recipeDone) => (
-            <RecipeDoneCard recipe={recipeDone} />
+          prefixDataTestId={`${prefixDataTestId}.List`}
+          renderItemCard={(recipeDone, index) => (
+            <RecipeDoneCard
+              prefixDataTestId={`${prefixDataTestId}.List.Item${index}`}
+              recipe={recipeDone}
+            />
           )}
           itemsPerPageBySize={{
             xs: 1,

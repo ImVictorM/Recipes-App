@@ -8,8 +8,11 @@ import {
 import useHeadTitle from "@/hooks/useHeadTitle";
 
 import ErrorIcon from "@/assets/icons/errorIcon.svg";
+import { TestableComponent } from "@/types/testableComponent";
 
-export default function RecipeError() {
+export default function RecipeError({
+  prefixDataTestId = "RecipeError",
+}: TestableComponent) {
   useHeadTitle("Error");
   const error = useRouteError();
   const navigate = useNavigate();
@@ -21,6 +24,7 @@ export default function RecipeError() {
   return (
     <div
       className={`min-vh-100 d-flex flex-column justify-content-center align-items-center`}
+      data-testid={prefixDataTestId}
     >
       <main className={`px-4`}>
         <ErrorIcon role="image" aria-label="error" style={{ width: "70px" }} />

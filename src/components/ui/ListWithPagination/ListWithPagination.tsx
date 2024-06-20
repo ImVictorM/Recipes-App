@@ -26,6 +26,7 @@ export default function ListWithPagination<T>({
   renderItemCardSkeleton,
   maxItemsPerPage = DEFAULT_ITEMS_PER_PAGE,
   loading = false,
+  prefixDataTestId = "ListWithPagination",
 }: ListWithPaginationProps<T>) {
   const totalPages: number = Math.max(
     Math.ceil(items.length / maxItemsPerPage),
@@ -129,7 +130,7 @@ export default function ListWithPagination<T>({
   }, [items]);
 
   return (
-    <section>
+    <section data-testid={prefixDataTestId}>
       <Row
         {...itemsPerPageBySize}
         as="ul"
@@ -157,11 +158,14 @@ export default function ListWithPagination<T>({
           fluid
           className="d-flex justify-content-center align-items-center mb-4"
         >
-          <Pagination className="m-0" data-testid="Pagination">
+          <Pagination
+            className="m-0"
+            data-testid={`${prefixDataTestId}.Pagination`}
+          >
             <Pagination.Prev
               as="button"
               onClick={handleMoveToPreviousPage}
-              data-testid="Pagination.Prev"
+              data-testid={`${prefixDataTestId}.Pagination.Prev`}
             />
 
             {paginationItemsToShow.map((item, index) => {
@@ -177,8 +181,8 @@ export default function ListWithPagination<T>({
                     onClick={() => handleMoveToSpecificPage(item)}
                     data-testid={
                       isActive
-                        ? `Pagination.Item.${item}.Active`
-                        : `Pagination.Item.${item}`
+                        ? `${prefixDataTestId}.Pagination.Item.${item}.Active`
+                        : `${prefixDataTestId}.Pagination.Item.${item}`
                     }
                   >
                     {item}
@@ -190,7 +194,7 @@ export default function ListWithPagination<T>({
                 <Pagination.Ellipsis
                   key={index}
                   as="button"
-                  data-testid="Pagination.Items.Ellipsis"
+                  data-testid={`${prefixDataTestId}.Pagination.Items.Ellipsis`}
                 />
               );
             })}
@@ -198,7 +202,7 @@ export default function ListWithPagination<T>({
             <Pagination.Next
               as="button"
               onClick={handleMoveToNextPage}
-              data-testid="Pagination.Next"
+              data-testid={`${prefixDataTestId}.Pagination.Next`}
             />
           </Pagination>
         </Container>

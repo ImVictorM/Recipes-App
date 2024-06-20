@@ -13,7 +13,10 @@ import { HeaderProps } from "./Header.types";
 
 import styles from "@/sass/layouts/BasicLayout/components/Header.module.scss";
 
-export default function Header({ containSearchBar }: HeaderProps) {
+export default function Header({
+  containSearchBar,
+  prefixDataTestId = "Header",
+}: HeaderProps) {
   const dispatch = useAppDispatch();
 
   const handleSearchBarVisibility = () => {
@@ -21,7 +24,7 @@ export default function Header({ containSearchBar }: HeaderProps) {
   };
 
   return (
-    <header className={`${styles.header}`} data-testid="BasicLayout.Header">
+    <header className={`${styles.header}`} data-testid={prefixDataTestId}>
       <Container fluid className={`${styles.header__inner}`}>
         <HeaderLogo role="banner" aria-label="recipes app logo" />
 
@@ -31,14 +34,16 @@ export default function Header({ containSearchBar }: HeaderProps) {
               placement="bottom-end"
               overlay={(props) => (
                 <Tooltip {...props} id="search-button">
-                  <span data-testid="BasicLayout.Header.ButtonSearch.Tooltip">
+                  <span
+                    data-testid={`${prefixDataTestId}.ButtonSearch.Tooltip`}
+                  >
                     Search for recipes
                   </span>
                 </Tooltip>
               )}
             >
               <button
-                data-testid="BasicLayout.Header.ButtonSearch"
+                data-testid={`${prefixDataTestId}.ButtonSearch`}
                 type="button"
                 onClick={handleSearchBarVisibility}
                 className={`${styles["header__search-button"]}`}
@@ -54,7 +59,7 @@ export default function Header({ containSearchBar }: HeaderProps) {
             placement="bottom-end"
             overlay={(props) => (
               <Tooltip {...props} id="profile-link">
-                <span data-testid="BasicLayout.Header.LinkProfile.Tooltip">
+                <span data-testid={`${prefixDataTestId}.LinkProfile.Tooltip`}>
                   Profile
                 </span>
               </Tooltip>
@@ -63,7 +68,7 @@ export default function Header({ containSearchBar }: HeaderProps) {
             <Link
               className={`${styles.header__profile}`}
               to="/profile"
-              data-testid="BasicLayout.Header.LinkProfile"
+              data-testid={`${prefixDataTestId}.LinkProfile`}
             >
               <ProfileIcon role="img" aria-label="circular profile user" />
             </Link>

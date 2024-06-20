@@ -4,28 +4,31 @@ import PlaceholderImage from "@/assets/images/placeholderImage.svg";
 import getRandomBetweenInclusive from "@/utils/getRandomBetweenInclusive";
 
 import styles from "@/sass/components/ui/RecipeBasicCardSkeleton.module.scss";
+import { TestableComponent } from "@/types/testableComponent";
 
-export default function RecipeBasicCardSkeleton() {
+export default function RecipeBasicCardSkeleton({
+  prefixDataTestId = "BasicCardSkeleton",
+}: TestableComponent) {
   return (
     <Card
       className={`${styles.card} shadow m-0`}
-      data-testid="BasicCardSkeleton"
+      data-testid={prefixDataTestId}
     >
       <PlaceholderImage
         role="img"
         aria-label="placeholder"
         className="card-img-top"
-        data-testid="BasicCardSkeleton.ImgPlaceholder"
+        data-testid={`${prefixDataTestId}.ImgPlaceholder`}
       />
 
       <Card.Body
         className={`${styles.card__body}`}
-        data-testid="BasicCardSkeleton.Body"
+        data-testid={`${prefixDataTestId}.Body`}
       >
         <Placeholder
           as={Card.Title}
           animation="glow"
-          data-testid="BasicCardSkeleton.Body.TitlePlaceholder"
+          data-testid={`${prefixDataTestId}.Body.TitlePlaceholder`}
         >
           <Placeholder xs={getRandomBetweenInclusive(4, 11)} bg="slate" />
         </Placeholder>

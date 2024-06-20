@@ -10,6 +10,7 @@ import {
 export default function RecipesEmptyByType({
   type,
   action = "done",
+  prefixDataTestId,
 }: RecipesFavoriteEmptyProps) {
   /** Only one type verification */
   const emptyState: EmptyState = React.useMemo(() => {
@@ -44,6 +45,7 @@ export default function RecipesEmptyByType({
   return (
     <section
       className={`d-flex flex-column align-items-center justify-content-center mt-4`}
+      data-testid={prefixDataTestId}
     >
       <h2 className="text-center">{emptyState.titleMessage}</h2>
 

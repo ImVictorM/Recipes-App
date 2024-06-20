@@ -21,8 +21,11 @@ import {
 import HeartCircularIcon from "@/assets/icons/heartCircularIcon.svg";
 
 import { RecipeTypeOrAll } from "@/components/ui/RecipesFilterByType/RecipesFilterByType.types";
+import { TestableComponent } from "@/types/testableComponent";
 
-export default function RecipesFavorite() {
+export default function RecipesFavorite({
+  prefixDataTestId = "RecipesFavorite",
+}: TestableComponent) {
   useHeadTitle("Recipes Favorite");
   const user = useAppSelector(selectUser);
   const [recipesFavoriteType, setRecipeType] =
@@ -47,25 +50,39 @@ export default function RecipesFavorite() {
   };
 
   return (
-    <BasicLayout>
+    <BasicLayout prefixDataTestId={prefixDataTestId}>
       <CenteredTitleWithIcon
         icon={{
           element: HeartCircularIcon,
           alt: "circular heart",
         }}
         title="Favorites"
+        prefixDataTestId={`${prefixDataTestId}.ComponentTitle`}
       />
 
-      <RecipesFilterByType onFilterByType={handleFilterByType} />
+      <RecipesFilterByType
+        prefixDataTestId={`${prefixDataTestId}.ComponentFiltersByType`}
+        onFilterByType={handleFilterByType}
+      />
 
       {isRecipesFavoriteEmpty && (
-        <RecipeEmptyByType type={recipesFavoriteType} action="favorite" />
+        <RecipeEmptyByType
+          prefixDataTestId={`${prefixDataTestId}.ComponentEmpty`}
+          type={recipesFavoriteType}
+          action="favorite"
+        />
       )}
 
       {!isRecipesFavoriteEmpty && (
         <ListWithPagination
           items={recipesFavorite}
-          renderItemCard={(recipe) => <RecipeFavoriteCard recipe={recipe} />}
+          prefixDataTestId={`${prefixDataTestId}.List`}
+          renderItemCard={(recipe, index) => (
+            <RecipeFavoriteCard
+              prefixDataTestId={`${prefixDataTestId}.List.Item${index}`}
+              recipe={recipe}
+            />
+          )}
           itemsPerPageBySize={{
             xs: 1,
             sm: 2,

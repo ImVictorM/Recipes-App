@@ -1,4 +1,6 @@
-export type ListWithPaginationProps<T> = {
+import { TestableComponent } from "@/types/testableComponent";
+
+export type ListWithPaginationProps<T> = TestableComponent & {
   items: T[];
   renderItemCard: (item: T, index: number) => React.ReactElement;
   getItemId: (item: T, index: number) => string | number;

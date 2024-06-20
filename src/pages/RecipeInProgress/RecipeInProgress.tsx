@@ -22,8 +22,11 @@ import { useLoaderData } from "@/utils/reactRouterDom/reactRouterDom";
 import toRecipeWithDetails from "@/utils/mappings/recipe/toRecipeWithDetails";
 
 import { RecipeInProgressLoader } from "@/routing/routesPrivate/loaders/common/types";
+import { TestableComponent } from "@/types/testableComponent";
 
-export default function RecipeInProgress() {
+export default function RecipeInProgress({
+  prefixDataTestId = "RecipeInProgress",
+}: TestableComponent) {
   const data = useLoaderData<RecipeInProgressLoader>();
   const recipe = toRecipeWithDetails(data.recipe);
   useHeadTitle(`${recipe.name} - In Progress`);
@@ -107,7 +110,7 @@ export default function RecipeInProgress() {
   }, [isRecipeInProgress, navigate, recipe.id, recipe.type]);
 
   return (
-    <HeroLayout recipe={recipe}>
+    <HeroLayout prefixDataTestId={prefixDataTestId} recipe={recipe}>
       <Stack gap={4}>
         <Stack>
           <section>
@@ -120,7 +123,7 @@ export default function RecipeInProgress() {
                     <Form.Check id={`ingredient-${index + 1}`} key={index}>
                       <Form.Check.Input
                         type="checkbox"
-                        data-testid={`${index}-ingredient-name-and-measure`}
+                        data-testid={`${prefixDataTestId}.Ingredient${index}.Checkbox`}
                         onClick={handleIngredientCheck}
                         defaultChecked={checked}
                         name={ingredient}
@@ -137,7 +140,10 @@ export default function RecipeInProgress() {
 
           <section>
             <h2>Instructions</h2>
-            <p data-testid="instructions" className="border-box">
+            <p
+              data-testid={`${prefixDataTestId}.Instructions`}
+              className="border-box"
+            >
               {recipe.instructions}
             </p>
           </section>
@@ -147,7 +153,7 @@ export default function RecipeInProgress() {
           <section className="m-0" style={{ maxWidth: 800 }}>
             <div className="ratio ratio-16x9">
               <iframe
-                data-testid="video"
+                data-testid={`${prefixDataTestId}.Video`}
                 title="youtube video"
                 src={recipe.video.replace("watch?v=", "embed/")}
                 allowFullScreen
@@ -161,7 +167,7 @@ export default function RecipeInProgress() {
         onClick={handleFinishRecipe}
         className="button-fixed-bottom"
         type="button"
-        data-testid="finish-recipe-btn"
+        data-testid={`${prefixDataTestId}.ButtonFinish`}
         disabled={!isAllIngredientsChecked}
       >
         Finish Recipe

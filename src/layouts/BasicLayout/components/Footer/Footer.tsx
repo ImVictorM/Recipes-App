@@ -5,21 +5,24 @@ import MealIcon from "@/assets/icons/mealIcon.svg";
 import CocktailIcon from "@/assets/icons/cocktailIcon.svg";
 
 import styles from "@/sass/layouts/BasicLayout/components/Footer.module.scss";
+import { TestableComponent } from "@/types/testableComponent";
 
-export default function Footer() {
+export default function Footer({
+  prefixDataTestId = "Footer",
+}: TestableComponent) {
   return (
     <Container
       as="footer"
       fluid
       className={`${styles.footer} fixed-bottom`}
-      data-testid="BasicLayout.Footer"
+      data-testid={prefixDataTestId}
     >
       <nav className={`${styles.footer__nav}`}>
         <div>
           <OverlayTrigger
             overlay={(props) => (
               <Tooltip id="link-meals" {...props}>
-                <span data-testid="BasicLayout.Footer.LinkMeals.Tooltip">
+                <span data-testid={`${prefixDataTestId}.LinkMeals.Tooltip`}>
                   Search for foods
                 </span>
               </Tooltip>
@@ -29,7 +32,7 @@ export default function Footer() {
             <Link
               className={`${styles.footer__nav__link}`}
               to="/meals"
-              data-testid="BasicLayout.Footer.LinkMeals"
+              data-testid={`${prefixDataTestId}.LinkMeals`}
             >
               <MealIcon
                 role="img"
@@ -43,7 +46,7 @@ export default function Footer() {
           <OverlayTrigger
             overlay={(props) => (
               <Tooltip id="link-drinks" {...props}>
-                <span data-testid="BasicLayout.Footer.LinkDrinks.Tooltip">
+                <span data-testid={`${prefixDataTestId}.LinkDrinks.Tooltip`}>
                   Search for drinks
                 </span>
               </Tooltip>
@@ -53,7 +56,7 @@ export default function Footer() {
             <Link
               className={`${styles.footer__nav__link}`}
               to="/drinks"
-              data-testid="BasicLayout.Footer.LinkDrinks"
+              data-testid={`${prefixDataTestId}.LinkDrinks`}
             >
               <CocktailIcon role="img" aria-label="cocktail glass" />
             </Link>

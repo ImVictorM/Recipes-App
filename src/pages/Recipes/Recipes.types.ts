@@ -6,8 +6,9 @@ import {
   RecipeCategory,
 } from "@/services/menu/common/types";
 import { RecipeType } from "@/store/slices/menu/menuSlice.types";
+import { TestableComponent } from "@/types/testableComponent";
 
-export type RecipesProps = {
+export type RecipesProps = TestableComponent & {
   type: RecipeType;
 };
 

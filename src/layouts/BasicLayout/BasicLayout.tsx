@@ -8,16 +8,23 @@ import styles from "@/sass/layouts/BasicLayout/BasicLayout.module.scss";
 export default function BasicLayout({
   children,
   containHeaderSearchBar,
+  prefixDataTestId: thisPrefixDataTestId = "BasicLayout",
 }: React.PropsWithChildren<BasicLayoutProps>) {
   return (
-    <>
-      <Header containSearchBar={containHeaderSearchBar} />
+    <div data-testid={thisPrefixDataTestId}>
+      <Header
+        prefixDataTestId={`${thisPrefixDataTestId}.Header`}
+        containSearchBar={containHeaderSearchBar}
+      />
 
-      <main data-testid="BasicLayout.Content" className={`${styles.content}`}>
+      <main
+        data-testid={`${thisPrefixDataTestId}.Content`}
+        className={`${styles.content}`}
+      >
         {children}
       </main>
 
-      <Footer />
-    </>
+      <Footer prefixDataTestId={`${thisPrefixDataTestId}.Footer`} />
+    </div>
   );
 }

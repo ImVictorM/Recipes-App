@@ -15,7 +15,10 @@ import { RecipeDoneCardProps } from "./RecipeDoneCard.types";
 
 import styles from "@/sass/pages/RecipesDone/components/RecipeDoneCard.module.scss";
 
-export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
+export default function RecipeDoneCard({
+  recipe,
+  prefixDataTestId = "RecipeDoneCard",
+}: RecipeDoneCardProps) {
   const recipeEndpoint = `/${recipe.type}s/${recipe.id}`;
   const { copyAndSetTooltipMessage, tooltipMessage } =
     useCopyToClipboardWithTooltip(
@@ -33,7 +36,7 @@ export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
   };
 
   return (
-    <Card className="shadow">
+    <Card className="shadow" data-testid={prefixDataTestId}>
       <Card.Link
         href={recipeEndpoint}
         className="text-decoration-none overflow-hidden rounded-top"
@@ -46,16 +49,21 @@ export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
         />
       </Card.Link>
 
-      <Card.Body className={`${styles.card__body}`}>
+      <Card.Body
+        className={`${styles.card__body}`}
+        data-testid={`${prefixDataTestId}.Body`}
+      >
         <div className="d-flex justify-content-between align-items-center mb-2">
           <Card.Link
             className="text-decoration-none overflow-hidden"
             href={recipeEndpoint}
+            data-testid={`${prefixDataTestId}.Body.LinkTitle`}
           >
             <Card.Title
               className={`${styles.card__title} text-truncate m-0`}
               title={recipe.name}
               as="h5"
+              data-testid={`${prefixDataTestId}.Body.LinkTitle.Title`}
             >
               {recipe.name}
             </Card.Title>
@@ -66,14 +74,18 @@ export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
             delay={{ show: 250, hide: 400 }}
             overlay={(props) => (
               <Tooltip id="copy-recipe-link-tooltip" {...props}>
-                {tooltipMessage}
+                <span
+                  data-testid={`${prefixDataTestId}.Body.ButtonShare.Tooltip`}
+                >
+                  {tooltipMessage}
+                </span>
               </Tooltip>
             )}
           >
             <button
               type="button"
               onClick={handleCopyRecipeLink}
-              data-testid="share-btn"
+              data-testid={`${prefixDataTestId}.Body.ButtonShare`}
               className={`${styles.card__share} flex-shrink-0`}
             >
               <ShareIcon role="img" aria-label="share" />
@@ -86,6 +98,7 @@ export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
             title={recipeSubtitle}
             as="h6"
             bsPrefix={`${styles.card__subtitle} m-0 text-truncate`}
+            data-testid={`${prefixDataTestId}.Body.Subtitle`}
           >
             {recipeSubtitle}
           </Card.Subtitle>
@@ -94,22 +107,31 @@ export default function RecipeDoneCard({ recipe }: RecipeDoneCardProps) {
             <Card.Text
               as="span"
               className={`${styles.card__alcoholic} flex-shrink-0`}
+              data-testid={`${prefixDataTestId}.Body.Alcoholic`}
             >
               {recipe.alcoholic}
             </Card.Text>
           )}
         </div>
 
-        <Card.Text className={`${styles.card__done}`}>
+        <Card.Text
+          data-testid={`${prefixDataTestId}.Body.DoneDate`}
+          className={`${styles.card__done}`}
+        >
           {`Done in: ${recipe.doneDate}`}
         </Card.Text>
 
         <ScrollLinearContainer
           as="ul"
           className={`${styles.cards__tags} hide-scroll`}
+          data-testid={`${prefixDataTestId}.Body.Tags`}
         >
-          {recipe.tags.map((tag) => (
-            <li key={tag} className={`${styles.card__tags__tag}`}>
+          {recipe.tags.map((tag, index) => (
+            <li
+              key={tag}
+              className={`${styles.card__tags__tag}`}
+              data-testid={`${prefixDataTestId}.Body.Tags.Tag${index}`}
+            >
               {tag}
             </li>
           ))}

@@ -1,3 +1,4 @@
+import { TestableComponent } from "@/types/testableComponent";
 import { RecipeTypeOrAll } from "../RecipesFilterByType/RecipesFilterByType.types";
 
 export type EmptyStateLink = {
@@ -10,7 +11,7 @@ export type EmptyState = {
   links: EmptyStateLink[];
 };
 
-export type RecipesFavoriteEmptyProps = {
+export type RecipesFavoriteEmptyProps = TestableComponent & {
   type: RecipeTypeOrAll;
   action: string;
 };

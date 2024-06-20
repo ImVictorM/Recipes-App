@@ -15,16 +15,14 @@ describe("layout: HeroLayout - component: RecipeHero", () => {
   it("renders correctly", () => {
     renderElement(<RecipeHeroDefault />);
 
-    const title = screen.getByTestId("HeroLayout.Hero.Presentation.Title");
-    const subtitle = screen.getByTestId(
-      "HeroLayout.Hero.Presentation.Subtitle"
-    );
+    const title = screen.getByTestId("RecipeHero.Presentation.Title");
+    const subtitle = screen.getByTestId("RecipeHero.Presentation.Subtitle");
     const alcoholic = screen.queryByTestId(
-      "HeroLayout.Hero.Presentation.Subtitle.Alcoholic"
+      "RecipeHero.Presentation.Subtitle.Alcoholic"
     );
 
-    screen.getByTestId("HeroLayout.Hero.Header.ButtonShare");
-    screen.getByTestId("HeroLayout.Hero.Header.ButtonFavorite");
+    screen.getByTestId("RecipeHero.Header.ButtonShare");
+    screen.getByTestId("RecipeHero.Header.ButtonFavorite");
 
     expect(title).toHaveTextContent(sushiWithDetails.name);
     expect(subtitle).toHaveTextContent(sushiWithDetails.category);
@@ -34,16 +32,14 @@ describe("layout: HeroLayout - component: RecipeHero", () => {
   it("handles copy the recipe url to clipboard when clicking the share button", async () => {
     const { user } = renderElement(<RecipeHeroDefault />);
 
-    const buttonShare = screen.getByTestId(
-      "HeroLayout.Hero.Header.ButtonShare"
-    );
+    const buttonShare = screen.getByTestId("RecipeHero.Header.ButtonShare");
 
     await act(async () => {
       await user.hover(buttonShare);
     });
 
     const shareTooltip = screen.getByTestId(
-      "HeroLayout.Hero.Header.ButtonShare.Tooltip"
+      "RecipeHero.Header.ButtonShare.Tooltip"
     );
 
     expect(shareTooltip).toHaveTextContent("Copy recipe link");
@@ -70,7 +66,7 @@ describe("layout: HeroLayout - component: RecipeHero", () => {
     });
 
     const buttonFavorite = screen.getByTestId(
-      "HeroLayout.Hero.Header.ButtonFavorite"
+      "RecipeHero.Header.ButtonFavorite"
     );
 
     await act(async () => {
@@ -78,7 +74,7 @@ describe("layout: HeroLayout - component: RecipeHero", () => {
     });
 
     const favoriteTooltip = screen.getByTestId(
-      "HeroLayout.Hero.Header.ButtonFavorite.Tooltip"
+      "RecipeHero.Header.ButtonFavorite.Tooltip"
     );
 
     expect(favoriteTooltip).toHaveTextContent("Favorite recipe");
@@ -114,12 +110,10 @@ describe("layout: HeroLayout - component: RecipeHero", () => {
   it('renders "alcoholic" before the category when the recipe is an alcoholic drink', () => {
     renderElement(<RecipeHeroDefault recipe={gilliganWithDetails} />);
 
-    const subtitle = screen.getByTestId(
-      "HeroLayout.Hero.Presentation.Subtitle"
-    );
+    const subtitle = screen.getByTestId("RecipeHero.Presentation.Subtitle");
 
     const alcoholicSub = screen.getByTestId(
-      "HeroLayout.Hero.Presentation.Subtitle.Alcoholic"
+      "RecipeHero.Presentation.Subtitle.Alcoholic"
     );
 
     expect(subtitle).toContainElement(alcoholicSub);

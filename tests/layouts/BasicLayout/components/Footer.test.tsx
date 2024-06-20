@@ -7,10 +7,10 @@ const FooterDefault = () => <Footer />;
 
 const links = {
   get meals() {
-    return screen.getByTestId("BasicLayout.Footer.LinkMeals");
+    return screen.getByTestId("Footer.LinkMeals");
   },
   get drinks() {
-    return screen.getByTestId("BasicLayout.Footer.LinkDrinks");
+    return screen.getByTestId("Footer.LinkDrinks");
   },
 };
 
@@ -29,18 +29,14 @@ describe("layout: BasicLayout - component: Footer", () => {
       await user.hover(links.meals);
     });
 
-    const mealsTooltip = screen.getByTestId(
-      "BasicLayout.Footer.LinkMeals.Tooltip"
-    );
+    const mealsTooltip = screen.getByTestId("Footer.LinkMeals.Tooltip");
     expect(mealsTooltip).toHaveTextContent("Search for foods");
 
     await act(async () => {
       await user.hover(links.drinks);
     });
 
-    const drinksTooltip = screen.getByTestId(
-      "BasicLayout.Footer.LinkDrinks.Tooltip"
-    );
+    const drinksTooltip = screen.getByTestId("Footer.LinkDrinks.Tooltip");
     expect(drinksTooltip).toHaveTextContent("Search for drinks");
   });
 });

@@ -25,6 +25,22 @@ const lazyRenderProfile = async () => {
   return render;
 };
 
+const profile = {
+  links: {
+    get recipesDone() {
+      return screen.getByRole("link", { name: /done recipes/i });
+    },
+    get recipesFavorite() {
+      return screen.getByRole("link", { name: /favorite recipes/i });
+    },
+  },
+  buttons: {
+    get logout() {
+      return screen.getByRole("button", { name: /logout/i });
+    },
+  },
+};
+
 describe("page: Profile - path: /profile", () => {
   afterEach(() => {
     vi.restoreAllMocks();
@@ -34,18 +50,20 @@ describe("page: Profile - path: /profile", () => {
     await lazyRenderProfile();
 
     screen.getByRole("heading", { level: 1, name: /profile/i });
-    screen.getByRole("link", { name: /done recipes/i });
-    screen.getByRole("link", { name: /favorite recipes/i });
-    screen.getByRole("button", { name: /logout/i });
+
+    expect(profile.links.recipesDone).toHaveAttribute("href", "/done-recipes");
+    expect(profile.links.recipesFavorite).toHaveAttribute(
+      "href",
+      "/favorite-recipes"
+    );
+    expect(profile.buttons.logout).toBeEnabled();
   });
 
   it("removes the user from global storage and redirects to / when clicking the logout button", async () => {
     const { user, store } = await lazyRenderProfile();
 
-    const logoutButton = screen.getByRole("button", { name: /logout/i });
-
     await act(async () => {
-      await user.click(logoutButton);
+      await user.click(profile.buttons.logout);
     });
 
     expect(store.getState().user.email).toBeFalsy();

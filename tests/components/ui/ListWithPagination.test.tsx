@@ -57,7 +57,9 @@ const checkItemsExistByPage = (
   const currentPageItems = items.slice(firstItemIndex, lastItemIndex);
   const restPageItems = items.slice(lastItemIndex);
 
-  within(container).getByTestId(`Pagination.Item.${currentPage}.Active`);
+  within(container).getByTestId(
+    `ListWithPagination.Pagination.Item.${currentPage}.Active`
+  );
 
   currentPageItems.forEach(({ id, value }) => {
     expect(within(container).getByTestId(`Item.${id}`)).toHaveTextContent(
@@ -83,7 +85,7 @@ describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
 
       if (currentPage !== expectedTotalPages) {
         const nextPage = within(container).getByTestId(
-          `Pagination.Item.${currentPage + 1}`
+          `ListWithPagination.Pagination.Item.${currentPage + 1}`
         );
 
         await act(async () => {
@@ -98,10 +100,16 @@ describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
   it("changes the page correctly when clicking the next and previous buttons", async () => {
     const { container, user } = renderElement(<ListWithPaginationDefault />);
 
-    within(container).getByTestId("Pagination.Item.1.Active");
+    within(container).getByTestId(
+      "ListWithPagination.Pagination.Item.1.Active"
+    );
 
-    const nextButton = within(container).getByTestId("Pagination.Next");
-    const previousButton = within(container).getByTestId("Pagination.Prev");
+    const nextButton = within(container).getByTestId(
+      "ListWithPagination.Pagination.Next"
+    );
+    const previousButton = within(container).getByTestId(
+      "ListWithPagination.Pagination.Prev"
+    );
 
     await act(async () => {
       await user.click(nextButton);
@@ -166,7 +174,7 @@ describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
       );
 
       expect(
-        within(container).queryByTestId("Pagination")
+        within(container).queryByTestId("ListWithPagination.Pagination")
       ).not.toBeInTheDocument();
     });
 
@@ -180,8 +188,9 @@ describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
           <ListWithPaginationDefault items={createItems(itemsQuantity)} />
         );
 
-        const paginationItems =
-          within(container).getAllByTestId(/Pagination\.Item/);
+        const paginationItems = within(container).getAllByTestId(
+          /ListWithPagination\.Pagination\.Item/
+        );
 
         expect(paginationItems.length).toBe(currentPaginationBlock);
 
@@ -203,10 +212,13 @@ describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
       const expectedOrder = ["1", "2", "3", "4", "5", /.../, "10"];
 
       while (currentPage < 5) {
-        within(container).getByTestId(`Pagination.Item.${currentPage}.Active`);
+        within(container).getByTestId(
+          `ListWithPagination.Pagination.Item.${currentPage}.Active`
+        );
 
-        const paginationItems =
-          within(container).getAllByTestId(/Pagination\.Item/);
+        const paginationItems = within(container).getAllByTestId(
+          /ListWithPagination\.Pagination\.Item/
+        );
 
         paginationItems.forEach((item, index) => {
           expect(item).toHaveTextContent(expectedOrder[index]);
@@ -214,7 +226,7 @@ describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
 
         await act(async () => {
           const nextPageBlock = within(container).getByTestId(
-            `Pagination.Item.${currentPage + 1}`
+            `ListWithPagination.Pagination.Item.${currentPage + 1}`
           );
           await user.click(nextPageBlock);
         });
@@ -231,7 +243,7 @@ describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
 
       await act(async () => {
         const lastPaginationBlock = within(container).getByTestId(
-          `Pagination.Item.${currentPage}`
+          `ListWithPagination.Pagination.Item.${currentPage}`
         );
         await user.click(lastPaginationBlock);
       });
@@ -239,7 +251,9 @@ describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
       const expectedOrder = ["1", /.../, "6", "7", "8", "9", "10"];
 
       while (currentPage > 6) {
-        within(container).getByTestId(`Pagination.Item.${currentPage}.Active`);
+        within(container).getByTestId(
+          `ListWithPagination.Pagination.Item.${currentPage}.Active`
+        );
 
         const paginationItems =
           within(container).getAllByTestId(/Pagination\.Item/);
@@ -250,7 +264,7 @@ describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
 
         await act(async () => {
           const previousPaginationBlock = within(container).getByTestId(
-            `Pagination.Item.${currentPage - 1}`
+            `ListWithPagination.Pagination.Item.${currentPage - 1}`
           );
           await user.click(previousPaginationBlock);
         });
@@ -269,15 +283,16 @@ describe(`component: ListWithPagination - ${MAX_ITEMS_PER_PAGE} items per page`,
 
       while (currentPage <= lastPage) {
         const currentPaginationBlock = within(container).getByTestId(
-          `Pagination.Item.${currentPage}`
+          `ListWithPagination.Pagination.Item.${currentPage}`
         );
 
         await act(async () => {
           await user.click(currentPaginationBlock);
         });
 
-        const paginationItems =
-          within(container).getAllByTestId(/Pagination\.Item/);
+        const paginationItems = within(container).getAllByTestId(
+          /ListWithPagination\.Pagination\.Item/
+        );
 
         const expectedOrder = [
           "1",

@@ -1,4 +1,4 @@
-import { waitFor, screen, act, within } from "@testing-library/react";
+import { waitFor, screen, act } from "@testing-library/react";
 
 import renderRoute from "../../utils/render/renderRoute";
 
@@ -28,6 +28,20 @@ const lazyRenderLogin = async (
   return render;
 };
 
+const formControls = {
+  get inputEmail() {
+    return screen.getByRole("textbox", {
+      name: "Enter your email",
+    });
+  },
+
+  get buttonSubmit() {
+    return screen.getByRole("button", {
+      name: "Enter",
+    });
+  },
+};
+
 describe("page: Login - path: /", () => {
   afterEach(() => {
     vi.restoreAllMocks();
@@ -37,37 +51,28 @@ describe("page: Login - path: /", () => {
     await lazyRenderLogin();
 
     const formLogin = screen.getByTestId("Login.Form");
-    const inputEmail = within(formLogin).getByRole("textbox", {
-      name: "Enter your email",
-    });
-    const buttonSubmit = within(formLogin).getByRole("button", {
-      name: "Enter",
-    });
 
     screen.getByRole("heading", { level: 1, name: "Login" });
-    expect(inputEmail).toHaveValue("");
-    expect(buttonSubmit).toBeDisabled();
+
+    expect(formLogin).toContainElement(formControls.inputEmail);
+    expect(formLogin).toContainElement(formControls.buttonSubmit);
+
+    expect(formControls.inputEmail).toHaveValue("");
+    expect(formControls.buttonSubmit).toBeDisabled();
   });
 
   it("handles login correctly", async () => {
     const { user, store } = await lazyRenderLogin();
 
-    const inputEmail = screen.getByRole("textbox", {
-      name: "Enter your email",
+    await act(async () => {
+      await user.type(formControls.inputEmail, emailValid);
     });
-    const buttonSubmit = screen.getByRole("button", {
-      name: "Enter",
-    });
+
+    expect(formControls.inputEmail).toHaveValue(emailValid);
+    expect(formControls.buttonSubmit).toBeEnabled();
 
     await act(async () => {
-      await user.type(inputEmail, emailValid);
-    });
-
-    expect(inputEmail).toHaveValue(emailValid);
-    expect(buttonSubmit).toBeEnabled();
-
-    await act(async () => {
-      await user.click(buttonSubmit);
+      await user.click(formControls.buttonSubmit);
     });
 
     expect(store.getState().user.email).toBe(emailValid);
@@ -77,18 +82,11 @@ describe("page: Login - path: /", () => {
   it("makes the button disabled when email is not valid", async () => {
     const { user } = await lazyRenderLogin();
 
-    const inputEmail = screen.getByRole("textbox", {
-      name: "Enter your email",
-    });
-    const buttonSubmit = screen.getByRole("button", {
-      name: "Enter",
-    });
-
     await act(async () => {
-      await user.type(inputEmail, emailInvalid);
+      await user.type(formControls.inputEmail, emailInvalid);
     });
 
-    expect(inputEmail).toHaveValue(emailInvalid);
-    expect(buttonSubmit).not.toBeEnabled();
+    expect(formControls.inputEmail).toHaveValue(emailInvalid);
+    expect(formControls.buttonSubmit).not.toBeEnabled();
   });
 });

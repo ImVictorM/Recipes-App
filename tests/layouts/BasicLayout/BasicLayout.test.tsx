@@ -13,9 +13,10 @@ const BasicLayoutDefault = (
 );
 
 const checkLayoutRendersBaseElements = () => {
-  const layoutContent = screen.getByTestId("BasicLayout.Content");
-  const layoutHeader = screen.getByTestId("BasicLayout.Header");
-  const layoutFooter = screen.getByTestId("BasicLayout.Footer");
+  const layout = screen.getByTestId("BasicLayout");
+  const layoutContent = within(layout).getByTestId("BasicLayout.Content");
+  const layoutHeader = within(layout).getByTestId("BasicLayout.Header");
+  const layoutFooter = within(layout).getByTestId("BasicLayout.Footer");
 
   within(layoutContent).getByRole("heading", { name: "Page content" });
 

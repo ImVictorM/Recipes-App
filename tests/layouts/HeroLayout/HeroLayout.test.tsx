@@ -18,8 +18,11 @@ describe("layout: HeroLayout", () => {
   it("renders correctly", () => {
     renderElement(<HeroLayoutDefault />);
 
-    screen.getByTestId("HeroLayout.Hero");
-    within(screen.getByTestId("HeroLayout.Content")).getByRole("heading", {
+    const layout = screen.getByTestId("HeroLayout");
+    const layoutContent = within(layout).getByTestId("HeroLayout.Content");
+
+    within(layout).getByTestId("HeroLayout.Hero");
+    within(layoutContent).getByRole("heading", {
       name: "content",
       level: 1,
     });

@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import userEvent from "@testing-library/user-event";
 
 import routes from "@/routing/routes";
-import { setupStore } from "@/store";
+import setupStore from "@/store/setupStore";
 
 import { RenderRouteOptions } from "./renderRoute.types";
 

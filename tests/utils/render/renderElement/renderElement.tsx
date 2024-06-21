@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 
-import { setupStore } from "@/store";
+import setupStore from "@/store/setupStore";
 import { ExtendedRenderOptions } from "../common/types";
 
 export default function renderElement(

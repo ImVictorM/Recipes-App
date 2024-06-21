@@ -40,15 +40,16 @@ export default function RecipeDetails({
   const isRecipeDone = useAppSelector((state) =>
     selectIsRecipeDone(state, recipe.id, user.email)
   );
-  const isRecipeInProgress = useAppSelector((state) =>
-    selectIsRecipeInProgress(state, recipe, user.email)
-  );
 
   /**
    * Needs to be static to not flicker the button text
    * when leaving the page.
    */
-  const isRecipeInProgressInitialStateRef = React.useRef(isRecipeInProgress);
+  const isRecipeInProgressInitialStateRef = React.useRef(
+    useAppSelector((state) =>
+      selectIsRecipeInProgress(state, recipe, user.email)
+    )
+  );
 
   const handleStartRecipe = () => {
     dispatch(setRecipeInProgress({ userEmail: user.email, recipe: recipe }));
@@ -108,7 +109,7 @@ export default function RecipeDetails({
         )}
 
         <section>
-          <h3>Recommended drinks</h3>
+          <h3>Recommended {recipe.type === "drink" ? "food" : "drinks"}</h3>
 
           <React.Suspense
             fallback={
@@ -125,7 +126,7 @@ export default function RecipeDetails({
             <Await
               resolve={data.recommendations}
               errorElement={
-                <div>
+                <div data-testid="RecipeDetails.Recommendations.Error">
                   <p className="text-muted">
                     There was an error trying to load the recommendations.
                   </p>

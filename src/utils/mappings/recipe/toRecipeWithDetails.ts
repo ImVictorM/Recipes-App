@@ -31,7 +31,7 @@ function combineIngredientWithMeasure(recipe: MenuRecipeType) {
 }
 
 export default function toRecipeWithDetails(
-  recipe: Meal | Drink
+  recipe: MenuRecipeType
 ): RecipeWithDetails {
   if (isMeal(recipe)) {
     const mealRecipe = recipe as Meal;

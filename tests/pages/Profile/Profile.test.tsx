@@ -1,4 +1,4 @@
-import { waitFor, screen, act } from "@testing-library/react";
+import { waitFor, screen } from "@testing-library/react";
 
 import renderRoute from "../../utils/render/renderRoute";
 
@@ -43,7 +43,7 @@ const profile = {
 
 describe("page: Profile - path: /profile", () => {
   afterEach(() => {
-    vi.restoreAllMocks();
+    vi.resetModules();
   });
 
   it("renders correctly", async () => {
@@ -62,9 +62,7 @@ describe("page: Profile - path: /profile", () => {
   it("removes the user from global storage and redirects to / when clicking the logout button", async () => {
     const { user, store } = await lazyRenderProfile();
 
-    await act(async () => {
-      await user.click(profile.buttons.logout);
-    });
+    await user.click(profile.buttons.logout);
 
     expect(store.getState().user.email).toBeFalsy();
     expect(mockNavigate).toHaveBeenCalledWith("/");

@@ -30,7 +30,9 @@ export default function RecipeError({
         <ErrorIcon role="image" aria-label="error" style={{ width: "70px" }} />
         <h1>Oops, something went wrong!</h1>
 
-        <p>Something happened when trying to show this page content.</p>
+        <p data-testid={`${prefixDataTestId}.Text`}>
+          Something happened when trying to show this page content.
+        </p>
 
         {isRouteErrorResponse(error) && (
           <p className="text-muted">

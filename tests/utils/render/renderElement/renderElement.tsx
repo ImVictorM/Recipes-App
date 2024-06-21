@@ -1,6 +1,8 @@
-import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { RouterProvider, createMemoryRouter } from "react-router-dom";
+
+import { render } from "@testing-library/react";
+
 import userEvent from "@testing-library/user-event";
 
 import setupStore from "@/store/setupStore";
@@ -15,17 +17,27 @@ export default function renderElement(
   }: ExtendedRenderOptions = {}
 ) {
   function Wrapper({ children }: React.PropsWithChildren) {
-    return (
-      <BrowserRouter>
-        <Provider store={store}>{children}</Provider>
-      </BrowserRouter>
-    );
+    return <Provider store={store}>{children}</Provider>;
   }
+
+  const testPath = "/testing-element";
+
+  const testRouter = createMemoryRouter(
+    [
+      {
+        path: testPath,
+        element: element,
+      },
+    ],
+    {
+      initialEntries: [testPath],
+    }
+  );
 
   return {
     user: userEvent.setup(),
     store,
-    ...render(element, {
+    ...render(<RouterProvider router={testRouter} />, {
       wrapper: Wrapper,
       ...renderOptions,
     }),

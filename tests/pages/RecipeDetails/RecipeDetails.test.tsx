@@ -1,6 +1,9 @@
 import axios from "axios";
 import { waitFor, screen, act } from "@testing-library/react";
 
+import toRecipeWithDetails from "@/utils/mappings/recipe/toRecipeWithDetails";
+import formatDateToDDMMYYYY from "@/utils/formatDateToDDMMYYYY";
+
 import renderRoute from "../../utils/render/renderRoute";
 import normalizeText from "../../utils/normalizeText";
 
@@ -14,8 +17,6 @@ import { emailValid } from "../../mocks/user/email";
 
 import { MenuRecipe } from "@/services/menu/common/types";
 import { RenderRouteOptions } from "../../utils/render/renderRoute/renderRoute.types";
-import toRecipeWithDetails from "@/utils/mappings/recipe/toRecipeWithDetails";
-import formatDateToDDMMYYYY from "@/utils/formatDateToDDMMYYYY";
 
 const mockNavigate = vi.fn();
 

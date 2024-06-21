@@ -130,6 +130,7 @@ export default function RecipeInProgress({
                       />
                       <Form.Check.Label
                         className={checked ? "line-through" : ""}
+                        data-testid={`${prefixDataTestId}.Ingredient${index}.Label`}
                       >{`${ingredient} ${measure}`}</Form.Check.Label>
                     </Form.Check>
                   );

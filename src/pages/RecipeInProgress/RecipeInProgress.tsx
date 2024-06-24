@@ -36,8 +36,10 @@ export default function RecipeInProgress({
     selectRecipeInProgressIngredients(state, recipe, user.email)
   );
   const navigate = useNavigate();
-  const isRecipeInProgress = useAppSelector((state) =>
-    selectIsRecipeInProgress(state, recipe, user.email)
+  const isRecipeInProgressRef = React.useRef(
+    useAppSelector((state) =>
+      selectIsRecipeInProgress(state, recipe, user.email)
+    )
   );
 
   const isAllIngredientsChecked = React.useMemo(() => {
@@ -99,15 +101,15 @@ export default function RecipeInProgress({
     return false;
   };
 
-  /*
-    Check if recipe is in progress in the global state,
-    if not, navigate to its details page.
-  **/
+  /**
+   * After mounting checks if recipe is in progress,
+   * if not, redirects to its recipe details page.
+   */
   React.useEffect(() => {
-    if (!isRecipeInProgress) {
+    if (!isRecipeInProgressRef.current) {
       navigate(`/${recipe.type}s/${recipe.id}`);
     }
-  }, [isRecipeInProgress, navigate, recipe.id, recipe.type]);
+  }, [navigate, recipe.id, recipe.type]);
 
   return (
     <HeroLayout prefixDataTestId={prefixDataTestId} recipe={recipe}>

@@ -20,7 +20,7 @@ const ScrollLinearContainerDefault = (
 
 describe("component: ScrollLinearContainer", () => {
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("renders the correct element and its children", () => {

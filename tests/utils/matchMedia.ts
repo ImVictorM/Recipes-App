@@ -1,5 +1,5 @@
 export function createMatchMedia(matches: boolean) {
-  return vi.fn().mockImplementation((query) => ({
+  return (query: string) => ({
     matches,
     media: query,
     onchange: null,
@@ -8,5 +8,5 @@ export function createMatchMedia(matches: boolean) {
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
-  }));
+  });
 }

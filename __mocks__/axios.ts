@@ -1,11 +1,10 @@
 import { vi } from "vitest";
 
-export default {
+const mockAxios = {
   post: vi.fn(),
   get: vi.fn(),
   delete: vi.fn(),
   put: vi.fn(),
-  create: vi.fn().mockReturnThis(),
   interceptors: {
     request: {
       use: vi.fn(),
@@ -16,4 +15,9 @@ export default {
       eject: vi.fn(),
     },
   },
+  create: function () {
+    return this;
+  },
 };
+
+export default mockAxios;

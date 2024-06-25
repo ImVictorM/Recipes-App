@@ -1,4 +1,10 @@
-import { Recipe, RecipeWithDetails } from "@/store/slices/menu/menuSlice.types";
+import formatDateToDDMMYYYY from "@/utils/formatDateToDDMMYYYY";
+
+import {
+  Recipe,
+  RecipeWithDetails,
+  RecipeWithDetailsAndDoneDate,
+} from "@/store/slices/menu/menuSlice.types";
 
 export const sushi: Recipe = {
   type: "meal",
@@ -11,7 +17,7 @@ export const sushiWithDetails: RecipeWithDetails = {
   ...sushi,
   category: "Seafood",
   instructions: "Sushi instructions",
-  tags: [],
+  tags: ["japanese food"],
   video: "https://www.youtube.com/watch?v=ub68OxEypaY",
   nationality: "Japanese",
   ingredientsMeasures: [
@@ -23,4 +29,9 @@ export const sushiWithDetails: RecipeWithDetails = {
     ["Soy Sauce", "1 tbs"],
     ["Cucumber", "1"],
   ],
+};
+
+export const sushiWithDetailsAndDoneDate: RecipeWithDetailsAndDoneDate = {
+  ...sushiWithDetails,
+  doneDate: formatDateToDDMMYYYY(new Date()),
 };

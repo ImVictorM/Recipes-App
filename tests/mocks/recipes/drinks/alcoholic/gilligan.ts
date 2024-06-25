@@ -1,4 +1,10 @@
-import { Recipe, RecipeWithDetails } from "@/store/slices/menu/menuSlice.types";
+import formatDateToDDMMYYYY from "@/utils/formatDateToDDMMYYYY";
+
+import {
+  Recipe,
+  RecipeWithDetails,
+  RecipeWithDetailsAndDoneDate,
+} from "@/store/slices/menu/menuSlice.types";
 
 export const gilligan: Recipe = {
   type: "drink",
@@ -19,4 +25,9 @@ export const gilliganWithDetails: RecipeWithDetails = {
     ["Cranberry juice", "3 oz "],
   ],
   tags: [],
+};
+
+export const gilliganWithDetailsAndDoneDate: RecipeWithDetailsAndDoneDate = {
+  ...gilliganWithDetails,
+  doneDate: formatDateToDDMMYYYY(new Date()),
 };

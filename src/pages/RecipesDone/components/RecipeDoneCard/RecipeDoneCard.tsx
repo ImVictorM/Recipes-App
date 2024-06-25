@@ -40,6 +40,7 @@ export default function RecipeDoneCard({
       <Card.Link
         href={recipeEndpoint}
         className="text-decoration-none overflow-hidden rounded-top"
+        data-testid={`${prefixDataTestId}.LinkImg`}
       >
         <Card.Img
           className={`${styles.card__img}`}
@@ -103,7 +104,7 @@ export default function RecipeDoneCard({
             {recipeSubtitle}
           </Card.Subtitle>
 
-          {recipe.alcoholic && (
+          {recipe.alcoholic?.toLocaleLowerCase() === "alcoholic" && (
             <Card.Text
               as="span"
               className={`${styles.card__alcoholic} flex-shrink-0`}
@@ -124,13 +125,14 @@ export default function RecipeDoneCard({
         <ScrollLinearContainer
           as="ul"
           className={`${styles.cards__tags} hide-scroll`}
-          data-testid={`${prefixDataTestId}.Body.Tags`}
+          prefixDataTestId={`${prefixDataTestId}.Body.Tags`}
         >
           {recipe.tags.map((tag, index) => (
             <li
               key={tag}
               className={`${styles.card__tags__tag}`}
               data-testid={`${prefixDataTestId}.Body.Tags.Tag${index}`}
+              aria-label={tag}
             >
               {tag}
             </li>

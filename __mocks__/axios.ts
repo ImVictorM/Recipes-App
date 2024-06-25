@@ -1,6 +1,9 @@
+import { isAxiosError as originalIsAxiosError } from "axios";
 import { vi } from "vitest";
 
-const mockAxios = {
+export const isAxiosError = vi.fn(originalIsAxiosError);
+
+export const mockAxios = {
   post: vi.fn(),
   get: vi.fn(),
   delete: vi.fn(),
@@ -18,6 +21,7 @@ const mockAxios = {
   create: function () {
     return this;
   },
+  isAxiosError,
 };
 
 export default mockAxios;

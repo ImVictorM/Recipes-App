@@ -12,7 +12,7 @@ import {
 const RecipesFavorite = React.lazy(() => import("@/pages/RecipesFavorite"));
 const RecipesDone = React.lazy(() => import("@/pages/RecipesDone"));
 const Profile = React.lazy(() => import("@/pages/Profile"));
-const Recipes = React.lazy(() => import("@/pages/Recipes/Recipes"));
+const Recipes = React.lazy(() => import("@/pages/Recipes"));
 const RecipeDetails = React.lazy(() => import("@/pages/RecipeDetails"));
 const RecipeError = React.lazy(
   () => import("@/pages/ErrorBoundaries/RecipeError")

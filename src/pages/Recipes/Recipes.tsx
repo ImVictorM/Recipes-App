@@ -1,7 +1,7 @@
 import React from "react";
+import { isAxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { Collapse } from "react-bootstrap";
-import { isAxiosError } from "axios";
 
 import BasicLayout from "@/layouts/BasicLayout";
 
@@ -237,10 +237,13 @@ export default function Recipes({
       )}
 
       <Collapse in={visibility.showSearchBar}>
-        <div>
+        <div
+          aria-hidden={!visibility.showSearchBar}
+          data-testid={`${prefixDataTestId}.RecipesFilterBySearch`}
+        >
           <RecipesFilterBySearch
             onSearch={handleFetchRecipesBySearch}
-            prefixDataTestId={`${prefixDataTestId}.ComponentRecipesFilterBySearch`}
+            prefixDataTestId={`${prefixDataTestId}.RecipesFilterBySearch.Component`}
           />
         </div>
       </Collapse>
@@ -250,7 +253,7 @@ export default function Recipes({
           categories={recipeUtils.categories}
           onFilterByCategory={handleFetchRecipesByCategory}
           onFilterByAll={handleFetchRecipesWithoutFilter}
-          prefixDataTestId={`${prefixDataTestId}.ComponentRecipesFilterByCategory`}
+          prefixDataTestId={`${prefixDataTestId}.RecipesFilterByCategory`}
         />
       )}
 

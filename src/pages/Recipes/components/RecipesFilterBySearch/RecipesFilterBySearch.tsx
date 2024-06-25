@@ -66,6 +66,7 @@ export default function RecipesFilterBySearch({
         name="searchQuery"
         value={formState.searchQuery}
         onChange={handleSearchInputChange}
+        aria-label="search for recipes"
       />
 
       <div className={`${styles.form__bottom}`}>

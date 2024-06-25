@@ -41,7 +41,7 @@ export default function RecipesFilterByCategory({
       >
         <button
           type="button"
-          data-testid={`${prefixDataTestId}.ButtonAll`}
+          data-testid={`${prefixDataTestId}.ButtonFilter.All`}
           name="all"
           className={`button-pill`}
           onClick={onFilterByAll}
@@ -53,7 +53,7 @@ export default function RecipesFilterByCategory({
             <button
               className={`button-pill`}
               key={index}
-              data-testid={`${prefixDataTestId}.Button${strCategory}`}
+              data-testid={`${prefixDataTestId}.ButtonFilter.${strCategory}`}
               name={strCategory}
               onClick={() => onFilterByCategory(strCategory)}
             >

@@ -7,7 +7,7 @@ import renderElement from "../../../utils/render/renderElement";
 import { sushiWithDetailsAndDoneDate } from "../../../mocks/recipes/meals/sushi";
 import { RecipeWithDetailsAndDoneDate } from "@/store/slices/menu/menuSlice.types";
 import { gilliganWithDetailsAndDoneDate } from "../../../mocks/recipes/drinks/alcoholic/gilligan";
-import { frappeWithDetailsAndDoneDate } from "../../../mocks/recipes/drinks/frappe";
+import { frappeWithDetailsAndDoneDate } from "../../../mocks/recipes/drinks/nonAlcoholic/frappe";
 
 const RecipeDoneCardDefault = (
   props: Partial<React.ComponentProps<typeof RecipeDoneCard>>

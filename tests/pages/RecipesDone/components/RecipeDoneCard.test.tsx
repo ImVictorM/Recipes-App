@@ -2,7 +2,7 @@ import { screen, within } from "@testing-library/react";
 
 import RecipeDoneCard from "@/pages/RecipesDone/components/RecipeDoneCard";
 
-import renderElement from "../../../utils/render/renderElement";
+import renderElement from "../../../helpers/render/renderElement";
 
 import { sushiWithDetailsAndDoneDate } from "../../../mocks/recipes/meals/sushi";
 import { RecipeWithDetailsAndDoneDate } from "@/store/slices/menu/menuSlice.types";

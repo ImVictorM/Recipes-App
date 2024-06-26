@@ -1,12 +1,12 @@
 import { screen, waitFor, within, act } from "@testing-library/react";
 
-import renderRoute from "../../utils/render/renderRoute";
+import renderRoute from "../../helpers/render/renderRoute";
 
 import { recipesWithDetails } from "../../mocks/recipes/recipes";
 import { drinksWithDetails } from "../../mocks/recipes/drinks/drinks";
 import { emailValid } from "../../mocks/user/email";
 
-import { RenderRouteOptions } from "../../utils/render/renderRoute/renderRoute.types";
+import { RenderRouteOptions } from "../../helpers/render/renderRoute/renderRoute.types";
 import { RecipeWithDetails } from "@/store/slices/menu/menuSlice.types";
 import { mealsWithDetails } from "../../mocks/recipes/meals/meals";
 

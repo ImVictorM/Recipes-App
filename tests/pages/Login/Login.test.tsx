@@ -1,10 +1,10 @@
 import { waitFor, screen, act } from "@testing-library/react";
 
-import renderRoute from "../../utils/render/renderRoute";
+import renderRoute from "../../helpers/render/renderRoute";
 
 import { emailValid, emailInvalid } from "../../mocks/user/email";
 
-import { RenderRouteOptions } from "../../utils/render/renderRoute/renderRoute.types";
+import { RenderRouteOptions } from "../../helpers/render/renderRoute/renderRoute.types";
 
 const mockNavigate = vi.fn();
 

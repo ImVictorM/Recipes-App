@@ -4,7 +4,7 @@ import RecipesFilterByCategory from "@/pages/Recipes/components/RecipesFilterByC
 
 import * as useScrollLinearManual from "@/hooks/useScrollLinearManual";
 
-import renderElement from "../../../utils/render/renderElement";
+import renderElement from "../../../helpers/render/renderElement";
 import categories from "../../../mocks/services/menu/categories";
 
 const mockOnFilterByAll = vi.fn();

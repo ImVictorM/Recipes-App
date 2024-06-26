@@ -2,7 +2,7 @@ import { screen, within } from "@testing-library/react";
 
 import BasicLayout from "@/layouts/BasicLayout";
 
-import renderElement from "../../utils/render/renderElement";
+import renderElement from "../../helpers/render/renderElement";
 
 const BasicLayoutDefault = (
   props: Partial<React.ComponentProps<typeof BasicLayout>>

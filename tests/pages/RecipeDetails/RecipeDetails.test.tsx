@@ -4,8 +4,8 @@ import { waitFor, screen, act } from "@testing-library/react";
 import toRecipeWithDetails from "@/utils/mappings/recipe/toRecipeWithDetails";
 import formatDateToDDMMYYYY from "@/utils/formatDateToDDMMYYYY";
 
-import renderRoute from "../../utils/render/renderRoute";
-import normalizeText from "../../utils/normalizeText";
+import renderRoute from "../../helpers/render/renderRoute";
+import normalizeText from "../../helpers/normalizeText";
 
 import getMealDetailsByIdResponse from "../../mocks/services/menu/meal/getMealDetailsByIdResponse";
 import getCocktailDetailsByIdResponse from "../../mocks/services/menu/cocktail/getCocktailDetailsByIdResponse";
@@ -16,7 +16,7 @@ import { corba, meals } from "../../mocks/services/menu/meal/meals";
 import { emailValid } from "../../mocks/user/email";
 
 import { MenuRecipe } from "@/services/menu/common/types";
-import { RenderRouteOptions } from "../../utils/render/renderRoute/renderRoute.types";
+import { RenderRouteOptions } from "../../helpers/render/renderRoute/renderRoute.types";
 
 const mockNavigate = vi.fn();
 

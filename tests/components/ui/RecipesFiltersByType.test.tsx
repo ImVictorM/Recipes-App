@@ -2,7 +2,7 @@ import { screen, within } from "@testing-library/react";
 
 import RecipesFilterByType from "@/components/ui/RecipesFilterByType";
 
-import renderElement from "../../utils/render/renderElement";
+import renderElement from "../../helpers/render/renderElement";
 
 const RecipesFilterByTypeDefault = (
   props: Partial<React.ComponentProps<typeof RecipesFilterByType>>

@@ -1,7 +1,7 @@
 import { within } from "@testing-library/react";
 
 import RecipesEmptyByType from "@/components/ui/RecipesEmptyByType";
-import renderElement from "../../utils/render/renderElement";
+import renderElement from "../../helpers/render/renderElement";
 
 const RecipeEmptyByTypeDefault = (
   props: Partial<React.ComponentProps<typeof RecipesEmptyByType>>

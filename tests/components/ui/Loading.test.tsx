@@ -2,8 +2,8 @@ import { within } from "@testing-library/react";
 
 import Loading from "@/components/ui/Loading";
 
-import renderElement from "../../utils/render/renderElement";
-import { createMatchMedia } from "../../utils/matchMedia";
+import renderElement from "../../helpers/render/renderElement";
+import { createMatchMedia } from "../../helpers/matchMedia";
 
 const LoadingDefault = () => <Loading />;
 

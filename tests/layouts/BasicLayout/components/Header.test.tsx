@@ -2,7 +2,7 @@ import { screen, act } from "@testing-library/react";
 
 import Header from "@/layouts/BasicLayout/components/Header";
 
-import renderElement from "../../../utils/render/renderElement";
+import renderElement from "../../../helpers/render/renderElement";
 
 const HeaderDefault = (props: Partial<React.ComponentProps<typeof Header>>) => (
   <Header {...props} />

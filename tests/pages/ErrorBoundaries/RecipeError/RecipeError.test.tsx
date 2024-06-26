@@ -2,7 +2,7 @@ import { screen, act } from "@testing-library/react";
 
 import RecipeError from "@/pages/ErrorBoundaries/RecipeError";
 
-import renderElement from "../../../utils/render/renderElement";
+import renderElement from "../../../helpers/render/renderElement";
 
 const mockNavigate = vi.fn();
 

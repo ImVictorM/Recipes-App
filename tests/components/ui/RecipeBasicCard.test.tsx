@@ -2,7 +2,7 @@ import { within } from "@testing-library/react";
 
 import RecipeBasicCard from "@/components/ui/RecipeBasicCard";
 
-import renderElement from "../../utils/render/renderElement";
+import renderElement from "../../helpers/render/renderElement";
 
 import { sushi } from "../../mocks/recipes/meals/sushi";
 import { gilligan } from "../../mocks/recipes/drinks/alcoholic/gilligan";

@@ -1,8 +1,8 @@
 import { screen, waitFor, within, act } from "@testing-library/react";
 
-import renderRoute from "../../utils/render/renderRoute";
+import renderRoute from "../../helpers/render/renderRoute";
 
-import { RenderRouteOptions } from "../../utils/render/renderRoute/renderRoute.types";
+import { RenderRouteOptions } from "../../helpers/render/renderRoute/renderRoute.types";
 
 import { recipesWithDetailsAndDoneDate } from "../../mocks/recipes/recipes";
 import { drinksWithDetailsAndDoneDate } from "../../mocks/recipes/drinks/drinks";

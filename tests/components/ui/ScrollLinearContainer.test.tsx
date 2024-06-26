@@ -2,7 +2,7 @@ import { within, act } from "@testing-library/react";
 
 import ScrollLinearContainer from "@/components/ui/ScrollLinearContainer";
 
-import renderElement from "../../utils/render/renderElement";
+import renderElement from "../../helpers/render/renderElement";
 
 vi.mock(
   "@/hooks/useOverflow",

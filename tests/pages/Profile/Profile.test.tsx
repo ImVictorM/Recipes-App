@@ -1,6 +1,6 @@
 import { waitFor, screen } from "@testing-library/react";
 
-import renderRoute from "../../utils/render/renderRoute";
+import renderRoute from "../../helpers/render/renderRoute";
 
 import { emailValid } from "../../mocks/user/email";
 

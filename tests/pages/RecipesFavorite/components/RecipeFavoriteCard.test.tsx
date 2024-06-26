@@ -2,7 +2,7 @@ import { screen, within, act } from "@testing-library/react";
 
 import RecipeFavoriteCard from "@/pages/RecipesFavorite/components/RecipeFavoriteCard";
 
-import renderElement from "../../../utils/render/renderElement";
+import renderElement from "../../../helpers/render/renderElement";
 
 import { sushiWithDetails } from "../../../mocks/recipes/meals/sushi";
 import { palomaWithDetails } from "../../../mocks/recipes/drinks/alcoholic/paloma";

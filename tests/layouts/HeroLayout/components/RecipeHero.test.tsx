@@ -2,7 +2,7 @@ import { screen, act } from "@testing-library/react";
 
 import RecipeHero from "@/layouts/HeroLayout/components/RecipeHero";
 
-import renderElement from "../../../utils/render/renderElement";
+import renderElement from "../../../helpers/render/renderElement";
 
 import { sushiWithDetails } from "../../../mocks/recipes/meals/sushi";
 import { gilliganWithDetails } from "../../../mocks/recipes/drinks/alcoholic/gilligan";

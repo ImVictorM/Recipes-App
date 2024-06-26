@@ -2,7 +2,7 @@ import { screen, within } from "@testing-library/react";
 
 import HeroLayout from "@/layouts/HeroLayout";
 
-import renderElement from "../../utils/render/renderElement";
+import renderElement from "../../helpers/render/renderElement";
 
 import { sushiWithDetails } from "../../mocks/recipes/meals/sushi";
 

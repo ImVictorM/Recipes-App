@@ -2,7 +2,7 @@ import { act, within } from "@testing-library/react";
 
 import ListWithPagination from "@/components/ui/ListWithPagination";
 
-import renderElement from "../../utils/render/renderElement";
+import renderElement from "../../helpers/render/renderElement";
 
 type Item = {
   id: string;

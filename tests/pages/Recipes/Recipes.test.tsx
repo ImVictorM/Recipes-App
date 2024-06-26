@@ -5,7 +5,7 @@ import { UserEvent } from "@testing-library/user-event";
 
 import toRecipe from "@/utils/mappings/recipe/toRecipe";
 
-import renderRoute from "../../utils/render/renderRoute";
+import renderRoute from "../../helpers/render/renderRoute";
 
 import mealCategories from "@/services/menu/meal/categories";
 import cocktailCategories from "@/services/menu/cocktail/categories";
@@ -16,7 +16,7 @@ import getMealsResponse from "../../mocks/services/menu/meal/getMealsResponse";
 import { cocktails } from "../../mocks/services/menu/cocktail/cocktails";
 import getCocktailsResponse from "../../mocks/services/menu/cocktail/getCocktailsResponse";
 
-import { RenderRouteOptions } from "../../utils/render/renderRoute/renderRoute.types";
+import { RenderRouteOptions } from "../../helpers/render/renderRoute/renderRoute.types";
 import { RecipeCategory } from "@/services/menu/common/types";
 import { Recipe } from "@/store/slices/menu/menuSlice.types";
 import { emailValid } from "../../mocks/user/email";

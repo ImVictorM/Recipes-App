@@ -2,7 +2,7 @@ import { within } from "@testing-library/react";
 
 import RecipeBasicCardSkeleton from "@/components/ui/RecipeBasicCardSkeleton";
 
-import renderElement from "../../utils/render/renderElement";
+import renderElement from "../../helpers/render/renderElement";
 
 const RecipeBasicCardSkeletonDefault = () => <RecipeBasicCardSkeleton />;
 

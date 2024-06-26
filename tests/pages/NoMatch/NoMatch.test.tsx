@@ -1,6 +1,6 @@
 import { screen, waitFor } from "@testing-library/react";
 
-import renderRoute from "../../utils/render/renderRoute";
+import renderRoute from "../../helpers/render/renderRoute";
 
 const invalidRoute = "/not-found";
 

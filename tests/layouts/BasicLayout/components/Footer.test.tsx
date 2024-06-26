@@ -1,7 +1,7 @@
 import { screen, act } from "@testing-library/react";
 
 import Footer from "@/layouts/BasicLayout/components/Footer";
-import renderElement from "../../../utils/render/renderElement";
+import renderElement from "../../../helpers/render/renderElement";
 
 const FooterDefault = () => <Footer />;
 

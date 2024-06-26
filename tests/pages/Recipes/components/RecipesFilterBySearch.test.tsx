@@ -2,7 +2,7 @@ import { screen, act } from "@testing-library/react";
 
 import RecipesFilterBySearch from "@/pages/Recipes/components/RecipesFilterBySearch";
 
-import renderElement from "../../../utils/render/renderElement";
+import renderElement from "../../../helpers/render/renderElement";
 import { RecipeFilterOptions } from "@/services/menu/common/enums";
 
 const mockOnSearch = vi.fn();

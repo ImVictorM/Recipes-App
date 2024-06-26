@@ -1,6 +1,6 @@
 /** Makes jest-dom matchers global */
 import "@testing-library/jest-dom/vitest";
-import { createMatchMedia } from "./utils/matchMedia";
+import { createMatchMedia } from "./helpers/matchMedia";
 
 /** Mocks modules from __mocks__ folder */
 vi.mock("axios");

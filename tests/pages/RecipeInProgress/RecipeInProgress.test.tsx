@@ -2,9 +2,9 @@ import axios from "axios";
 
 import { screen, waitFor, act } from "@testing-library/react";
 
-import renderRoute from "../../utils/render/renderRoute";
-import normalizeText from "../../utils/normalizeText";
-import extractIngredientsFromRecipe from "../../utils/extractIngredientsFromRecipe";
+import renderRoute from "../../helpers/render/renderRoute";
+import normalizeText from "../../helpers/normalizeText";
+import extractIngredientsFromRecipe from "../../helpers/extractIngredientsFromRecipe";
 
 import getCocktailDetailsByIdResponse from "../../mocks/services/menu/cocktail/getCocktailDetailsByIdResponse";
 import getMealDetailsByIdResponse from "../../mocks/services/menu/meal/getMealDetailsByIdResponse";
@@ -13,7 +13,7 @@ import { emailValid } from "../../mocks/user/email";
 import { ace } from "../../mocks/services/menu/cocktail/cocktails";
 
 import { MenuRecipe } from "@/services/menu/common/types";
-import { RenderRouteOptions } from "../../utils/render/renderRoute/renderRoute.types";
+import { RenderRouteOptions } from "../../helpers/render/renderRoute/renderRoute.types";
 import { RecipeInProgress } from "@/store/slices/menu/menuSlice.types";
 
 const mockNavigate = vi.fn();

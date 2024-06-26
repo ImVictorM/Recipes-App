@@ -7,6 +7,8 @@ import useAppDispatch from "@/hooks/useAppDispatch";
 
 import { selectUser, setUser } from "@/store/slices/user";
 
+import { EMAIL_REGEX } from "@/utils/constants";
+
 import Logo from "@/assets/images/logo.svg";
 
 import styles from "@/sass/pages/Login/Login.module.scss";
@@ -22,16 +24,14 @@ export default function Login({
 
   const [userEmail, setUserEmail] = React.useState<string>("");
 
+  const isFormValid = React.useMemo(() => {
+    return EMAIL_REGEX.test(userEmail);
+  }, [userEmail]);
+
   const handleUserEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setUserEmail(value);
   };
-
-  const isFormValid = React.useMemo(() => {
-    const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-
-    return emailRegex.test(userEmail);
-  }, [userEmail]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

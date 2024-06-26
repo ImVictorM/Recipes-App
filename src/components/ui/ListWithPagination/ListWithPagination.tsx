@@ -15,6 +15,36 @@ const DEFAULT_SIZES = {
 };
 const MAX_PAGE_BLOCKS_UI = 7;
 
+const calculatePaginationItemsToShow = (
+  currentPage: number,
+  totalPages: number
+) => {
+  const allPaginationItems = Array.from(
+    { length: totalPages },
+    (_v, i) => i + 1
+  );
+
+  if (totalPages <= MAX_PAGE_BLOCKS_UI) {
+    return allPaginationItems;
+  }
+
+  if (currentPage < 5) {
+    const leftPortion = allPaginationItems.slice(0, 5);
+    return [...leftPortion, "...", totalPages];
+  }
+
+  if (currentPage < totalPages - 3) {
+    const middlePortion = allPaginationItems.slice(
+      currentPage - 2,
+      currentPage + 1
+    );
+    return [1, "...", ...middlePortion, "...", totalPages];
+  }
+
+  const rightPortion = allPaginationItems.slice(totalPages - 5);
+  return [1, "...", ...rightPortion];
+};
+
 export default function ListWithPagination<T>({
   items,
   getItemId,
@@ -26,36 +56,6 @@ export default function ListWithPagination<T>({
   prefixDataTestId = "ListWithPagination",
 }: ListWithPaginationProps<T>) {
   const [currentPage, setCurrentPage] = React.useState<number>(1);
-
-  const calculatePaginationItemsToShow = (
-    currentPage: number,
-    totalPages: number
-  ) => {
-    const allPaginationItems = Array.from(
-      { length: totalPages },
-      (_v, i) => i + 1
-    );
-
-    if (totalPages <= MAX_PAGE_BLOCKS_UI) {
-      return allPaginationItems;
-    }
-
-    if (currentPage < 5) {
-      const leftPortion = allPaginationItems.slice(0, 5);
-      return [...leftPortion, "...", totalPages];
-    }
-
-    if (currentPage < totalPages - 3) {
-      const middlePortion = allPaginationItems.slice(
-        currentPage - 2,
-        currentPage + 1
-      );
-      return [1, "...", ...middlePortion, "...", totalPages];
-    }
-
-    const rightPortion = allPaginationItems.slice(totalPages - 5);
-    return [1, "...", ...rightPortion];
-  };
 
   const totalPages: number = React.useMemo(() => {
     return Math.max(Math.ceil(items.length / maxItemsPerPage), 1);

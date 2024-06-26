@@ -71,6 +71,7 @@ export default function RecipeFavoriteCard({
             data-testid={`${prefixDataTestId}.Body.LinkTitle.Title`}
             className={`${styles.card__title} text-truncate m-0`}
             title={name}
+            as="h5"
           >
             {name}
           </Card.Title>
@@ -121,7 +122,9 @@ export default function RecipeFavoriteCard({
           <OverlayTrigger
             overlay={(props) => (
               <Tooltip id="unfavorite-button" {...props}>
-                <span data-testid={`${prefixDataTestId}.Body.ButtonUnfavorite`}>
+                <span
+                  data-testid={`${prefixDataTestId}.Body.ButtonUnfavorite.Tooltip`}
+                >
                   Unfavorite recipe
                 </span>
               </Tooltip>
@@ -133,7 +136,7 @@ export default function RecipeFavoriteCard({
               className={`${styles.card__buttons__favorite}`}
               data-testid={`${prefixDataTestId}.Body.ButtonUnfavorite`}
             >
-              <HeartFillIcon role="img" aria-label="fill heart" />
+              <HeartFillIcon role="img" aria-label="unfavorite" />
             </button>
           </OverlayTrigger>
         </div>

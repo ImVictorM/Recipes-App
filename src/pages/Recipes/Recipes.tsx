@@ -1,5 +1,4 @@
 import React from "react";
-import { isAxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { Collapse } from "react-bootstrap";
 
@@ -15,6 +14,7 @@ import RecipesFilterBySearch from "./components/RecipesFilterBySearch";
 
 import useAppSelector from "@/hooks/useAppSelector";
 import useHeadTitle from "@/hooks/useHeadTitle";
+import useRequest from "@/hooks/useRequest";
 
 import { selectVisibility } from "@/store/slices/visibility";
 
@@ -35,49 +35,7 @@ export default function Recipes({
   const navigate = useNavigate();
   const [recipes, setRecipes] = React.useState<Recipe[]>([]);
   const [recipeUtils, setRecipeUtils] = React.useState<RecipesUtils>();
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-
-  // All the API calls in this page updates the same state using setRecipes,
-  // so using a single abort controller is a good approach
-  const abortControllerRef = React.useRef<AbortController | null>(null);
-
-  const fetchWithControllers = React.useCallback(
-    async (
-      fetch: () => Promise<void>,
-      onCatch?: (error: unknown) => Promise<void> | void
-    ) => {
-      setIsLoading(true);
-      resetAbortController();
-      setRecipes([]);
-
-      try {
-        await fetch();
-
-        setErrorMessage(null);
-      } catch (error) {
-        if (abortControllerRef.current?.signal.aborted) {
-          return;
-        } else if (isAxiosError(error) && error.config?.signal?.aborted) {
-          return;
-        }
-
-        if (onCatch) {
-          await onCatch(error);
-        } else {
-          console.error(error);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    []
-  );
-
-  const resetAbortController = () => {
-    abortControllerRef.current?.abort();
-    abortControllerRef.current = new AbortController();
-  };
+  const { errorMessage, isLoading, request, setErrorMessage } = useRequest();
 
   const handleSetRecipes = React.useCallback(
     (recipes: Recipe[]) => {
@@ -98,15 +56,15 @@ export default function Recipes({
     searchQuery,
     searchFilter,
   }: RecipesFilterBySearchFormState) => {
-    await fetchWithControllers(
-      async () => {
+    await request(
+      async (abortController) => {
         if (!recipeUtils) return;
 
         const response = await recipeUtils.onGetRecipesByFilter(
           searchQuery,
           searchFilter,
           {
-            signal: abortControllerRef.current?.signal,
+            signal: abortController.signal,
           }
         );
         const recipes = response.map(toRecipe);
@@ -122,14 +80,14 @@ export default function Recipes({
   };
 
   const handleFetchRecipesByCategory = async (category: string) => {
-    await fetchWithControllers(
-      async () => {
+    await request(
+      async (abortController) => {
         if (!recipeUtils) return;
 
         const response = await recipeUtils.onGetRecipesByFilter(
           category,
           RecipeFilterOptions.CATEGORY,
-          { signal: abortControllerRef.current?.signal }
+          { signal: abortController.signal }
         );
         const recipes = response.map(toRecipe);
 
@@ -144,12 +102,12 @@ export default function Recipes({
   };
 
   const handleFetchRecipesWithoutFilter = React.useCallback(async () => {
-    await fetchWithControllers(
-      async () => {
+    await request(
+      async (abortController) => {
         if (!recipeUtils) return;
 
         const response = await recipeUtils.onGetRecipes({
-          signal: abortControllerRef.current?.signal,
+          signal: abortController.signal,
         });
 
         const recipes = response.map(toRecipe);
@@ -162,15 +120,10 @@ export default function Recipes({
         );
       }
     );
-  }, [fetchWithControllers, handleSetRecipes, recipeUtils]);
+  }, [handleSetRecipes, recipeUtils, request, setErrorMessage]);
 
   React.useEffect(() => {
     handleFetchRecipesWithoutFilter();
-
-    return () => {
-      const { current } = abortControllerRef;
-      current?.abort();
-    };
   }, [handleFetchRecipesWithoutFilter]);
 
   React.useEffect(() => {

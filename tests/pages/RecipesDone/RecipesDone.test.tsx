@@ -14,7 +14,6 @@ import { mealsWithDetailsAndDoneDate } from "../../mocks/recipes/meals/meals";
 const defaultRecipesDone = recipesWithDetailsAndDoneDate;
 
 const lazyLoadPage = async (
-  initialRoutes: string[],
   doneRecipes: RecipeWithDetailsAndDoneDate[] = defaultRecipesDone,
   options: RenderRouteOptions = {
     preloadedState: {
@@ -27,7 +26,7 @@ const lazyLoadPage = async (
     },
   }
 ) => {
-  const render = renderRoute(initialRoutes, options);
+  const render = renderRoute(["/done-recipes"], options);
 
   await waitFor(() => screen.getByTestId("RecipesDone"), { timeout: 5000 });
 
@@ -73,7 +72,7 @@ const uiElements = {
 
 describe("page: RecipesDone - path: /done-recipes", () => {
   it("renders correctly", async () => {
-    await lazyLoadPage(["/done-recipes"]);
+    await lazyLoadPage();
 
     screen.getByRole("heading", { level: 1, name: /done recipes/i });
 
@@ -111,7 +110,7 @@ describe("page: RecipesDone - path: /done-recipes", () => {
   });
 
   it("renders correctly when the user doesn't have done recipes", async () => {
-    await lazyLoadPage(["/done-recipes"], []);
+    await lazyLoadPage([]);
 
     const linkToMeals = screen.getByRole("link", { name: /search for meals/i });
     const linkToDrinks = screen.getByRole("link", {
@@ -127,10 +126,7 @@ describe("page: RecipesDone - path: /done-recipes", () => {
   });
 
   it("renders correctly when the user doesn't have done meals", async () => {
-    const { user } = await lazyLoadPage(
-      ["/done-recipes"],
-      [...drinksWithDetailsAndDoneDate]
-    );
+    const { user } = await lazyLoadPage([...drinksWithDetailsAndDoneDate]);
 
     await act(async () => {
       await user.click(uiElements.buttons.food);
@@ -151,10 +147,7 @@ describe("page: RecipesDone - path: /done-recipes", () => {
   });
 
   it("renders correctly when the user doesn't have done drinks", async () => {
-    const { user } = await lazyLoadPage(
-      ["/done-recipes"],
-      [...mealsWithDetailsAndDoneDate]
-    );
+    const { user } = await lazyLoadPage([...mealsWithDetailsAndDoneDate]);
 
     await act(async () => {
       await user.click(uiElements.buttons.drinks);

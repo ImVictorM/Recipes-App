@@ -7,6 +7,15 @@ import {
   EmptyStateLink,
 } from "./RecipesEmptyByType.types";
 
+const drinkLink: EmptyStateLink = {
+  to: "/drinks",
+  text: "Search for drinks",
+};
+const mealLink: EmptyStateLink = {
+  to: "/meals",
+  text: "Search for meals",
+};
+
 export default function RecipesEmptyByType({
   type,
   action = "done",
@@ -14,15 +23,6 @@ export default function RecipesEmptyByType({
 }: RecipesFavoriteEmptyProps) {
   /** Only one type verification */
   const emptyState: EmptyState = React.useMemo(() => {
-    const drinkLink: EmptyStateLink = {
-      to: "/drinks",
-      text: "Search for drinks",
-    };
-    const mealLink: EmptyStateLink = {
-      to: "/meals",
-      text: "Search for meals",
-    };
-
     switch (type) {
       case "all":
         return {

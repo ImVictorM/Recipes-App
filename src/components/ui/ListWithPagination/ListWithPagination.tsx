@@ -1,8 +1,6 @@
 import React from "react";
 import { Col, Container, Pagination, Row } from "react-bootstrap";
 
-import waitForMs from "@/utils/waitForMs";
-
 import { ListWithPaginationProps } from "./ListWithPagination.types";
 
 /**
@@ -16,7 +14,6 @@ const DEFAULT_SIZES = {
   md: 3,
 };
 const MAX_PAGE_BLOCKS_UI = 7;
-const LOADING_DELAY_THRESHOLD_MS = 500;
 
 export default function ListWithPagination<T>({
   items,
@@ -28,33 +25,12 @@ export default function ListWithPagination<T>({
   loading = false,
   prefixDataTestId = "ListWithPagination",
 }: ListWithPaginationProps<T>) {
-  const totalPages: number = Math.max(
-    Math.ceil(items.length / maxItemsPerPage),
-    1
-  );
-
   const [currentPage, setCurrentPage] = React.useState<number>(1);
-  const [lastLoadingTime, setLastLoadingTime] = React.useState<number>(
-    new Date().getTime()
-  );
-  const [showSkeleton, setShowSkeleton] = React.useState<boolean>(
-    loading && Boolean(renderItemCardSkeleton) && items.length === 0
-  );
 
-  const uiItemsIndex = React.useMemo(() => {
-    const lastItemIndexCalc = currentPage * maxItemsPerPage;
-    return {
-      firstItemIndex: (currentPage - 1) * maxItemsPerPage,
-      lastItemIndex:
-        lastItemIndexCalc > items.length ? items.length : lastItemIndexCalc,
-    };
-  }, [currentPage, maxItemsPerPage, items.length]);
-
-  const showPagination: boolean = React.useMemo(() => {
-    return totalPages > 1 && items.length > 0 && !loading;
-  }, [items.length, loading, totalPages]);
-
-  const paginationItemsToShow = React.useMemo(() => {
+  const calculatePaginationItemsToShow = (
+    currentPage: number,
+    totalPages: number
+  ) => {
     const allPaginationItems = Array.from(
       { length: totalPages },
       (_v, i) => i + 1
@@ -79,51 +55,48 @@ export default function ListWithPagination<T>({
 
     const rightPortion = allPaginationItems.slice(totalPages - 5);
     return [1, "...", ...rightPortion];
+  };
+
+  const totalPages: number = React.useMemo(() => {
+    return Math.max(Math.ceil(items.length / maxItemsPerPage), 1);
+  }, [items.length, maxItemsPerPage]);
+
+  const showSkeleton = React.useMemo<boolean>(() => {
+    if (Boolean(renderItemCardSkeleton) && items.length === 0) return true;
+
+    return loading;
+  }, [loading, renderItemCardSkeleton, items.length]);
+
+  const uiItemsIndex = React.useMemo(() => {
+    const lastItemIndexCalc = currentPage * maxItemsPerPage;
+    return {
+      firstItemIndex: (currentPage - 1) * maxItemsPerPage,
+      lastItemIndex:
+        lastItemIndexCalc > items.length ? items.length : lastItemIndexCalc,
+    };
+  }, [currentPage, maxItemsPerPage, items.length]);
+
+  const showPagination: boolean = React.useMemo(() => {
+    return totalPages > 1 && items.length > 0 && !loading;
+  }, [items.length, loading, totalPages]);
+
+  const paginationItemsToShow = React.useMemo(() => {
+    return calculatePaginationItemsToShow(currentPage, totalPages);
   }, [totalPages, currentPage]);
 
-  const handleMoveToPreviousPage = () => {
+  const handleMoveToPreviousPage = React.useCallback(() => {
     /** If prev - 1 is equal to 0, then return 1 */
     setCurrentPage((prev) => Math.max(prev - 1, 1));
-  };
+  }, []);
 
-  const handleMoveToNextPage = () => {
+  const handleMoveToNextPage = React.useCallback(() => {
     /** If prev + 1 is greater than the total pages, then return total pages */
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  };
+  }, [totalPages]);
 
-  const handleMoveToSpecificPage = (pageNumber: number) => {
+  const handleMoveToSpecificPage = React.useCallback((pageNumber: number) => {
     setCurrentPage(pageNumber);
-  };
-
-  React.useEffect(() => {
-    const handleLoadingChange = async () => {
-      if (!renderItemCardSkeleton) return;
-      /**
-       * For the item to show, the page must be loading
-       * and the items list must be empty.
-       * Sometimes, the loading state will update
-       * to true before the items are set.
-       */
-      if (loading || items.length === 0) {
-        setLastLoadingTime(new Date().getTime());
-        setShowSkeleton(true);
-      } else {
-        /**
-         * Slow the transition to not flicker the cards
-         */
-        const now = new Date().getTime();
-        const pastTime = now - lastLoadingTime;
-
-        if (pastTime < LOADING_DELAY_THRESHOLD_MS) {
-          await waitForMs(LOADING_DELAY_THRESHOLD_MS - pastTime);
-        }
-
-        setShowSkeleton(false);
-      }
-    };
-
-    handleLoadingChange();
-  }, [renderItemCardSkeleton, items.length, lastLoadingTime, loading]);
+  }, []);
 
   React.useEffect(() => {
     setCurrentPage(1);

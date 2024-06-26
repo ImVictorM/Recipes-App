@@ -84,19 +84,19 @@ export default function ListWithPagination<T>({
     return calculatePaginationItemsToShow(currentPage, totalPages);
   }, [totalPages, currentPage]);
 
-  const handleMoveToPreviousPage = React.useCallback(() => {
+  const handleMoveToPreviousPage = () => {
     /** If prev - 1 is equal to 0, then return 1 */
     setCurrentPage((prev) => Math.max(prev - 1, 1));
-  }, []);
+  };
 
-  const handleMoveToNextPage = React.useCallback(() => {
+  const handleMoveToNextPage = () => {
     /** If prev + 1 is greater than the total pages, then return total pages */
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  }, [totalPages]);
+  };
 
-  const handleMoveToSpecificPage = React.useCallback((pageNumber: number) => {
+  const handleMoveToSpecificPage = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-  }, []);
+  };
 
   React.useEffect(() => {
     setCurrentPage(1);

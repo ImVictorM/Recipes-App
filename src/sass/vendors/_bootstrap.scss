@@ -1,0 +1,119 @@
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/mixins" as *;
+/*
+  Override bootstrap variables
+**/
+
+/* colors **/
+$primary: map-get($theme-colors, "gold");
+$secondary: map-get($theme-colors, "purple");
+$dark: map-get($theme-colors, "black");
+$white: map-get($theme-colors, "white");
+$danger: map-get($theme-colors, "red");
+$headings-color: $dark;
+
+/* theme **/
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    "primary": $primary,
+    "secondary": $secondary,
+    "dark": $dark,
+    "white": $white,
+    "danger": $danger,
+  ),
+);
+
+/** inputs */
+$input-border-color: lighten($secondary, 30%);
+$input-focus-box-shadow: 0 0 0 0.25rem rgba($secondary, 0.25);
+$input-focus-border-color: lighten($secondary, 5%);
+
+
+/** checkbox */
+$form-check-input-border: 1px solid map-get($map: $theme-colors, $key: "slate");
+
+/** card */
+$card-title-color: $dark;
+
+@import "node_modules/bootstrap/scss/bootstrap";
+
+/**
+  Override pagination class
+*/
+.pagination {
+  @extend .pagination;
+
+  .page-item {
+    @extend .page-item;
+
+    & > * {
+      color: map-get($map: $theme-colors, $key: "black");
+
+      &:hover {
+        color: darken(map-get($map: $theme-colors, $key: "gold"), 7.5%);
+      }
+
+      &:focus {
+        color: map-get($map: $theme-colors, $key: "black");
+        background: darken(map-get($map: $theme-colors, $key: "white"), 5%);
+        box-shadow: 0 0 0 0.25rem rgba(map-get($map: $theme-colors, $key: "gold"), 0.25);
+      }
+    }
+    
+  
+    &.active {
+      span {
+        color: map-get($map: $theme-colors, $key: "black");
+        border: 1px solid darken(map-get($map: $theme-colors, $key: "gold"), 7.5%);
+        background-color: map-get($map: $theme-colors, $key: "gold");
+      }
+    }
+  }
+}
+
+/**
+  Override primary button styles
+*/
+.btn-primary {
+  @include button-variant(
+    $background: $primary,
+    $border: darken($primary, 7.5%), 
+    $color: color-contrast($primary),
+    $hover-background: map-get($theme-colors, "yellow"), 
+    $hover-border: darken(map-get($theme-colors, "yellow"), 7.5%), 
+    $hover-color: color-contrast(map-get($theme-colors, "yellow")),
+  );
+}
+
+/** 
+  Custom classes based on bootstrap classes.
+*/
+.button-fixed-bottom {
+  @extend .btn, .btn-primary;
+
+  position: fixed;
+  bottom: 0;
+  left: 0.5em;
+  right: 0.5em;
+
+  @include respond-to("tabletS") {
+    left: auto;
+    right: 1em;
+    bottom: 1em;
+    width: auto;
+    border-radius: 30px;
+    padding: 1em 5em;
+    box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+}
+
+.button-pill {
+  @extend .btn, .btn-primary;
+
+  border-radius: 12px;
+  padding: 0.2em 1.5em;
+  box-shadow: 0 1px 3px rgb(0,0,0,0.25);
+  white-space: nowrap;
+  margin: 0;
+}

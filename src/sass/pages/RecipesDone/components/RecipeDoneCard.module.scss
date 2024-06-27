@@ -1,0 +1,63 @@
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/mixins" as *;
+
+.card__img {
+  transition: all 0.2s ease-in-out;
+
+  &:hover, &:focus {
+    transform: scale(1.1);
+  }
+}
+
+.card__body {
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card__title {
+  transition: all 0.2s ease;
+
+  &:hover, &:focus {
+    color: map-get($map: $theme-colors, $key: "gold")
+  }
+}
+
+.card__share {
+  background-color: transparent;
+  width: 30px;
+}
+
+.card__subtitle {
+  color: map-get($map: $theme-colors, $key: "gray");
+}
+
+.card__alcoholic {
+  color: map-get($map: $theme-colors, $key: "red");
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.card__done {
+  margin: 0.25rem 0;
+}
+
+.cards__tags {
+  display: flex;
+  overflow-x: auto;
+
+  padding: 0;
+  margin: 0;
+  gap: 0.25rem;
+  margin-top: auto;
+}
+
+.card__tags__tag {
+  display: inline-block;
+  max-width: fit-content;
+  background-color: map-get($map: $theme-colors, $key: "lightGray");
+  padding: 0.1rem 0.4rem;
+  border-radius: 30px;
+  color: map-get($map: $theme-colors, $key: "gray");
+  font-size: 0.8rem;
+}

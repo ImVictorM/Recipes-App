@@ -1,0 +1,17 @@
+@use "@/sass/abstracts/variables" as *;
+@use "@/sass/abstracts/mixins" as *;
+
+.content {
+  padding: 0 1em;
+  padding-top: 3em;
+  padding-bottom: 4em;
+  max-width: $max-content-width;
+
+  @include respond-to("tabletS") {
+    padding-bottom: 6em;
+  }
+
+  @include respond-to("desktopM") {
+    padding-left: 4rem;
+  }
+}

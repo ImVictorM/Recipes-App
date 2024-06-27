@@ -1,0 +1,31 @@
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/mixins" as *;
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+
+  @include respond-to("tabletS") {
+    gap: 3rem;
+  }
+}
+
+.filters__button {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.2s ease;
+  
+  &__img {
+    width: 60px;
+    height: 60px;
+  }
+
+  &:hover, &:focus {
+    transform: scale(1.1);
+    color: map-get($map: $theme-colors, $key: "gold");
+  }
+}

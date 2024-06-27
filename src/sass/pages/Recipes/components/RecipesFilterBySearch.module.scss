@@ -1,0 +1,27 @@
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/mixins" as *;
+
+.form {
+  max-width: 600px;
+  margin: 0.5em 1em;
+  position: relative;
+  background: map-get($map: $theme-colors, $key: "purple");
+  border-radius: 10px;
+
+  @include respond-to("tabletS") {
+    margin: 0.5em auto;
+  }
+}
+
+.form__bottom {
+  padding: 1em 1.5em;
+
+  @include respond-to("tabletS") {
+    padding: 1em 15%;
+  }
+}
+
+.form__checkbox {
+  color: map-get($map: $theme-colors, $key: "white");
+  white-space: nowrap;
+}

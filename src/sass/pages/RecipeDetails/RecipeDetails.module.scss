@@ -1,0 +1,7 @@
+@use "@/sass/abstracts/mixins" as *;
+
+.recipe__recommendations {
+  @include scroll-inline(minmax(200px, auto));
+  overflow-y: hidden;
+  height: 300px;
+}

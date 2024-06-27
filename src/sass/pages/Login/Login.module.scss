@@ -1,0 +1,82 @@
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/mixins" as *;
+
+$purple: map-get($theme-colors, "purple");
+$white: map-get($theme-colors, "white");
+
+.login {
+  background: 
+    url("@/assets/images/salad.png") right center no-repeat,
+    linear-gradient(to bottom, $purple 50%, $white 50%); 
+  background-size: auto;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2em 0;
+  width: 100%;
+
+  @include respond-to("tabletS") {
+    max-width: 600px;
+    justify-content: center;
+    border-radius: 20px;
+    gap: 2.5em;
+    margin: auto;
+    padding: 1.5em 2em;
+    box-shadow:  0 2px 4px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+
+  @include respond-to("tabletS") {
+    box-shadow: 0 -4px 3px 0 rgba(0,0,0,0.25);
+    padding: 1em;
+    border-radius: 10px;
+    background-color: $white;
+  }
+}
+
+/** 
+  Increase specificity by using id selector to override bootstrap
+  styles without having to use !important.
+*/
+#login-form .login__form__email__input {
+  $purple-focus: rgba($purple, 0.65);
+
+  & ~ label {
+    color: $purple;
+  }
+  
+  &:focus,
+  &:not(:placeholder-shown) {
+    ~ label {
+      color:$purple-focus;
+
+      &::after {
+        background-color: transparent;
+      }
+    }
+  }
+ 
+  &:-webkit-autofill {
+    ~ label {
+      color: $purple-focus;
+    }
+  }
+}
+
+.login__logo {
+  width: auto;
+}
+
+.login__title {
+  text-align: center;
+  color: $purple;
+  font-style: italic;
+}

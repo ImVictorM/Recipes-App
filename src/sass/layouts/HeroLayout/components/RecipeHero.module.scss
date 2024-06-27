@@ -1,0 +1,47 @@
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/variables" as *;
+@use "@/sass/abstracts/mixins" as *;
+
+.hero {
+  height: 40vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero__header {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  max-width: $max-content-width;
+
+  &__icon {
+    width: 32px;
+
+    @include hover-circular();
+  }
+}
+
+.hero__presentation {
+  text-transform: uppercase;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  &__title {
+    color: map-get($map: $theme-colors, $key: "white");
+  }
+
+  &__category {
+    color: map-get($map: $theme-colors, $key: "gold");
+    font-size: 1rem;
+  }
+
+  & > * {
+    margin: 0;
+  }
+}
+

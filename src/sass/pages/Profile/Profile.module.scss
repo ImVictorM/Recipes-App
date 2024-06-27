@@ -1,0 +1,83 @@
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/mixins" as *;
+
+.profile {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.profile__button {
+  $border: 1px solid #{map-get($map: $theme-colors, $key: "slate")};
+  $border-radius: 5px;
+
+  background-color: transparent;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  padding: 2.5em 1em;
+  gap: 1.5em;
+  transition: all 0.25s ease;
+
+  @include respond-to("tabletS") {
+    padding: 2.5em 2em;
+  }
+
+  &:first-child {
+    border-bottom: $border;
+    border-radius: $border-radius $border-radius 0 0;
+  }
+
+  &:last-child {
+    border-top: $border;
+    border-radius: 0 0 $border-radius $border-radius;
+  }
+
+  &:hover, &:focus {
+    background-color: rgb(0, 0, 0, 0.02);
+    transform: translateX(-7px);
+
+    .profile__button__img {
+      transform: scale(1.2);
+    }
+
+    .profile__button__text {
+      color: map-get($map: $theme-colors, $key: "gold");
+
+      &::before {
+        transform: translate(-50%, 0.8rem);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.profile__button__img {
+  transition: transform 0.25s ease-in-out;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.profile__button__text {
+  color: map-get($map: $theme-colors, $key: "gray");
+  transition: all 0.25s ease;
+  font-weight: 500;
+  font-size: 1.2rem;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    transition: transform 0.25s ease;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: map-get($map: $theme-colors, $key: "yellow");
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+}

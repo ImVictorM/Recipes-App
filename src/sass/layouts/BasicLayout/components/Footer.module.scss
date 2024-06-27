@@ -1,0 +1,36 @@
+@use "@/sass/themes/theme" as *;
+@use "@/sass/abstracts/mixins" as *;
+@use "@/sass/abstracts/variables" as *;
+@use "@/sass/base/animations" as *;
+
+.footer {
+  background-color: map-get($map: $theme-colors, $key: "purple");
+  height: $footer-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:  0 -3px 4px 3px rgba(0, 0, 0, 0.2);
+
+  &__nav {
+    max-width: calc($max-content-width / 2);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1em;
+  }
+
+  &__nav__link {
+    $link-size: calc($footer-height - 12px);
+    display: block;
+    width: $link-size;
+    height: $link-size;
+
+    &:hover, &:focus {
+      animation: $shake-smooth;
+    }
+
+    @include hover-circular($hover-bg-color: rgba(255, 255, 255, 0.04));
+  }
+}
+

@@ -1,0 +1,49 @@
+@use "breakpoints" as *;
+
+@mixin respond-to($breakpoint) {
+  $raw-query: map-get($breakpoints, $breakpoint);
+
+  @if $raw-query {
+    $query: if(
+      type-of($raw-query) == 'string',
+      unquote($raw-query),
+      inspect($raw-query)
+    );
+
+    @media #{$query} {
+      @content;
+    }
+  } @else {
+    @error 'No value found for `#{$breakpoint}`. '
+         + 'Please make sure it is defined in `$breakpoints` map.';
+  }
+}
+
+@mixin scroll-inline($minColumnWidth: auto) {
+  width: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: $minColumnWidth;
+  gap: 0.5em;
+  overflow-x: auto;
+  overscroll-behavior-inline: none;
+  padding: 0.5em 0;
+}
+
+@mixin hover-circular($hover-size-increase: 12px, $hover-bg-color: rgba(0,0,0,0.09)) {
+  position: relative;
+
+  &:hover, &:focus {
+    &::before {
+      content: "";
+      display: block;
+      background-color: $hover-bg-color;
+      width: calc(100% + $hover-size-increase);
+      height: calc(100% + $hover-size-increase);
+      position: absolute;
+      border-radius: 50%;
+      top: calc(-#{$hover-size-increase} / 2);
+      left: calc(-#{$hover-size-increase} / 2);
+    }
+  }
+}

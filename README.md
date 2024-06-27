@@ -1,153 +1,126 @@
 # Recipes App 🧑‍🍳
 
-## Project Context 💡
-Recipes app, where you can search, filter, favorite, and follow instructions to make a delicious meal/drink 😋.
+## Project context 💡
 
-In this application, you can:
-- Login;
-- Search for various types of drinks/meals you want;
-- See details of each recipe you search;
-- Make a recipe with a checklist of ingredients you need. Also, you can continue a stopped recipe;
-- Mark a recipe as finished;
-- Favorite a recipe;
-- See the recipes you completed;
-- See your profile;
-- Change your profile info.
+The Recipe allows you to search for food and drinks. In addition to discovering interesting details about dishes from around the world, you can also make them by following a detailed step-by-step guide. You can favorite recipes or view recipes you have already made.
 
-### Used API's 🌐
+This app uses the browser's [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) and [Redux Toolkit](https://redux-toolkit.js.org/) for handling data storage. Therefore, do not provide any sensitive data as it will be stored in your browser.
 
-- Meal API: https://www.themealdb.com/
-- Drink API: https://www.thecocktaildb.com/
+### APIs used 🌐
 
-### Contributors 👥
+Both APIs work quite similarly; the difference is that one provides food recipes and the other drinks.
 
-- [Victor Figueiredo Mendes](https://github.com/ImVictorM)
-- [Felipe Seabra](https://github.com/felipe-seabra)
-- [Thayane Quintanilha](https://github.com/ThayaneQuintanilha)
-- [Thalis Venancio](https://github.com/devthalis)
-- [Arthur Moraes](https://github.com/ArthurVSCMoraes)
+- [The Meal DB](https://www.themealdb.com/)
+- [The Cocktail DB](https://www.thecocktaildb.com/)
 
-### Acquired Knowledge 📖
+## Main technologies used 🧰
 
-In this project, we were able to:
-- Use Redux to manage state;
-- Use the React-Redux library;
-- Use React's Context API to manage state;
-- Use React Hook useState;
-- Use React Hook useContext;
-- Use React Hook useEffect;
-- Create custom Hooks.
-
-## Used Technologies 🧰
-<table>
-    <thead>
-        <tr>
-            <th>HTML5</th>
-            <th>CSS3</th>
-            <th>Bootstrap</th>
-            <th>JavaScript</th>
-            <th>React</th>
-            <th>Jest</th>
-            <th>RTL</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td align="center">
-                <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> 
-                    <img 
-                        src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" 
-                        alt="html5" 
-                        width="40" 
-                        height="40"
-                    /> 
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> 
-                    <img 
-                        src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" 
-                        alt="css3" 
-                        width="40" 
-                        height="40"
-                    />
-                </a>
-            </td>
-            <td align="center">
-                 <a href="https://getbootstrap.com" target="_blank" rel="noreferrer">
-                    <img 
-                        src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg" 
-                        alt="bootstrap" 
-                        width="40" 
-                        height="40"
-                    /> 
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> 
-                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" 
-                        alt="javascript" 
-                        width="40" 
-                        height="40"
-                    /> 
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://reactjs.org/" target="_blank" rel="noreferrer"> 
-                    <img 
-                        src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" 
-                        alt="react" 
-                        width="40" 
-                        height="40"
-                    /> 
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://jestjs.io" target="_blank" rel="noreferrer"> 
-                    <img 
-                        src="https://www.vectorlogo.zone/logos/jestjsio/jestjsio-icon.svg" 
-                        alt="jest" 
-                        width="40" 
-                        height="40"
-                     /> 
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://testing-library.com/docs/" target="_blank" rel="noreferrer">
-                    <img 
-                        src="https://testing-library.com/img/octopus-128x128.png"
-                        alt="rtl"
-                        width="40"
-                        height="40"
-                    />
-                </a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<img
+    alt="Static Badge"
+    src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" 
+    style="margin-bottom: 4px;" 
+    height="30px" 
+/>
+<img
+    alt="Static Badge"
+    src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" 
+    style="margin-bottom: 4px;" 
+    height="30px"
+/>
+<br>
+<img 
+    alt="Static Badge" 
+    src="https://img.shields.io/badge/Redux%20Toolkit-%23764ABC?style=for-the-badge&logo=redux&logoColor=white"
+    style="margin-bottom: 4px;"
+    height="30px"
+/>
+<img 
+    alt="Static Badge" 
+    src="https://img.shields.io/badge/React%20Router%20v6-%23CA4245?style=for-the-badge&logo=React%20Router&logoColor=white"
+    style="margin-bottom: 4px;"
+    height="30px"
+/>
+<br>
+<img 
+    alt="Static Badge" 
+    src="https://img.shields.io/badge/React%20Bootstrap-%2341E0FD?style=for-the-badge&logo=React%20Bootstrap&logoColor=black"
+    style="margin-bottom: 4px;"
+    height="30px"
+/>
+<img 
+    alt="Static Badge" 
+    src="https://img.shields.io/badge/Sass-%23CC6699?style=for-the-badge&logo=Sass&logoColor=white"
+    style="margin-bottom: 4px;"
+    height="30px"
+/>
+<br>
+<img
+    alt="Static Badge"
+    src="https://img.shields.io/badge/Testing%20Library-%23E33332?style=for-the-badge&logo=testinglibrary&logoColor=white" 
+    style="margin-bottom: 4px;" 
+    height="30px"
+/>
+<img
+    alt="Static Badge"
+    src="https://img.shields.io/badge/vitest-%236E9F18?style=for-the-badge&logo=vitest&logoColor=white"
+    style="margin-bottom: 4px;" 
+    height="30px"
+/>
 
 ## Running the application ⚙️
 
-1. Clone and enter this repository
-```
-git clone git@github.com:ImVictorM/Recipes-App.git && cd Recipes-App
-```
-2. Install the dependencies
-```
-npm install 
-```
-3. Start the project
-```
-npm start
-```
+1. Clone and enter the repository:
+
+   ```sh
+   git clone git@github.com:ImVictorM/Recipes-App.git && cd Recipes-App
+   ```
+
+2. Install dependencies:
+
+   ```sh
+   npm install
+   ```
+
+3. Start the application:
+
+- To start in development mode:
+
+  ```sh
+  npm run dev
+  ```
+
+- To start in production mode:
+  ```sh
+  npm run build && npm run preview
+  ```
 
 ## Testing 🛠️
-Running all tests:
-```
-npm test
-```
-Running a specific test:
-```
-npm test {test_file_name}
-```
 
+- Running all tests:
+  ```sh
+  npm test
+  ```
+- Running a specific test:
+  ```sh
+  npm test -t {test_file_name}
+  ```
+- Running tests from a directory:
+  ```sh
+  npm test --dir {path/to/directory}
+  ```
+- Running page tests:
+  ```sh
+  npm run test:pages
+  ```
+- Running component tests:
+  ```sh
+  npm run test:components
+  ```
+- Running test coverage:
+  ```sh
+  npm run test:coverage
+  ```
+- Running tests in the browser:
+  ```sh
+  npm run test:ui
+  ```

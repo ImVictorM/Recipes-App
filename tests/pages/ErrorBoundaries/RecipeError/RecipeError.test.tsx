@@ -1,3 +1,4 @@
+import * as reactRouterDom from "react-router-dom";
 import { screen, act } from "@testing-library/react";
 
 import RecipeError from "@/pages/ErrorBoundaries/RecipeError";
@@ -5,13 +6,16 @@ import RecipeError from "@/pages/ErrorBoundaries/RecipeError";
 import renderElement from "../../../helpers/render/renderElement";
 
 const mockNavigate = vi.fn();
+const mockRouteError = vi.fn();
 
 vi.mock("react-router-dom", async (importOriginal) => {
   const actual = await importOriginal<typeof import("react-router-dom")>();
 
   return {
     ...actual,
+    isRouteErrorResponse: () => false,
     useNavigate: () => mockNavigate,
+    useRouteError: () => mockRouteError,
   };
 });
 
@@ -42,5 +46,19 @@ describe("page: RecipeError - ErrorBoundary", () => {
     });
 
     expect(mockNavigate).toHaveBeenCalledWith(0);
+  });
+
+  it("renders correctly when there is a route error", () => {
+    vi.spyOn(reactRouterDom, "isRouteErrorResponse").mockImplementation(
+      () => true
+    );
+    vi.spyOn(reactRouterDom, "useRouteError").mockImplementation(() => ({
+      status: 404,
+      statusText: "NOT_FOUND",
+    }));
+
+    renderElement(<RecipesErrorDefault />);
+
+    screen.getByText("Error code: 404 - NOT_FOUND");
   });
 });

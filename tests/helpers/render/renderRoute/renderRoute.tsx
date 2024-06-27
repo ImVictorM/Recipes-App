@@ -1,10 +1,9 @@
 import React from "react";
-import { render } from "@testing-library/react";
-
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
-
 import { Provider } from "react-redux";
+
 import userEvent from "@testing-library/user-event";
+import { render } from "@testing-library/react";
 
 import routes from "@/routing/routes";
 import setupStore from "@/store/setupStore";
@@ -21,7 +20,11 @@ export default function renderRoute(
   }: RenderRouteOptions = {}
 ) {
   function Wrapper({ children }: React.PropsWithChildren) {
-    return <Provider store={store}>{children}</Provider>;
+    return (
+      <React.Suspense>
+        <Provider store={store}>{children}</Provider>
+      </React.Suspense>
+    );
   }
 
   const routerTest = createMemoryRouter(routes, {

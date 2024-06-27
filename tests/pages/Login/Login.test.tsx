@@ -89,4 +89,25 @@ describe("page: Login - path: /", () => {
     expect(formControls.inputEmail).toHaveValue(emailInvalid);
     expect(formControls.buttonSubmit).not.toBeEnabled();
   });
+
+  it("redirects to previous protected page when user tried to access it at first", async () => {
+    const { user } = renderRoute(["/profile"]);
+
+    await waitFor(
+      () => expect(screen.queryByTestId("Profile")).not.toBeInTheDocument(),
+      { timeout: 5000 }
+    );
+
+    await waitFor(() => screen.getByTestId("Login"), { timeout: 5000 });
+
+    await act(async () => {
+      await user.type(formControls.inputEmail, emailValid);
+    });
+
+    await act(async () => {
+      await user.click(formControls.buttonSubmit);
+    });
+
+    expect(mockNavigate).toHaveBeenCalledWith("/profile");
+  });
 });

@@ -15,7 +15,7 @@ export type GetRecipes<T extends MenuRecipeType> = (
   config?: AxiosRequestConfig
 ) => Promise<T[]>;
 
-export type GetRecipesById<T extends MenuRecipeType> = (
+export type GetRecipeDetailsById<T extends MenuRecipeType> = (
   id: string,
   config?: AxiosRequestConfig
 ) => Promise<T>;
@@ -25,6 +25,12 @@ export type GetRecipesByFilter<T extends MenuRecipeType> = (
   option: RecipeFilterOptions,
   config?: AxiosRequestConfig
 ) => Promise<T[]>;
+
+export type MenuService<T extends MenuRecipeType> = {
+  getRecipes: GetRecipes<T>;
+  getRecipeDetailsById: GetRecipeDetailsById<T>;
+  getRecipesByFilter: GetRecipesByFilter<T>;
+};
 
 export type MenuRecipe = {
   strTags: string | null | "";

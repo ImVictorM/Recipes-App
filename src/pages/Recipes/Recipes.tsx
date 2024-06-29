@@ -19,23 +19,33 @@ import useRequest from "@/hooks/useRequest";
 import { selectVisibility } from "@/store/slices/visibility";
 
 import toRecipe from "@/utils/mappings/recipe/toRecipe";
+import capitalize from "@/utils/capitalize";
 
+import getMenuServicesByRecipeType from "@/services/menu/getMenuServicesByRecipeType";
+import getMenuCategoriesByRecipeType from "@/services/menu/getMenuCategoriesByRecipeType";
 import { RecipeFilterOptions } from "@/services/menu/common/enums";
 
 import { Recipe } from "@/store/slices/menu/menuSlice.types";
 import { RecipesFilterBySearchFormState } from "./components/RecipesFilterBySearch/RecipesFilterBySearch.types";
-import { RecipesProps, RecipesUtils } from "./Recipes.types";
+import { RecipesProps } from "./Recipes.types";
+import { CenteredTitleWithIconProps } from "@/components/ui/CenteredTitleWithIcon/CenteredTitleWithIcon.types";
 
 export default function Recipes({
   type,
   prefixDataTestId = "Recipes",
 }: RecipesProps) {
-  useHeadTitle(type === "drink" ? "Drinks" : "Meals");
+  const pageTitle = capitalize(`${type}s`);
+  useHeadTitle(pageTitle);
+
   const visibility = useAppSelector(selectVisibility);
   const navigate = useNavigate();
   const [recipes, setRecipes] = React.useState<Recipe[]>([]);
-  const [recipeUtils, setRecipeUtils] = React.useState<RecipesUtils>();
   const { errorMessage, isLoading, request, setErrorMessage } = useRequest();
+  const [pageIcon, setPageIcon] =
+    React.useState<CenteredTitleWithIconProps["icon"]>();
+
+  const { getRecipes, getRecipesByFilter } = getMenuServicesByRecipeType(type);
+  const categories = getMenuCategoriesByRecipeType(type);
 
   const handleSetRecipes = React.useCallback(
     (recipes: Recipe[]) => {
@@ -58,15 +68,9 @@ export default function Recipes({
   }: RecipesFilterBySearchFormState) => {
     await request(
       async (abortController) => {
-        if (!recipeUtils) return;
-
-        const response = await recipeUtils.onGetRecipesByFilter(
-          searchQuery,
-          searchFilter,
-          {
-            signal: abortController.signal,
-          }
-        );
+        const response = await getRecipesByFilter(searchQuery, searchFilter, {
+          signal: abortController.signal,
+        });
         const recipes = response.map(toRecipe);
 
         handleSetRecipes(recipes);
@@ -82,9 +86,7 @@ export default function Recipes({
   const handleFetchRecipesByCategory = async (category: string) => {
     await request(
       async (abortController) => {
-        if (!recipeUtils) return;
-
-        const response = await recipeUtils.onGetRecipesByFilter(
+        const response = await getRecipesByFilter(
           category,
           RecipeFilterOptions.CATEGORY,
           { signal: abortController.signal }
@@ -104,9 +106,7 @@ export default function Recipes({
   const handleFetchRecipesWithoutFilter = React.useCallback(async () => {
     await request(
       async (abortController) => {
-        if (!recipeUtils) return;
-
-        const response = await recipeUtils.onGetRecipes({
+        const response = await getRecipes({
           signal: abortController.signal,
         });
 
@@ -120,71 +120,39 @@ export default function Recipes({
         );
       }
     );
-  }, [handleSetRecipes, recipeUtils, request, setErrorMessage]);
+  }, [getRecipes, handleSetRecipes, request, setErrorMessage]);
 
   React.useEffect(() => {
-    handleFetchRecipesWithoutFilter();
-  }, [handleFetchRecipesWithoutFilter]);
-
-  React.useEffect(() => {
-    const importRecipesUtils = async () => {
+    const fetchIcon = async () => {
       switch (type) {
         case "drink": {
-          const getCocktailsByFilter = await import(
-            "@/services/menu/cocktail/getCocktailsByFilter"
-          );
-          const getCocktails = await import(
-            "@/services/menu/cocktail/getCocktails"
-          );
-          const cocktailCategories = await import(
-            "@/services/menu/cocktail/categories"
-          );
           const icon = await import("@/assets/icons/cocktailIcon.svg");
 
-          const title = "Drinks";
-
-          setRecipeUtils({
-            onGetRecipesByFilter: getCocktailsByFilter.default,
-            onGetRecipes: getCocktails.default,
-            categories: cocktailCategories.default,
-            title: title,
-            icon: { element: icon.default, alt: "cocktail" },
-          });
+          setPageIcon({ element: icon.default, alt: "Drinks" });
           return;
         }
         case "meal": {
-          const getMealsByFilter = await import(
-            "@/services/menu/meal/getMealsByFilter"
-          );
-          const getMeals = await import("@/services/menu/meal/getMeals");
-          const mealCategories = await import(
-            "@/services/menu/meal/categories"
-          );
           const icon = await import("@/assets/icons/mealIcon.svg");
 
-          const title = "Meals";
-
-          setRecipeUtils({
-            onGetRecipesByFilter: getMealsByFilter.default,
-            onGetRecipes: getMeals.default,
-            categories: mealCategories.default,
-            title: title,
-            icon: { element: icon.default, alt: "meal" },
-          });
+          setPageIcon({ element: icon.default, alt: "Meals" });
           return;
         }
       }
     };
 
-    importRecipesUtils();
+    fetchIcon();
   }, [type]);
+
+  React.useEffect(() => {
+    handleFetchRecipesWithoutFilter();
+  }, [handleFetchRecipesWithoutFilter]);
 
   return (
     <BasicLayout containHeaderSearchBar prefixDataTestId={prefixDataTestId}>
-      {recipeUtils && (
+      {pageIcon && (
         <CenteredTitleWithIcon
-          icon={recipeUtils.icon}
-          title={recipeUtils.title}
+          icon={pageIcon}
+          title={pageTitle}
           prefixDataTestId={`${prefixDataTestId}.ComponentTitle`}
         />
       )}
@@ -201,14 +169,12 @@ export default function Recipes({
         </div>
       </Collapse>
 
-      {recipeUtils && (
-        <RecipesFilterByCategory
-          categories={recipeUtils.categories}
-          onFilterByCategory={handleFetchRecipesByCategory}
-          onFilterByAll={handleFetchRecipesWithoutFilter}
-          prefixDataTestId={`${prefixDataTestId}.RecipesFilterByCategory`}
-        />
-      )}
+      <RecipesFilterByCategory
+        categories={categories}
+        onFilterByCategory={handleFetchRecipesByCategory}
+        onFilterByAll={handleFetchRecipesWithoutFilter}
+        prefixDataTestId={`${prefixDataTestId}.RecipesFilterByCategory`}
+      />
 
       {errorMessage !== null && (
         <section

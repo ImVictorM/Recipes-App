@@ -4,10 +4,10 @@ import cocktailClient from "./client";
 
 import NotFoundError from "@/errors/http/NotFoundError";
 
-import { GetRecipesById } from "../common/types";
+import { GetRecipeDetailsById } from "../common/types";
 import { Drink, GenericCocktailApiResponse } from "./types";
 
-const getCocktailDetailsById: GetRecipesById<Drink> = async (
+const getCocktailDetailsById: GetRecipeDetailsById<Drink> = async (
   id: string,
   config?: AxiosRequestConfig
 ): Promise<Drink> => {

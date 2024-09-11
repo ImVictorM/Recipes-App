@@ -1,8 +1,8 @@
 # Recipes App 🧑‍🍳
 
-## Project context 💡
+## Overview 💡
 
-The Recipe allows you to search for food and drinks. In addition to discovering interesting details about dishes from around the world, you can also make them by following a detailed step-by-step guide. You can favorite recipes or view recipes you have already made.
+The Recipe App allows you to search for food and drinks. In addition to discovering interesting details about dishes from around the world, you can also make them by following a detailed step-by-step guide. You can favorite recipes or view recipes you have already made.
 
 This app uses the browser's [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) and [Redux Toolkit](https://redux-toolkit.js.org/) for handling data storage. Therefore, do not provide any sensitive data as it will be stored in your browser.
 
